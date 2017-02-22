@@ -364,6 +364,7 @@
 				90CCE9911DF214B3000FD386 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

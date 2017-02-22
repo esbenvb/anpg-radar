@@ -51,4 +51,10 @@ extension CameraListItem {
         self.init(id: id, lat: lat, lon: lon, operatur: tags["operator"] as? String, imageUrl: tags["image"] as? String)
     }
 
+    var region: CLCircularRegion {
+        let region = CLCircularRegion(center: coordinate, radius: CLLocationDistance(1000), identifier: String(id))
+        region.notifyOnEntry = true
+        return region
+    }
+    
 }

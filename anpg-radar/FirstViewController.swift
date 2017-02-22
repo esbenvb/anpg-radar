@@ -9,7 +9,9 @@
 import UIKit
 import MapKit
 
-let feedUrlString = "https://anpg.dk/data.json"
+//let feedUrlString = "https://anpg.dk/data.json"
+let feedUrlString = "http://localhost:8000/data.json"
+
 
 class FirstViewController: UIViewController {
 
@@ -17,6 +19,18 @@ class FirstViewController: UIViewController {
     @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var footerStackView: UIStackView!
     @IBOutlet weak var footerViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var notificationSwitch: UISwitch!
+    @IBAction func notificationSwitchChanged(_ sender: Any) {
+        guard let svitch = sender as? UISwitch else {return}
+        if svitch.isOn {
+            camList.forEach({ (item) in
+                startMonitoring(camListItem: item)
+            })
+        }
+        else {
+            stopMonitoringAll()
+        }
+    }
 
     var camList: [CameraListItem] = [] {
         didSet {
@@ -27,7 +41,7 @@ class FirstViewController: UIViewController {
     let locationManager = CLLocationManager()
     let bottomView = CameraBottomView.viewFromNib()
     var originalFooterHeight: CGFloat = 0
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -86,6 +100,24 @@ class FirstViewController: UIViewController {
         })
 
     }
+    
+    func startMonitoring(camListItem: CameraListItem) {
+        if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+            print("NOT SUPPORTED ON DEVICE")
+            return
+        }
+        if CLLocationManager.authorizationStatus() != .authorizedAlways {
+            print ("NEEDS TO GRANT ACCESS")
+        }
+        
+        locationManager.startMonitoring(for: camListItem.region)
+    }
+    
+    func stopMonitoringAll() {
+        locationManager.monitoredRegions.forEach { (region) in
+            locationManager.stopMonitoring(for: region)
+        }
+    }
 }
 
 extension FirstViewController: CLLocationManagerDelegate {
@@ -96,6 +128,14 @@ extension FirstViewController: CLLocationManagerDelegate {
         print(location.coordinate.longitude)
         centerMap(location: location, radius: 1000.0)
         bottomView.currentPosition = location
+    }
+    
+    func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+        print("monitoring failed for ragion with ID \(region?.identifier)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("location manager failed with error \(error.localizedDescription)")
     }
 }
 
@@ -128,4 +168,20 @@ extension FirstViewController: MKMapViewDelegate {
 
     }
 
+}
+
+extension UIViewController {
+    func notify(region: CLCircularRegion /*FIXME*/) {
+       // guard let vc = self as? FirstViewController else {return}
+        
+        let ac = UIAlertController(title: "WARNING", message: region.identifier, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel) { (action) in
+            ac.dismiss(animated: true, completion: nil)
+        }
+        ac.addAction(okAction)
+        present(ac, animated: true, completion: nil)
+        
+        // vc.select proper annontation view
+        // play alert sound
+    }
 }

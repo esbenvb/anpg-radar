@@ -7,15 +7,27 @@
 //
 
 import UIKit
+import CoreLocation
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    let locationManager = CLLocationManager()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+            print(granted ? "granted" : "not granted")
+            print(error?.localizedDescription ?? "NA")
+        }
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         return true
     }
 
@@ -44,3 +56,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate {
+    func notificationMessage(region: CLCircularRegion) -> String? {
+        return ""
+    }
+    
+    func showNotification(region: CLCircularRegion) {
+        if UIApplication.shared.applicationState == .active {
+            guard let message = notificationMessage(region: region) else {return}
+            /// FIXME find model from region ID...
+            window?.rootViewController?.notify(region: region) // FIXME
+            
+        }
+        else {
+            // https://blog.codecentric.de/en/2016/11/setup-ios-10-local-notification/
+            
+            let content = UNMutableNotificationContent()
+            content.title = "hej der skete noget"
+            content.subtitle = region.identifier
+            content.body = "BODY"
+            content.categoryIdentifier = "cam"
+            content.sound = UNNotificationSound.default()
+            
+            // FIXME make action for clicking notification
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.001, repeats: false) // FIXME HACK
+            
+            let request = UNNotificationRequest(identifier: "camNotification", content: content, trigger: trigger)
+            
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("completed")
+                }
+                
+            })
+        }
+        print("you enteded region \(region.identifier)")
+    }
+}
+
+extension AppDelegate: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        guard let region = region as? CLCircularRegion else { return }
+        showNotification(region: region)
+    }
+}
