@@ -9,8 +9,11 @@
 import UIKit
 import MapKit
 
-//let feedUrlString = "https://anpg.dk/data.json"
-let feedUrlString = "http://localhost:8000/data.json"
+#if (arch(i386) || arch(x86_64))
+    let feedUrlString = "http://localhost:8000/data.json"
+#else
+    let feedUrlString = "https://anpg.dk/data.json"
+#endif
 
 
 class FirstViewController: UIViewController {
