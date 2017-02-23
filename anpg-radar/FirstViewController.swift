@@ -57,10 +57,24 @@ class FirstViewController: UIViewController {
         footerStackView.addArrangedSubview(bottomView)
         originalFooterHeight = footerViewHeight.constant
         hideFooter()
-
+        
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(notify), name: Constants.cameraDetectedNotificationName, object: nil)
+    }
+    
+    deinit {
+        let nc = NotificationCenter.default
+        nc.removeObserver(self, name: Constants.cameraDetectedNotificationName, object: nil)
     }
 
     func loadData() {
+        let ud = UserDefaults.standard
+
+        if let elements = ud.array(forKey: "camList") as? [CameraListItem] {
+            camList = elements
+            return
+        }
+        
         guard let url = URL(string: feedUrlString) else {return}
         URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
             guard let data = data, error == nil else {
@@ -70,7 +84,11 @@ class FirstViewController: UIViewController {
             do {
                 guard let parsedData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {return}
                 let responseModel = CameraListResponseModel(json: parsedData)
-                self?.camList = responseModel?.elements ?? []
+                let elements = responseModel?.elements ?? []
+                self?.camList = elements
+                let delegate = UIApplication.shared.delegate as? AppDelegate
+                delegate?.camList = elements
+                self?.saveDataLocally(elements: elements)
             } catch {
 
             }
@@ -78,6 +96,14 @@ class FirstViewController: UIViewController {
 
     }
 
+    func saveDataLocally(elements: [CameraListItem]) {
+        let ud = UserDefaults.standard
+        let elementsSerialized: [Data] = elements.map { NSKeyedArchiver.archivedData(withRootObject: $0) }
+        ud.set(elementsSerialized, forKey: "camList")
+        ud.synchronize()
+
+    }
+    
     func centerMap(location: CLLocation, radius: CLLocationDistance) {
         let region = MKCoordinateRegionMakeWithDistance(location.coordinate, radius * 2, radius * 2)
         mapView.setRegion(region, animated: true)
@@ -118,6 +144,34 @@ class FirstViewController: UIViewController {
             locationManager.stopMonitoring(for: region)
         }
     }
+    
+    func notify(notification: NSNotification) {
+        guard let item = notification.object as? CameraListItem else {return}
+        
+        // FIXME: Check that a map VC is being shown
+        
+        let ac = UIAlertController(title: "WARNING", message: item.id, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel) { (action) in
+            ac.dismiss(animated: true, completion: nil)
+        }
+        ac.addAction(okAction)
+        present(ac, animated: true, completion: nil)
+
+        selectAnnotation(byId: item.id)
+        // play alert sound
+    }
+
+    func selectAnnotation(byId id: String) {
+        let filteredList = mapView.annotations.filter{ (annotation) -> Bool in
+            guard let annotation = annotation as? CameraListItem else { return false }
+            return id == annotation.id
+        }
+        guard let item = filteredList.first else { return }
+        mapView.selectAnnotation(item, animated: true)
+        centerMap(location: CLLocation(latitude: item.coordinate.latitude, longitude: item.coordinate.longitude), radius: 2000) // FIXME RADIUS
+
+    }
+    
 }
 
 extension FirstViewController: CLLocationManagerDelegate {
@@ -168,20 +222,4 @@ extension FirstViewController: MKMapViewDelegate {
 
     }
 
-}
-
-extension UIViewController {
-    func notify(region: CLCircularRegion /*FIXME*/) {
-       // guard let vc = self as? FirstViewController else {return}
-        
-        let ac = UIAlertController(title: "WARNING", message: region.identifier, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel) { (action) in
-            ac.dismiss(animated: true, completion: nil)
-        }
-        ac.addAction(okAction)
-        present(ac, animated: true, completion: nil)
-        
-        // vc.select proper annontation view
-        // play alert sound
-    }
 }

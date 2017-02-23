@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     let locationManager = CLLocationManager()
+    var camList = UserDefaults.standard.array(forKey: "camList") as? [CameraListItem] ?? []
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -57,51 +58,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate {
-    func notificationMessage(region: CLCircularRegion) -> String? {
-        return ""
-    }
-    
-    func showNotification(region: CLCircularRegion) {
+
+    func showNotification(item: CameraListItem) {
         if UIApplication.shared.applicationState == .active {
-            guard let message = notificationMessage(region: region) else {return}
-            /// FIXME find model from region ID...
-            window?.rootViewController?.notify(region: region) // FIXME
-            
+            let nc = NotificationCenter.default
+            let notification = Notification(name: Constants.cameraDetectedNotificationName, object: item, userInfo: nil)
+            nc.post(notification)
         }
         else {
             // https://blog.codecentric.de/en/2016/11/setup-ios-10-local-notification/
             
-            let content = UNMutableNotificationContent()
-            content.title = "hej der skete noget"
-            content.subtitle = region.identifier
-            content.body = "BODY"
-            content.categoryIdentifier = "cam"
-            content.sound = UNNotificationSound.default()
             
-            // FIXME make action for clicking notification
-            
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.001, repeats: false) // FIXME HACK
-            
-            let request = UNNotificationRequest(identifier: "camNotification", content: content, trigger: trigger)
-            
-            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-            UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    print("completed")
-                }
+            let location = CLLocation(latitude: item.coordinate.latitude, longitude: item.coordinate.longitude)
+            GeoTools.decodePosition(location: location) { [weak self]
+                (address, city) in
+                let content = UNMutableNotificationContent()
+                content.title = "Camera nearby!"
+                content.subtitle = item.id
+                content.body = "\(address), \(city)"
+                content.categoryIdentifier = "cam"
+                content.sound = UNNotificationSound.default()
                 
-            })
+                // FIXME make action for clicking notification
+                
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.001, repeats: false) // FIXME HACK
+                
+                let request = UNNotificationRequest(identifier: "camNotification", content: content, trigger: trigger)
+                
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
+                    if let error = error {
+                        print(error)
+                    }
+                    else {
+                        print("completed")
+                    }
+                    
+                })
+                
+            }
+            
+            
         }
-        print("you enteded region \(region.identifier)")
+        print("you enteded region \(item.id)")
     }
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        guard let region = region as? CLCircularRegion else { return }
-        showNotification(region: region)
+        guard let item = CameraListItem.findById(id: region.identifier, list: camList) else {return}
+        showNotification(item: item)
     }
 }

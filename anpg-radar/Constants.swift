@@ -14,4 +14,7 @@ struct Constants {
         let image = UIImage(named: "noImage")
         return image
     }
+    
+    static let cameraDetectedNotificationName = Notification.Name(rawValue: "CameraDetected")
 }
+
