@@ -24,11 +24,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+        let unc = UNUserNotificationCenter.current()
+        
+        unc.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
             print(granted ? "granted" : "not granted")
             print(error?.localizedDescription ?? "NA")
         }
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        unc.removeAllPendingNotificationRequests()
+        
+        unc.setNotificationCategories([category])
+        unc.delegate = self
+
+        
         return true
     }
 
@@ -60,10 +67,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
 
     func showNotification(item: CameraListItem) {
+
         if UIApplication.shared.applicationState == .active {
-            let nc = NotificationCenter.default
+            let ac = UIAlertController(title: "WARNING", message: item.id, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .cancel) { (action) in
+                ac.dismiss(animated: true, completion: nil)
+            }
+            ac.addAction(okAction)
+            window?.rootViewController?.present(ac, animated: true, completion: nil)
             let notification = Notification(name: Constants.cameraDetectedNotificationName, object: item, userInfo: nil)
-            nc.post(notification)
+            NotificationCenter.default.post(notification)
+
         }
         else {
             // https://blog.codecentric.de/en/2016/11/setup-ios-10-local-notification/
@@ -76,8 +90,9 @@ extension AppDelegate {
                 content.title = "Camera nearby!"
                 content.subtitle = item.id
                 content.body = "\(address), \(city)"
-                content.categoryIdentifier = "cam"
+                content.categoryIdentifier = Constants.notificationCategoryId
                 content.sound = UNNotificationSound.default()
+                content.threadIdentifier = item.id
                 
                 // FIXME make action for clicking notification
                 
@@ -85,8 +100,9 @@ extension AppDelegate {
                 
                 let request = UNNotificationRequest(identifier: "camNotification", content: content, trigger: trigger)
                 
-                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-                UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
+                let unc = UNUserNotificationCenter.current()
+                unc.removeAllPendingNotificationRequests()
+                unc.add(request, withCompletionHandler: { (error) in
                     if let error = error {
                         print(error)
                     }
@@ -108,5 +124,19 @@ extension AppDelegate: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         guard let item = CameraListItem.findById(id: region.identifier, list: camList) else {return}
         showNotification(item: item)
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        guard let item = CameraListItem.findById(id: response.notification.request.content.threadIdentifier, list: camList) else {return}
+        let notification = Notification(name: Constants.cameraDetectedNotificationName, object: item, userInfo: nil)
+        NotificationCenter.default.post(notification)
+
+        
+        completionHandler()
+    }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler(.alert)
     }
 }

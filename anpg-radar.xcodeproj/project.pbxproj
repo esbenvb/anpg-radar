@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		904A28451E5E66E8009EF2B7 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 904A28441E5E66E8009EF2B7 /* UserNotifications.framework */; };
+		904A28471E5E66E8009EF2B7 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 904A28461E5E66E8009EF2B7 /* UserNotificationsUI.framework */; };
+		904A284A1E5E66E8009EF2B7 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904A28491E5E66E8009EF2B7 /* NotificationViewController.swift */; };
+		904A284D1E5E66E8009EF2B7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 904A284B1E5E66E8009EF2B7 /* MainInterface.storyboard */; };
+		904A28511E5E66E8009EF2B7 /* notification.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 904A28421E5E66E8009EF2B7 /* notification.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		90CCE97F1DF214B3000FD386 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE97E1DF214B3000FD386 /* AppDelegate.swift */; };
 		90CCE9811DF214B3000FD386 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9801DF214B3000FD386 /* FirstViewController.swift */; };
 		90CCE9831DF214B3000FD386 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9821DF214B3000FD386 /* SecondViewController.swift */; };
@@ -25,7 +30,37 @@
 		90CCE9A71DF2169E000FD386 /* GeoTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9A51DF2169E000FD386 /* GeoTools.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		904A284F1E5E66E8009EF2B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90CCE9731DF214B3000FD386 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 904A28411E5E66E8009EF2B7;
+			remoteInfo = notification;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		904A28551E5E66E8009EF2B7 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				904A28511E5E66E8009EF2B7 /* notification.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		904A28421E5E66E8009EF2B7 /* notification.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = notification.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		904A28441E5E66E8009EF2B7 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		904A28461E5E66E8009EF2B7 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		904A28491E5E66E8009EF2B7 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		904A284C1E5E66E8009EF2B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		904A284E1E5E66E8009EF2B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		90CCE97B1DF214B3000FD386 /* anpg-radar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "anpg-radar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90CCE97E1DF214B3000FD386 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		90CCE9801DF214B3000FD386 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +82,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		904A283F1E5E66E8009EF2B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				904A28471E5E66E8009EF2B7 /* UserNotificationsUI.framework in Frameworks */,
+				904A28451E5E66E8009EF2B7 /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		90CCE9781DF214B3000FD386 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -57,10 +101,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		904A28431E5E66E8009EF2B7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				904A28441E5E66E8009EF2B7 /* UserNotifications.framework */,
+				904A28461E5E66E8009EF2B7 /* UserNotificationsUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		904A28481E5E66E8009EF2B7 /* notification */ = {
+			isa = PBXGroup;
+			children = (
+				904A28491E5E66E8009EF2B7 /* NotificationViewController.swift */,
+				904A284B1E5E66E8009EF2B7 /* MainInterface.storyboard */,
+				904A284E1E5E66E8009EF2B7 /* Info.plist */,
+			);
+			path = notification;
+			sourceTree = "<group>";
+		};
 		90CCE9721DF214B3000FD386 = {
 			isa = PBXGroup;
 			children = (
 				90CCE97D1DF214B3000FD386 /* anpg-radar */,
+				904A28481E5E66E8009EF2B7 /* notification */,
+				904A28431E5E66E8009EF2B7 /* Frameworks */,
 				90CCE97C1DF214B3000FD386 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				90CCE97B1DF214B3000FD386 /* anpg-radar.app */,
+				904A28421E5E66E8009EF2B7 /* notification.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -116,6 +182,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		904A28411E5E66E8009EF2B7 /* notification */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 904A28521E5E66E8009EF2B7 /* Build configuration list for PBXNativeTarget "notification" */;
+			buildPhases = (
+				904A283E1E5E66E8009EF2B7 /* Sources */,
+				904A283F1E5E66E8009EF2B7 /* Frameworks */,
+				904A28401E5E66E8009EF2B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = notification;
+			productName = notification;
+			productReference = 904A28421E5E66E8009EF2B7 /* notification.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		90CCE97A1DF214B3000FD386 /* anpg-radar */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 90CCE98F1DF214B3000FD386 /* Build configuration list for PBXNativeTarget "anpg-radar" */;
@@ -123,10 +206,12 @@
 				90CCE9771DF214B3000FD386 /* Sources */,
 				90CCE9781DF214B3000FD386 /* Frameworks */,
 				90CCE9791DF214B3000FD386 /* Resources */,
+				904A28551E5E66E8009EF2B7 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				904A28501E5E66E8009EF2B7 /* PBXTargetDependency */,
 			);
 			name = "anpg-radar";
 			productName = "anpg-radar";
@@ -139,14 +224,24 @@
 		90CCE9731DF214B3000FD386 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0810;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Esben von Buchwald";
 				TargetAttributes = {
+					904A28411E5E66E8009EF2B7 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = WHQ3KJUC5S;
+						ProvisioningStyle = Automatic;
+					};
 					90CCE97A1DF214B3000FD386 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = WHQ3KJUC5S;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -164,11 +259,20 @@
 			projectRoot = "";
 			targets = (
 				90CCE97A1DF214B3000FD386 /* anpg-radar */,
+				904A28411E5E66E8009EF2B7 /* notification */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		904A28401E5E66E8009EF2B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				904A284D1E5E66E8009EF2B7 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		90CCE9791DF214B3000FD386 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -185,6 +289,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		904A283E1E5E66E8009EF2B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				904A284A1E5E66E8009EF2B7 /* NotificationViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		90CCE9771DF214B3000FD386 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -204,7 +316,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		904A28501E5E66E8009EF2B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 904A28411E5E66E8009EF2B7 /* notification */;
+			targetProxy = 904A284F1E5E66E8009EF2B7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		904A284B1E5E66E8009EF2B7 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				904A284C1E5E66E8009EF2B7 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		90CCE9841DF214B3000FD386 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -224,6 +352,36 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		904A28531E5E66E8009EF2B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEVELOPMENT_TEAM = WHQ3KJUC5S;
+				INFOPLIST_FILE = notification/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "dk.vonbuchwald.esben.anpg-radar.notification";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		904A28541E5E66E8009EF2B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEVELOPMENT_TEAM = WHQ3KJUC5S;
+				INFOPLIST_FILE = notification/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "dk.vonbuchwald.esben.anpg-radar.notification";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		90CCE98D1DF214B3000FD386 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -320,6 +478,7 @@
 		90CCE9901DF214B3000FD386 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = WHQ3KJUC5S;
@@ -334,6 +493,7 @@
 		90CCE9911DF214B3000FD386 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = WHQ3KJUC5S;
@@ -348,6 +508,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		904A28521E5E66E8009EF2B7 /* Build configuration list for PBXNativeTarget "notification" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				904A28531E5E66E8009EF2B7 /* Debug */,
+				904A28541E5E66E8009EF2B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		90CCE9761DF214B3000FD386 /* Build configuration list for PBXProject "anpg-radar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

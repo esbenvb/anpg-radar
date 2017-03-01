@@ -15,6 +15,6 @@ struct Constants {
         return image
     }
     
-    static let cameraDetectedNotificationName = Notification.Name(rawValue: "CameraDetected")
+    static let cameraDetectedNotificationName = Notification.Name("CameraDetected")
 }
 

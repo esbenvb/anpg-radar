@@ -151,14 +151,6 @@ class FirstViewController: UIViewController {
     func notify(notification: NSNotification) {
         guard let item = notification.object as? CameraListItem else {return}
         
-        // FIXME: Check that a map VC is being shown
-        
-        let ac = UIAlertController(title: "WARNING", message: item.id, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel) { (action) in
-            ac.dismiss(animated: true, completion: nil)
-        }
-        ac.addAction(okAction)
-        present(ac, animated: true, completion: nil)
 
         selectAnnotation(byId: item.id)
         // play alert sound
