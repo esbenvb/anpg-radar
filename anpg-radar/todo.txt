@@ -1,0 +1,3 @@
+colors/styling
+* center map on current position
+handle permissions for notfications and location

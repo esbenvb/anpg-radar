@@ -18,6 +18,16 @@ import MapKit
 
 class FirstViewController: UIViewController {
 
+    @IBAction func mapPinched(_ sender: Any) {
+        handleUserMovedMap(sender)
+    }
+    @IBAction func mapRotated(_ sender: Any) {
+        handleUserMovedMap(sender)
+    }
+    @IBAction func mapPanned(_ sender: Any) {
+        handleUserMovedMap(sender)
+    }
+    @IBOutlet weak var followLocationButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var footerStackView: UIStackView!
@@ -34,6 +44,10 @@ class FirstViewController: UIViewController {
             stopMonitoringAll()
         }
     }
+    @IBAction func followLocationButtonClicked(_ sender: Any) {
+        // enable following location
+        followLocation = true
+    }
 
     var camList: [CameraListItem] = [] {
         didSet {
@@ -44,6 +58,31 @@ class FirstViewController: UIViewController {
     let locationManager = CLLocationManager()
     let bottomView = CameraBottomView.viewFromNib()
     var originalFooterHeight: CGFloat = 0
+    var followLocation = true {
+        didSet {
+            if followLocation {
+                // update button focus
+                followLocationButton.isSelected = true
+                followLocationButton.isHighlighted = true
+                // force update
+                locationManager.stopUpdatingLocation()
+                locationManager.startUpdatingLocation()
+            } else  {
+                // update button focus
+                followLocationButton.isSelected = false
+                followLocationButton.isHighlighted = false
+                // stop update
+                locationManager.stopUpdatingLocation()
+            }
+        }
+    }
+    
+    func handleUserMovedMap(_ sender: Any) {
+        guard let gr = sender as? UIGestureRecognizer else {return}
+        if gr.state == .ended {
+            followLocation = false
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,7 +149,6 @@ class FirstViewController: UIViewController {
     func centerMap(location: CLLocation, radius: CLLocationDistance) {
         let region = MKCoordinateRegionMakeWithDistance(location.coordinate, radius * 2, radius * 2)
         mapView.setRegion(region, animated: true)
-        locationManager.stopUpdatingLocation()
     }
 
     func showFooter() {
@@ -164,7 +202,7 @@ class FirstViewController: UIViewController {
         guard let item = filteredList.first else { return }
         mapView.selectAnnotation(item, animated: true)
         centerMap(location: CLLocation(latitude: item.coordinate.latitude, longitude: item.coordinate.longitude), radius: 2000) // FIXME RADIUS
-
+        followLocation = false
     }
     
 }
