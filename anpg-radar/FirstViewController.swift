@@ -60,7 +60,6 @@ class FirstViewController: UIViewController {
             alertManager.alertItems = camList
         }
     }
-    let locationManager = CLLocationManager()
     let bottomView = CameraBottomView.viewFromNib()
     var originalFooterHeight: CGFloat = 0
     var followLocation = true {
@@ -70,21 +69,21 @@ class FirstViewController: UIViewController {
                 followLocationButton.isSelected = true
                 followLocationButton.isHighlighted = true
                 // force update
-                locationManager.stopUpdatingLocation()
-                locationManager.startUpdatingLocation()
+                CommonLocationManager.shared.subscribe(subscriber: self)
             } else  {
                 // update button focus
                 followLocationButton.isSelected = false
                 followLocationButton.isHighlighted = false
                 // stop update
-                locationManager.stopUpdatingLocation()
+                CommonLocationManager.shared.unsubscribe(subscriber: self)
+
             }
         }
     }
     
     let alertManager = CameraAlertManager()
     
-    func handleUserMovedMap(_ sender: Any) {
+    func handleUserMovedMap(_ sender: Any) { // FIXME: does not work perfectly
         guard let gr = sender as? UIGestureRecognizer else {return}
         print (gr.state)
         print(gr.numberOfTouches)
@@ -97,12 +96,6 @@ class FirstViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         loadData()
-        locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-            locationManager.startUpdatingLocation()
-        }
         mapView.delegate = self
 
         footerStackView.addArrangedSubview(bottomView)
@@ -113,8 +106,9 @@ class FirstViewController: UIViewController {
         nc.addObserver(self, selector: #selector(notify), name: Constants.cameraDetectedNotificationName, object: nil)
     }
     
+    
     deinit {
-        locationManager.stopUpdatingLocation()
+        CommonLocationManager.shared.unsubscribe(subscriber: self)
         let nc = NotificationCenter.default
         nc.removeObserver(self, name: Constants.cameraDetectedNotificationName, object: nil)
     }
@@ -199,24 +193,13 @@ class FirstViewController: UIViewController {
     
 }
 
-extension FirstViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print(locations)
-        guard let location = manager.location else {return}
-        print(location.coordinate.latitude)
-        print(location.coordinate.longitude)
+extension FirstViewController: CommonLocationSubscriber {
+    func updateLocation(location: CLLocation) {
         centerMap(location: location, radius: 1000.0)
         bottomView.currentPosition = location
-        locationManager.adjustAccuracy()
     }
     
-    func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
-        print("monitoring failed for ragion with ID \(region?.identifier)")
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("location manager failed with error \(error.localizedDescription)")
-    }
+    var accuracy: CommonLocationAccuracy { return .accurate }
 }
 
 extension FirstViewController: MKMapViewDelegate {

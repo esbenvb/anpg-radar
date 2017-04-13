@@ -12,17 +12,16 @@ import CoreLocation
 let kGeofenceLimit = 20 // FIXME
 
 class CameraAlertManager: NSObject {
-    let locationManager = CLLocationManager()
     var items: [CameraListItem] {
         didSet {
             estimatedLocation = nil
-            previousLocation = nil
-            previousDistance = 0
+            previousLocationOfUpdating = nil
+            previousDistanceToFirstSkippedItem = 0
         }
     }
     var currentDistances: [String : CLLocationDistance] = [:]
-    var previousLocation: CLLocation?
-    var previousDistance: CLLocationDistance = 0
+    var previousLocationOfUpdating: CLLocation?
+    var previousDistanceToFirstSkippedItem: CLLocationDistance = 0
     var estimatedLocation: CLLocation?
     var alertItems: [CameraListItem] = [] {
         didSet {
@@ -34,15 +33,12 @@ class CameraAlertManager: NSObject {
     init(items: [CameraListItem] = []) {
         self.items = items
         super.init()
-        
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-//        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        locationManager.adjustAccuracy()
+
+        CommonLocationManager.shared.subscribe(subscriber: self)
     }
     
     func updateGeofences() {
-        locationManager.stopUpdatingLocation()
+        CommonLocationManager.shared.unsubscribe(subscriber: self)
         guard let location = estimatedLocation else {return}
         
         currentDistances = [:]
@@ -57,15 +53,15 @@ class CameraAlertManager: NSObject {
         alertItems = Array(items.prefix(kGeofenceLimit))
 
         if items.count > kGeofenceLimit, let distance = currentDistances[items[kGeofenceLimit].id] {
-            previousDistance = distance
-            previousLocation = location
-            locationManager.startUpdatingLocation()
+            previousDistanceToFirstSkippedItem = distance
+            previousLocationOfUpdating = location
+            CommonLocationManager.shared.subscribe(subscriber: self)
         }
     }
 
     
     func startMonitoring(camListItem: CameraListItem) {
-        locationManager.startUpdatingLocation()
+//        CommonLocationManager.shared.subscribe(subscriber: self)
 
         if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
             print("NOT SUPPORTED ON DEVICE") // FIXME
@@ -75,28 +71,25 @@ class CameraAlertManager: NSObject {
             print ("NEEDS TO GRANT ACCESS") // FIXME
         }
         
-        locationManager.startMonitoring(for: camListItem.region)
+        CLLocationManager().startMonitoring(for: camListItem.region)
     }
     
     func stopMonitoringAll() {
-        locationManager.monitoredRegions.forEach { locationManager.stopMonitoring(for: $0) }
+        CLLocationManager().monitoredRegions.forEach { CLLocationManager().stopMonitoring(for: $0) }
     }
     
 }
 
-extension CameraAlertManager: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        estimatedLocation = manager.location
-        guard let estimatedLocation = estimatedLocation else {return}
-        guard let previousLocation = previousLocation, previousDistance > 0 else {
-            updateGeofences()
-            return
-        }
-        if estimatedLocation.distance(from: previousLocation) > previousDistance * 0.9 {
+extension CameraAlertManager: CommonLocationSubscriber {
+    func updateLocation(location: CLLocation) {
+        guard let previousLocationOfUpdating = previousLocationOfUpdating, previousDistanceToFirstSkippedItem > 0 else { return }
+        // Update if items were skipped and the distance to the last location of update is within 90% of the original distance to the first skipped item.
+        if location.distance(from: previousLocationOfUpdating) > previousDistanceToFirstSkippedItem * 0.9 {
             updateGeofences()
         }
-        locationManager.adjustAccuracy()
     }
+    
+    var accuracy: CommonLocationAccuracy {return .inaccurate}
 }
 
 extension CLLocationManager {
