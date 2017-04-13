@@ -16,5 +16,7 @@ struct Constants {
     }
     
     static let cameraDetectedNotificationName = Notification.Name("CameraDetected")
+
+    static let notificationCategoryId = "camDetected"
 }
 

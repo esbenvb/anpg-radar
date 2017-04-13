@@ -12,6 +12,7 @@
 		904A284A1E5E66E8009EF2B7 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904A28491E5E66E8009EF2B7 /* NotificationViewController.swift */; };
 		904A284D1E5E66E8009EF2B7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 904A284B1E5E66E8009EF2B7 /* MainInterface.storyboard */; };
 		904A28511E5E66E8009EF2B7 /* notification.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 904A28421E5E66E8009EF2B7 /* notification.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		90A9EB211E6E049100C76B2C /* CameraAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9EB201E6E049100C76B2C /* CameraAlertManager.swift */; };
 		90B8B2011E678F3F00A1AEF1 /* todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90B8B2001E678F3F00A1AEF1 /* todo.txt */; };
 		90CCE97F1DF214B3000FD386 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE97E1DF214B3000FD386 /* AppDelegate.swift */; };
 		90CCE9811DF214B3000FD386 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9801DF214B3000FD386 /* FirstViewController.swift */; };
@@ -62,6 +63,7 @@
 		904A28491E5E66E8009EF2B7 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		904A284C1E5E66E8009EF2B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		904A284E1E5E66E8009EF2B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90A9EB201E6E049100C76B2C /* CameraAlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraAlertManager.swift; sourceTree = "<group>"; };
 		90B8B2001E678F3F00A1AEF1 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
 		90CCE97B1DF214B3000FD386 /* anpg-radar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "anpg-radar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90CCE97E1DF214B3000FD386 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -144,18 +146,19 @@
 		90CCE97D1DF214B3000FD386 /* anpg-radar */ = {
 			isa = PBXGroup;
 			children = (
-				90CCE9A41DF2169E000FD386 /* Constants.swift */,
-				90CCE9A51DF2169E000FD386 /* GeoTools.swift */,
-				90CCE9921DF21625000FD386 /* Model */,
-				90CCE9951DF21625000FD386 /* View */,
 				90CCE97E1DF214B3000FD386 /* AppDelegate.swift */,
-				90CCE9801DF214B3000FD386 /* FirstViewController.swift */,
-				90CCE9821DF214B3000FD386 /* SecondViewController.swift */,
-				90CCE9841DF214B3000FD386 /* Main.storyboard */,
 				90CCE9871DF214B3000FD386 /* Assets.xcassets */,
-				90CCE9891DF214B3000FD386 /* LaunchScreen.storyboard */,
+				90A9EB201E6E049100C76B2C /* CameraAlertManager.swift */,
+				90CCE9A41DF2169E000FD386 /* Constants.swift */,
+				90CCE9801DF214B3000FD386 /* FirstViewController.swift */,
+				90CCE9A51DF2169E000FD386 /* GeoTools.swift */,
 				90CCE98C1DF214B3000FD386 /* Info.plist */,
+				90CCE9891DF214B3000FD386 /* LaunchScreen.storyboard */,
+				90CCE9841DF214B3000FD386 /* Main.storyboard */,
+				90CCE9921DF21625000FD386 /* Model */,
+				90CCE9821DF214B3000FD386 /* SecondViewController.swift */,
 				90B8B2001E678F3F00A1AEF1 /* todo.txt */,
+				90CCE9951DF21625000FD386 /* View */,
 			);
 			path = "anpg-radar";
 			sourceTree = "<group>";
@@ -242,7 +245,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -308,6 +311,7 @@
 				90CCE9831DF214B3000FD386 /* SecondViewController.swift in Sources */,
 				90CCE99E1DF21625000FD386 /* CamAnnotationView.swift in Sources */,
 				90CCE9A21DF21625000FD386 /* CameraBottomView.swift in Sources */,
+				90A9EB211E6E049100C76B2C /* CameraAlertManager.swift in Sources */,
 				90CCE9A01DF21625000FD386 /* CamCustomView.swift in Sources */,
 				90CCE99D1DF21625000FD386 /* CameraListResponseModel.swift in Sources */,
 				90CCE99C1DF21625000FD386 /* CameraListItemModel.swift in Sources */,

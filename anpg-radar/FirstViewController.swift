@@ -16,6 +16,10 @@ import MapKit
 #endif
 
 
+// FIXME handle unload of view
+
+// kig her https://github.com/MartinBergerDX/LocalNotifications_iOS10/blob/master/LocalNotification_iOS10/ViewController.swift
+
 class FirstViewController: UIViewController {
 
     @IBAction func mapPinched(_ sender: Any) {
@@ -37,11 +41,11 @@ class FirstViewController: UIViewController {
         guard let svitch = sender as? UISwitch else {return}
         if svitch.isOn {
             camList.forEach({ (item) in
-                startMonitoring(camListItem: item)
+                alertManager.startMonitoring(camListItem: item)
             })
         }
         else {
-            stopMonitoringAll()
+            alertManager.stopMonitoringAll()
         }
     }
     @IBAction func followLocationButtonClicked(_ sender: Any) {
@@ -53,6 +57,7 @@ class FirstViewController: UIViewController {
         didSet {
             mapView.removeAnnotations(mapView.annotations)
             mapView.addAnnotations(camList)
+            alertManager.alertItems = camList
         }
     }
     let locationManager = CLLocationManager()
@@ -77,11 +82,15 @@ class FirstViewController: UIViewController {
         }
     }
     
+    let alertManager = CameraAlertManager()
+    
     func handleUserMovedMap(_ sender: Any) {
         guard let gr = sender as? UIGestureRecognizer else {return}
-        if gr.state == .ended {
+        print (gr.state)
+        print(gr.numberOfTouches)
+//        if gr.state == .ended {
             followLocation = false
-        }
+//        }
     }
     
     override func viewDidLoad() {
@@ -105,6 +114,7 @@ class FirstViewController: UIViewController {
     }
     
     deinit {
+        locationManager.stopUpdatingLocation()
         let nc = NotificationCenter.default
         nc.removeObserver(self, name: Constants.cameraDetectedNotificationName, object: nil)
     }
@@ -167,25 +177,7 @@ class FirstViewController: UIViewController {
         })
 
     }
-    
-    func startMonitoring(camListItem: CameraListItem) {
-        if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
-            print("NOT SUPPORTED ON DEVICE")
-            return
-        }
-        if CLLocationManager.authorizationStatus() != .authorizedAlways {
-            print ("NEEDS TO GRANT ACCESS")
-        }
-        
-        locationManager.startMonitoring(for: camListItem.region)
-    }
-    
-    func stopMonitoringAll() {
-        locationManager.monitoredRegions.forEach { (region) in
-            locationManager.stopMonitoring(for: region)
-        }
-    }
-    
+
     func notify(notification: NSNotification) {
         guard let item = notification.object as? CameraListItem else {return}
         
@@ -215,6 +207,7 @@ extension FirstViewController: CLLocationManagerDelegate {
         print(location.coordinate.longitude)
         centerMap(location: location, radius: 1000.0)
         bottomView.currentPosition = location
+        locationManager.adjustAccuracy()
     }
     
     func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
