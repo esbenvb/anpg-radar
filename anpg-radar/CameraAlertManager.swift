@@ -81,6 +81,10 @@ class CameraAlertManager: NSObject {
 }
 
 extension CameraAlertManager: CommonLocationSubscriber {
+    var isActiveInBackground: Bool {
+        return true
+    }
+
     func updateLocation(location: CLLocation) {
         guard let previousLocationOfUpdating = previousLocationOfUpdating, previousDistanceToFirstSkippedItem > 0 else { return }
         // Update if items were skipped and the distance to the last location of update is within 90% of the original distance to the first skipped item.
@@ -89,16 +93,5 @@ extension CameraAlertManager: CommonLocationSubscriber {
         }
     }
     
-    var accuracy: CommonLocationAccuracy {return .inaccurate}
-}
-
-extension CLLocationManager {
-    func adjustAccuracy() {
-        switch UIApplication.shared.applicationState {
-        case .active:
-            desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        case .inactive, .background:
-            desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        }
-    }
+    var accuracy: CLLocationAccuracy {return kCLLocationAccuracyThreeKilometers}
 }

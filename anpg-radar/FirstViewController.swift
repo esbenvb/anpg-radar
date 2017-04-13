@@ -106,6 +106,18 @@ class FirstViewController: UIViewController {
         nc.addObserver(self, selector: #selector(notify), name: Constants.cameraDetectedNotificationName, object: nil)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if followLocation {
+            CommonLocationManager.shared.subscribe(subscriber: self)
+            
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        CommonLocationManager.shared.unsubscribe(subscriber: self)
+    }
     
     deinit {
         CommonLocationManager.shared.unsubscribe(subscriber: self)
@@ -194,12 +206,16 @@ class FirstViewController: UIViewController {
 }
 
 extension FirstViewController: CommonLocationSubscriber {
+    var isActiveInBackground: Bool {
+        return false
+    }
+
     func updateLocation(location: CLLocation) {
         centerMap(location: location, radius: 1000.0)
         bottomView.currentPosition = location
     }
     
-    var accuracy: CommonLocationAccuracy { return .accurate }
+    var accuracy: CLLocationAccuracy { return kCLLocationAccuracyBestForNavigation }
 }
 
 extension FirstViewController: MKMapViewDelegate {

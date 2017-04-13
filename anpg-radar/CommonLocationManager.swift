@@ -10,14 +10,10 @@ import UIKit
 import CoreLocation
 
 
-enum CommonLocationAccuracy: Int {
-    case accurate
-    case inaccurate
-}
-
 protocol CommonLocationSubscriber: class {
     func updateLocation(location: CLLocation)
-    var accuracy: CommonLocationAccuracy {get}
+    var accuracy: CLLocationAccuracy {get}
+    var isActiveInBackground: Bool {get}
 }
 
 class CommonLocationManager: NSObject {
@@ -29,72 +25,55 @@ class CommonLocationManager: NSObject {
             locationManager.delegate = self
         }
     }
-
+    
     let locationManager = CLLocationManager()
 
     static let shared = CommonLocationManager()
     
-    var inaccurateSubscribers: [CommonLocationSubscriber] = [] {
+    var subscribers: [CommonLocationSubscriber] = [] {
         didSet {
-            update()
-        }    }
-    
-    var accurateSubscribers: [CommonLocationSubscriber] = [] {
-        didSet {
-            update()
+            updateAccuracy()
+            if subscribers.count > 0 {
+                locationManager.startUpdatingLocation()
+            }
+            else {
+                locationManager.stopUpdatingLocation()
+            }
+            print(locationManager.desiredAccuracy.description)
         }
     }
 
-    func update() {
-        maxAccuracy = accurateSubscribers.count > 0
-        if inaccurateSubscribers.count + accurateSubscribers.count > 0 {
-            locationManager.startUpdatingLocation()
-        }
-        else {
-            locationManager.stopUpdatingHeading()
+    func updateAccuracy() {
+        var minAccuracy: CLLocationAccuracy = 10000000
+        
+        let background = UIApplication.shared.applicationState == .background || UIApplication.shared.applicationState == .inactive
+        
+        subscribers.forEach { subscriber in
+            // Skip non backgrounded items if running in background, to make a lower accuracy if possible
+            if !background || subscriber.isActiveInBackground {
+                minAccuracy = min(subscriber.accuracy, minAccuracy)
+            }
         }
         
-        print(locationManager.desiredAccuracy.description)
-    }
-    
-    var maxAccuracy = false {
-        didSet {
-            locationManager.desiredAccuracy = maxAccuracy ? kCLLocationAccuracyBestForNavigation : kCLLocationAccuracyThreeKilometers
-        }
+        locationManager.desiredAccuracy = minAccuracy
     }
     
     func subscribe(subscriber: CommonLocationSubscriber) {
         print("subscribe: \(subscriber.self)")
         locationManager.stopUpdatingLocation()
         locationManager.startUpdatingLocation()
-        switch subscriber.accuracy {
-        case .accurate:
-            if accurateSubscribers.contains(where: {$0 === subscriber}) {
-               return
-            }
-            accurateSubscribers.append(subscriber)
-        case .inaccurate:
-            if inaccurateSubscribers.contains(where: {$0 === subscriber}) {
-                return
-            }
-            inaccurateSubscribers.append(subscriber)
+        if subscribers.contains(where: {$0 === subscriber}) {
+            return
         }
+        subscribers.append(subscriber)
         
     }
 
     func unsubscribe(subscriber: CommonLocationSubscriber) {
         print("unsubscribe: \(subscriber.self)")
-        switch subscriber.accuracy {
-        case .accurate:
-            guard let index = accurateSubscribers.index(where: {$0 === subscriber}) else {return}
-            accurateSubscribers.remove(at: index)
-        case .inaccurate:
-            guard let index = inaccurateSubscribers.index(where: {$0 === subscriber}) else {return}
-            inaccurateSubscribers.remove(at: index)
-        }
+            guard let index = subscribers.index(where: {$0 === subscriber}) else {return}
+            subscribers.remove(at: index)
     }
-    
-    
 }
 
 extension CommonLocationManager: CLLocationManagerDelegate {
@@ -102,8 +81,13 @@ extension CommonLocationManager: CLLocationManagerDelegate {
         // FIXME
         guard let location = manager.location else {return}
 
-        (accurateSubscribers + inaccurateSubscribers).forEach { (subscriber) in
-            subscriber.updateLocation(location: location)
+        let background = UIApplication.shared.applicationState == .background || UIApplication.shared.applicationState == .inactive
+
+        subscribers.forEach { (subscriber) in
+            // Skip non backgrounded items if running in background
+            if !background || subscriber.isActiveInBackground {
+                subscriber.updateLocation(location: location)
+            }
         }
         
         print(manager.desiredAccuracy)
