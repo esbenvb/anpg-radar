@@ -58,7 +58,6 @@ class CameraAlertManager: NSObject {
     init(items: [CameraListItem] = []) {
         self.items = items
         super.init()
-//        locationSubscriber.enable()
     }
     
     func updateGeofences(location: CLLocation) {

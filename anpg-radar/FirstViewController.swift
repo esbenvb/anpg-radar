@@ -22,6 +22,8 @@ import MapKit
 
 class FirstViewController: UIViewController {
 
+    let notificationSettingIdentifier = "CameraNotificationsEnabled"
+    
     @IBAction func mapPinched(_ sender: Any) {
         handleUserMovedMap(sender)
     }
@@ -41,9 +43,11 @@ class FirstViewController: UIViewController {
         guard let svitch = sender as? UISwitch else {return}
         if svitch.isOn {
             alertManager.items = camList
+            UserDefaults().set(true, forKey: notificationSettingIdentifier)
         }
         else {
             alertManager.stopMonitoring()
+            UserDefaults().set(false, forKey: notificationSettingIdentifier)
         }
     }
     @IBAction func followLocationButtonClicked(_ sender: Any) {
@@ -103,7 +107,15 @@ class FirstViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        notificationSwitch.isEnabled = false
+        
+        if UserDefaults().bool(forKey: notificationSettingIdentifier) {
+            notificationSwitch.isOn = true
+        } else {
+            notificationSwitch.isEnabled = false
+            notificationSwitch.isOn = false
+        }
+        
+        followLocation = true
 
         // Do any additional setup after loading the view, typically from a nib.
         loadData()
