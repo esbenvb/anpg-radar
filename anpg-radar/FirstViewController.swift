@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 #if (arch(i386) || arch(x86_64))
-    let feedUrlString = "http://localhost:8000/data.json"
+    let feedUrlString = "http://localhost:8000/data.json?aa"
 #else
     let feedUrlString = "https://anpg.dk/data.json"
 #endif
@@ -40,12 +40,10 @@ class FirstViewController: UIViewController {
     @IBAction func notificationSwitchChanged(_ sender: Any) {
         guard let svitch = sender as? UISwitch else {return}
         if svitch.isOn {
-            camList.forEach({ (item) in
-                alertManager.startMonitoring(camListItem: item)
-            })
+            alertManager.items = camList
         }
         else {
-            alertManager.stopMonitoringAll()
+            alertManager.stopMonitoring()
         }
     }
     @IBAction func followLocationButtonClicked(_ sender: Any) {
@@ -69,19 +67,30 @@ class FirstViewController: UIViewController {
                 followLocationButton.isSelected = true
                 followLocationButton.isHighlighted = true
                 // force update
-                CommonLocationManager.shared.subscribe(subscriber: self)
+                locationSubscriber.enable()
             } else  {
                 // update button focus
                 followLocationButton.isSelected = false
                 followLocationButton.isHighlighted = false
                 // stop update
-                CommonLocationManager.shared.unsubscribe(subscriber: self)
+                locationSubscriber.disable()
 
             }
         }
     }
     
     let alertManager = CameraAlertManager()
+    
+    lazy var locationSubscriber: CommonLocationSubscriber = {
+        let subscriber = CommonLocationSubscriber()
+        subscriber.accuracy = kCLLocationAccuracyBestForNavigation
+        subscriber.isLocationActiveInBackground = false
+        subscriber.updateLocation = { (location) in
+            self.centerMap(location: location, radius: 1000.0)
+            self.bottomView.currentPosition = location
+        }
+        return subscriber
+    }()
     
     func handleUserMovedMap(_ sender: Any) { // FIXME: does not work perfectly
         guard let gr = sender as? UIGestureRecognizer else {return}
@@ -94,6 +103,8 @@ class FirstViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationSwitch.isEnabled = false
+
         // Do any additional setup after loading the view, typically from a nib.
         loadData()
         mapView.delegate = self
@@ -104,23 +115,23 @@ class FirstViewController: UIViewController {
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(notify), name: Constants.cameraDetectedNotificationName, object: nil)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if followLocation {
-            CommonLocationManager.shared.subscribe(subscriber: self)
-            
+            locationSubscriber.enable()
         }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        CommonLocationManager.shared.unsubscribe(subscriber: self)
+        locationSubscriber.disable()
     }
     
     deinit {
-        CommonLocationManager.shared.unsubscribe(subscriber: self)
+        locationSubscriber.disable()
         let nc = NotificationCenter.default
         nc.removeObserver(self, name: Constants.cameraDetectedNotificationName, object: nil)
     }
@@ -146,6 +157,9 @@ class FirstViewController: UIViewController {
                 self?.camList = elements
                 let delegate = UIApplication.shared.delegate as? AppDelegate
                 delegate?.camList = elements
+                if elements.count > 0 {
+                    self?.notificationSwitch.isEnabled = true
+                }
                 self?.saveDataLocally(elements: elements)
             } catch {
 
@@ -203,19 +217,6 @@ class FirstViewController: UIViewController {
         followLocation = false
     }
     
-}
-
-extension FirstViewController: CommonLocationSubscriber {
-    var isActiveInBackground: Bool {
-        return false
-    }
-
-    func updateLocation(location: CLLocation) {
-        centerMap(location: location, radius: 1000.0)
-        bottomView.currentPosition = location
-    }
-    
-    var accuracy: CLLocationAccuracy { return kCLLocationAccuracyBestForNavigation }
 }
 
 extension FirstViewController: MKMapViewDelegate {

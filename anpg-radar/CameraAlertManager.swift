@@ -14,84 +14,114 @@ let kGeofenceLimit = 20 // FIXME
 class CameraAlertManager: NSObject {
     var items: [CameraListItem] {
         didSet {
-            estimatedLocation = nil
             previousLocationOfUpdating = nil
             previousDistanceToFirstSkippedItem = 0
+            locationSubscriber.enable()
         }
     }
     var currentDistances: [String : CLLocationDistance] = [:]
     var previousLocationOfUpdating: CLLocation?
-    var previousDistanceToFirstSkippedItem: CLLocationDistance = 0
-    var estimatedLocation: CLLocation?
+    var previousDistanceToFirstSkippedItem: CLLocationDistance?
     var alertItems: [CameraListItem] = [] {
         didSet {
-            stopMonitoringAll()
+            CommonLocationManager.shared.stopMonitoringAll()
             alertItems.forEach { startMonitoring(camListItem: $0) }
         }
     }
     
+    lazy var locationSubscriber: CommonLocationSubscriber = {
+        let subscriber = CommonLocationSubscriber()
+        subscriber.accuracy = kCLLocationAccuracyThreeKilometers
+        subscriber.isLocationActiveInBackground = true
+        subscriber.updateLocation = { (location) in
+            // Scenario 1: Nothing has been set yet. Initiate an update.
+            guard let previousLocationOfUpdating = self.previousLocationOfUpdating else {
+                self.updateGeofences(location: location)
+                return
+            }
+            
+            // Scenario 2: Number of geofences is below limit
+            guard let distance = self.previousDistanceToFirstSkippedItem else {
+                return
+            }
+            
+            // Scenario 3: Number of geofences is above limit
+            // Update if items were skipped and the distance to the last location of update is within 90% of the original distance to the first skipped item.
+            if location.distance(from: previousLocationOfUpdating) > distance * 0.9 {
+                self.updateGeofences(location: location)
+            }
+        }
+        return subscriber
+    }()
+    
+
     init(items: [CameraListItem] = []) {
         self.items = items
         super.init()
-
-        CommonLocationManager.shared.subscribe(subscriber: self)
+//        locationSubscriber.enable()
     }
     
-    func updateGeofences() {
-        CommonLocationManager.shared.unsubscribe(subscriber: self)
-        guard let location = estimatedLocation else {return}
+    func updateGeofences(location: CLLocation) {
+        locationSubscriber.disable()
         
         currentDistances = [:]
         items.forEach { (item) in
             currentDistances[item.id] = CLLocation(latitude: item.coordinate.latitude, longitude: item.coordinate.longitude).distance(from: location)
         }
-        items.sort {
+        
+        let sortedItems = items.sorted {
             guard let a = currentDistances[$0.id], let b = currentDistances[$1.id] else {return false}
             return a < b
         }
         
-        alertItems = Array(items.prefix(kGeofenceLimit))
+        alertItems = Array(sortedItems.prefix(kGeofenceLimit))
 
-        if items.count > kGeofenceLimit, let distance = currentDistances[items[kGeofenceLimit].id] {
+
+        previousLocationOfUpdating = location
+        if sortedItems.count > kGeofenceLimit, let distance = currentDistances[sortedItems[kGeofenceLimit].id] {
             previousDistanceToFirstSkippedItem = distance
-            previousLocationOfUpdating = location
-            CommonLocationManager.shared.subscribe(subscriber: self)
+            locationSubscriber.enable()
         }
-    }
-
-    
-    func startMonitoring(camListItem: CameraListItem) {
-//        CommonLocationManager.shared.subscribe(subscriber: self)
-
-        if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
-            print("NOT SUPPORTED ON DEVICE") // FIXME
-            return
-        }
-        if CLLocationManager.authorizationStatus() != .authorizedAlways {
-            print ("NEEDS TO GRANT ACCESS") // FIXME
+        else {
+            previousDistanceToFirstSkippedItem = 0
         }
         
-        CLLocationManager().startMonitoring(for: camListItem.region)
-    }
-    
-    func stopMonitoringAll() {
-        CLLocationManager().monitoredRegions.forEach { CLLocationManager().stopMonitoring(for: $0) }
-    }
-    
-}
-
-extension CameraAlertManager: CommonLocationSubscriber {
-    var isActiveInBackground: Bool {
-        return true
     }
 
-    func updateLocation(location: CLLocation) {
-        guard let previousLocationOfUpdating = previousLocationOfUpdating, previousDistanceToFirstSkippedItem > 0 else { return }
-        // Update if items were skipped and the distance to the last location of update is within 90% of the original distance to the first skipped item.
-        if location.distance(from: previousLocationOfUpdating) > previousDistanceToFirstSkippedItem * 0.9 {
-            updateGeofences()
-        }
+    func stopMonitoring() {
+        CommonLocationManager.shared.stopMonitoringAll()
     }
     
-    var accuracy: CLLocationAccuracy {return kCLLocationAccuracyThreeKilometers}
+    func startMonitoring(camListItem: CameraListItem) {
+        CommonLocationManager.shared.startMonitoring(for: camListItem.region)
+    }
 }
+
+//extension CameraAlertManager: CommonLocationSubscriber {
+//    var isActiveInBackground: Bool {
+//        return true
+//    }
+//
+//    func updateLocation(location: CLLocation) {
+////        estimatedLocation = location
+//        
+//        // Scenario 1: Nothing has been set yet. Initiate an update.
+//        guard let previousLocationOfUpdating = previousLocationOfUpdating else {
+//            updateGeofences(location: location)
+//            return
+//        }
+//
+//        // Scenario 2: Number of geofences is below limit
+//        guard let distance = previousDistanceToFirstSkippedItem else {
+//            return
+//        }
+//        
+//        // Scenario 3: Number of geofences is above limit
+//        // Update if items were skipped and the distance to the last location of update is within 90% of the original distance to the first skipped item.
+//        if location.distance(from: previousLocationOfUpdating) > distance * 0.9 {
+//            updateGeofences(location: location)
+//        }
+//    }
+//    
+//    var accuracy: CLLocationAccuracy {return kCLLocationAccuracyThreeKilometers}
+//}

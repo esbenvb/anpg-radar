@@ -21,14 +21,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return category
     }()
     
-    let locationManager = CLLocationManager()
+    lazy var locationSubscriber: CommonLocationSubscriber = {
+        let subscriber = CommonLocationSubscriber()
+        subscriber.didEnterRegion = {(region) in
+            guard let item = CameraListItem.findById(id: region.identifier, list: self.camList) else {return}
+            self.showNotification(item: item)
+        }
+        return subscriber
+    }()
+    
+    
     var camList = UserDefaults.standard.array(forKey: "camList") as? [CameraListItem] ?? []
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
+        locationSubscriber.enable()
         
         let unc = UNUserNotificationCenter.current()
         
@@ -127,13 +135,6 @@ extension AppDelegate {
             
         }
         print("you enteded region \(item.id)")
-    }
-}
-
-extension AppDelegate: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        guard let item = CameraListItem.findById(id: region.identifier, list: camList) else {return}
-        showNotification(item: item)
     }
 }
 
