@@ -69,13 +69,13 @@ class FirstViewController: UIViewController {
             if followLocation {
                 // update button focus
                 followLocationButton.isSelected = true
-                followLocationButton.isHighlighted = true
+                followLocationButton.alpha = 0.6
                 // force update
                 locationSubscriber.enable()
             } else  {
                 // update button focus
                 followLocationButton.isSelected = false
-                followLocationButton.isHighlighted = false
+                followLocationButton.alpha = 1
                 // stop update
                 locationSubscriber.disable()
 
@@ -114,6 +114,9 @@ class FirstViewController: UIViewController {
             notificationSwitch.isEnabled = false
             notificationSwitch.isOn = false
         }
+        
+        followLocationButton.setTitle("Follow", for: .normal)
+        followLocationButton.setTitle("✅ Follow", for: .selected)
         
         followLocation = true
 
