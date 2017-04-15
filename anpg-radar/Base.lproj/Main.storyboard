@@ -31,6 +31,59 @@
                                     <outletCollection property="gestureRecognizers" destination="vu0-6C-FbS" appends="YES" id="8X4-rO-0iM"/>
                                 </connections>
                             </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2jb-OK-ocS">
+                                <rect key="frame" x="201.5" y="28" width="165.5" height="81"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="A7w-6P-lLI">
+                                        <rect key="frame" x="8" y="8" width="149.5" height="65"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="CXk-aT-ecp">
+                                                <rect key="frame" x="0.0" y="0.0" width="149.5" height="31"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1f-zg-UgX">
+                                                        <rect key="frame" x="0.0" y="0.0" width="96.5" height="31"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6kU-4q-Tp4">
+                                                        <rect key="frame" x="100.5" y="0.0" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="notificationSwitchChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="atg-O1-jFg"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X4A-Q3-jyB">
+                                                <rect key="frame" x="119.5" y="31" width="30" height="34"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="followLocationButtonClicked:" destination="9pv-A4-QxB" eventType="touchUpInside" id="aAf-s8-Qoq"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.60078660102739723" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailingMargin" secondItem="A7w-6P-lLI" secondAttribute="trailing" id="PKe-7S-VgP"/>
+                                    <constraint firstItem="A7w-6P-lLI" firstAttribute="top" secondItem="2jb-OK-ocS" secondAttribute="topMargin" id="SMW-9N-WGy"/>
+                                    <constraint firstItem="A7w-6P-lLI" firstAttribute="leading" secondItem="2jb-OK-ocS" secondAttribute="leadingMargin" id="Tn6-sy-7q6"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="A7w-6P-lLI" secondAttribute="bottom" id="cJl-hr-SBz"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ifr-L3-mQJ">
                                 <rect key="frame" x="0.0" y="490" width="375" height="128"/>
                                 <subviews>
@@ -47,54 +100,18 @@
                                     <constraint firstAttribute="trailingMargin" secondItem="Y67-ME-6MQ" secondAttribute="trailing" id="iwT-II-QGd"/>
                                 </constraints>
                             </view>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6kU-4q-Tp4">
-                                <rect key="frame" x="310" y="28" width="51" height="31"/>
-                                <connections>
-                                    <action selector="notificationSwitchChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="atg-O1-jFg"/>
-                                </connections>
-                            </switch>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X4A-Q3-jyB">
-                                <rect key="frame" x="270" y="67" width="89" height="30"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
-                                <state key="normal" title="✅ Follow"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="followLocationButtonClicked:" destination="9pv-A4-QxB" eventType="touchUpInside" id="aAf-s8-Qoq"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1f-zg-UgX">
-                                <rect key="frame" x="209" y="33" width="97" height="21"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="X4A-Q3-jyB" firstAttribute="top" secondItem="6kU-4q-Tp4" secondAttribute="bottom" constant="8" id="9AM-kp-INM"/>
                             <constraint firstItem="Ifr-L3-mQJ" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="9Fo-ma-EC8"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="6kU-4q-Tp4" secondAttribute="trailing" id="Db8-cH-r8r"/>
                             <constraint firstAttribute="trailing" secondItem="Y2R-7a-yDE" secondAttribute="trailing" id="I1T-6K-gGr"/>
-                            <constraint firstItem="C1f-zg-UgX" firstAttribute="centerY" secondItem="6kU-4q-Tp4" secondAttribute="centerY" id="QF8-gW-LOR"/>
                             <constraint firstAttribute="trailing" secondItem="Ifr-L3-mQJ" secondAttribute="trailing" id="RKV-Fb-bhp"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="Ifr-L3-mQJ" secondAttribute="bottom" id="auR-6I-fRt"/>
                             <constraint firstItem="Y2R-7a-yDE" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="dZh-cH-8nY"/>
                             <constraint firstItem="Y2R-7a-yDE" firstAttribute="bottom" secondItem="4ug-Mw-9AY" secondAttribute="top" id="g7w-w1-zuY"/>
-                            <constraint firstItem="X4A-Q3-jyB" firstAttribute="trailing" secondItem="6kU-4q-Tp4" secondAttribute="trailing" id="r1z-wq-aZn"/>
-                            <constraint firstItem="6kU-4q-Tp4" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="8" id="v4R-O9-fic"/>
+                            <constraint firstAttribute="trailing" secondItem="2jb-OK-ocS" secondAttribute="trailing" constant="8" id="nbA-1r-G2g"/>
                             <constraint firstItem="Y2R-7a-yDE" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="y30-8F-81h"/>
-                            <constraint firstItem="6kU-4q-Tp4" firstAttribute="leading" secondItem="C1f-zg-UgX" secondAttribute="trailing" constant="4" id="zop-Ip-vIP"/>
+                            <constraint firstItem="2jb-OK-ocS" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="8" id="zbF-5Z-hbB"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="mapPin" id="acW-dT-cKf"/>
