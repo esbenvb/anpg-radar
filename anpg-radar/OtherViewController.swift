@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  OtherViewController.swift
 //  anpg-radar
 //
 //  Created by Esben von Buchwald on 02/12/2016.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class OtherViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

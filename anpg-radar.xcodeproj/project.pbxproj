@@ -16,8 +16,8 @@
 		90A9EB211E6E049100C76B2C /* CameraAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9EB201E6E049100C76B2C /* CameraAlertManager.swift */; };
 		90B8B2011E678F3F00A1AEF1 /* todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90B8B2001E678F3F00A1AEF1 /* todo.txt */; };
 		90CCE97F1DF214B3000FD386 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE97E1DF214B3000FD386 /* AppDelegate.swift */; };
-		90CCE9811DF214B3000FD386 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9801DF214B3000FD386 /* FirstViewController.swift */; };
-		90CCE9831DF214B3000FD386 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9821DF214B3000FD386 /* SecondViewController.swift */; };
+		90CCE9811DF214B3000FD386 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9801DF214B3000FD386 /* MapViewController.swift */; };
+		90CCE9831DF214B3000FD386 /* OtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9821DF214B3000FD386 /* OtherViewController.swift */; };
 		90CCE9861DF214B3000FD386 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE9841DF214B3000FD386 /* Main.storyboard */; };
 		90CCE9881DF214B3000FD386 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE9871DF214B3000FD386 /* Assets.xcassets */; };
 		90CCE98B1DF214B3000FD386 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE9891DF214B3000FD386 /* LaunchScreen.storyboard */; };
@@ -69,8 +69,8 @@
 		90B8B2001E678F3F00A1AEF1 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
 		90CCE97B1DF214B3000FD386 /* anpg-radar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "anpg-radar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90CCE97E1DF214B3000FD386 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		90CCE9801DF214B3000FD386 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		90CCE9821DF214B3000FD386 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		90CCE9801DF214B3000FD386 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		90CCE9821DF214B3000FD386 /* OtherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherViewController.swift; sourceTree = "<group>"; };
 		90CCE9851DF214B3000FD386 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		90CCE9871DF214B3000FD386 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		90CCE98A1DF214B3000FD386 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -153,13 +153,13 @@
 				90A9EB201E6E049100C76B2C /* CameraAlertManager.swift */,
 				90868EF21E9FFABD001E1798 /* CommonLocationManager.swift */,
 				90CCE9A41DF2169E000FD386 /* Constants.swift */,
-				90CCE9801DF214B3000FD386 /* FirstViewController.swift */,
+				90CCE9801DF214B3000FD386 /* MapViewController.swift */,
 				90CCE9A51DF2169E000FD386 /* GeoTools.swift */,
 				90CCE98C1DF214B3000FD386 /* Info.plist */,
 				90CCE9891DF214B3000FD386 /* LaunchScreen.storyboard */,
 				90CCE9841DF214B3000FD386 /* Main.storyboard */,
 				90CCE9921DF21625000FD386 /* Model */,
-				90CCE9821DF214B3000FD386 /* SecondViewController.swift */,
+				90CCE9821DF214B3000FD386 /* OtherViewController.swift */,
 				90B8B2001E678F3F00A1AEF1 /* todo.txt */,
 				90CCE9951DF21625000FD386 /* View */,
 			);
@@ -311,7 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90CCE9831DF214B3000FD386 /* SecondViewController.swift in Sources */,
+				90CCE9831DF214B3000FD386 /* OtherViewController.swift in Sources */,
 				90CCE99E1DF21625000FD386 /* CamAnnotationView.swift in Sources */,
 				90CCE9A21DF21625000FD386 /* CameraBottomView.swift in Sources */,
 				90A9EB211E6E049100C76B2C /* CameraAlertManager.swift in Sources */,
@@ -319,7 +319,7 @@
 				90CCE99D1DF21625000FD386 /* CameraListResponseModel.swift in Sources */,
 				90CCE99C1DF21625000FD386 /* CameraListItemModel.swift in Sources */,
 				90CCE97F1DF214B3000FD386 /* AppDelegate.swift in Sources */,
-				90CCE9811DF214B3000FD386 /* FirstViewController.swift in Sources */,
+				90CCE9811DF214B3000FD386 /* MapViewController.swift in Sources */,
 				90CCE9A61DF2169E000FD386 /* Constants.swift in Sources */,
 				90CCE9A71DF2169E000FD386 /* GeoTools.swift in Sources */,
 				90868EF31E9FFABD001E1798 /* CommonLocationManager.swift in Sources */,

@@ -20,7 +20,7 @@ import MapKit
 
 // kig her https://github.com/MartinBergerDX/LocalNotifications_iOS10/blob/master/LocalNotification_iOS10/ViewController.swift
 
-class FirstViewController: UIViewController {
+class MapViewController: UIViewController {
 
     let notificationSettingIdentifier = "CameraNotificationsEnabled"
     
@@ -160,7 +160,8 @@ class FirstViewController: UIViewController {
         }
         
         guard let url = URL(string: feedUrlString) else {return}
-        URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
+        URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
             guard let data = data, error == nil else {
                 print(error ?? "error")
                 return
@@ -234,7 +235,7 @@ class FirstViewController: UIViewController {
     
 }
 
-extension FirstViewController: MKMapViewDelegate {
+extension MapViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? CameraListItem else {return nil}
