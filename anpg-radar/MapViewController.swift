@@ -42,11 +42,11 @@ class MapViewController: UIViewController {
     @IBAction func notificationSwitchChanged(_ sender: Any) {
         guard let svitch = sender as? UISwitch else {return}
         if svitch.isOn {
-            alertManager.items = camList
+            alertManager.enable()
             UserDefaults().set(true, forKey: notificationSettingIdentifier)
         }
         else {
-            alertManager.stopMonitoring()
+            alertManager.disable()
             UserDefaults().set(false, forKey: notificationSettingIdentifier)
         }
     }
@@ -59,7 +59,7 @@ class MapViewController: UIViewController {
         didSet {
             mapView.removeAnnotations(mapView.annotations)
             mapView.addAnnotations(camList)
-            alertManager.alertItems = camList
+            alertManager.items = camList
         }
     }
     let bottomView = CameraBottomView.viewFromNib()
@@ -120,8 +120,6 @@ class MapViewController: UIViewController {
         
         followLocation = true
 
-        // Do any additional setup after loading the view, typically from a nib.
-        loadData()
         mapView.delegate = self
 
         footerStackView.addArrangedSubview(bottomView)
@@ -130,7 +128,8 @@ class MapViewController: UIViewController {
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(notify), name: Constants.cameraDetectedNotificationName, object: nil)
-        
+
+        loadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {

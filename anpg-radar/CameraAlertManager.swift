@@ -14,22 +14,22 @@ let kGeofenceLimit = 20 // FIXME
 class CameraAlertManager: NSObject {
     var items: [CameraListItem] {
         didSet {
+            // This will trigger an update when location is received.
             previousLocationOfUpdating = nil
             previousDistanceToFirstSkippedItem = 0
-            locationSubscriber.enable()
         }
     }
-    var currentDistances: [String : CLLocationDistance] = [:]
-    var previousLocationOfUpdating: CLLocation?
-    var previousDistanceToFirstSkippedItem: CLLocationDistance?
-    var alertItems: [CameraListItem] = [] {
+    private var currentDistances: [String : CLLocationDistance] = [:]
+    private var previousLocationOfUpdating: CLLocation?
+    private var previousDistanceToFirstSkippedItem: CLLocationDistance?
+    private var alertItems: [CameraListItem] = [] {
         didSet {
             CommonLocationManager.shared.stopMonitoringAll()
             alertItems.forEach { startMonitoring(camListItem: $0) }
         }
     }
     
-    lazy var locationSubscriber: CommonLocationSubscriber = {
+    private lazy var locationSubscriber: CommonLocationSubscriber = {
         let subscriber = CommonLocationSubscriber()
         subscriber.accuracy = kCLLocationAccuracyThreeKilometers
         subscriber.isLocationActiveInBackground = true
@@ -60,7 +60,7 @@ class CameraAlertManager: NSObject {
         super.init()
     }
     
-    func updateGeofences(location: CLLocation) {
+    private func updateGeofences(location: CLLocation) {
         locationSubscriber.disable()
         
         currentDistances = [:]
@@ -87,40 +87,16 @@ class CameraAlertManager: NSObject {
         
     }
 
-    func stopMonitoring() {
-        CommonLocationManager.shared.stopMonitoringAll()
+    func enable() {
+        locationSubscriber.enable()
     }
     
-    func startMonitoring(camListItem: CameraListItem) {
+    func disable() {
+        alertItems = []
+        locationSubscriber.disable()
+    }
+    
+    private func startMonitoring(camListItem: CameraListItem) {
         CommonLocationManager.shared.startMonitoring(for: camListItem.region)
     }
 }
-
-//extension CameraAlertManager: CommonLocationSubscriber {
-//    var isActiveInBackground: Bool {
-//        return true
-//    }
-//
-//    func updateLocation(location: CLLocation) {
-////        estimatedLocation = location
-//        
-//        // Scenario 1: Nothing has been set yet. Initiate an update.
-//        guard let previousLocationOfUpdating = previousLocationOfUpdating else {
-//            updateGeofences(location: location)
-//            return
-//        }
-//
-//        // Scenario 2: Number of geofences is below limit
-//        guard let distance = previousDistanceToFirstSkippedItem else {
-//            return
-//        }
-//        
-//        // Scenario 3: Number of geofences is above limit
-//        // Update if items were skipped and the distance to the last location of update is within 90% of the original distance to the first skipped item.
-//        if location.distance(from: previousLocationOfUpdating) > distance * 0.9 {
-//            updateGeofences(location: location)
-//        }
-//    }
-//    
-//    var accuracy: CLLocationAccuracy {return kCLLocationAccuracyThreeKilometers}
-//}
