@@ -12,7 +12,10 @@ import CoreLocation
 let kGeofenceLimit = 20 // FIXME
 
 class CameraAlertManager: NSObject {
-    var items: [CameraListItem] {
+    
+    static let shared: CameraAlertManager = CameraAlertManager()
+    
+    var items: [CameraListItem] = [] {
         didSet {
             // This will trigger an update when location is received.
             previousLocationOfUpdating = nil
@@ -33,7 +36,7 @@ class CameraAlertManager: NSObject {
         let subscriber = CommonLocationSubscriber()
         subscriber.accuracy = kCLLocationAccuracyThreeKilometers
         subscriber.isLocationActiveInBackground = true
-        subscriber.updateLocation = { (location) in
+        subscriber.updateSignificantLocation = { (location) in
             // Scenario 1: Nothing has been set yet. Initiate an update.
             guard let previousLocationOfUpdating = self.previousLocationOfUpdating else {
                 self.updateGeofences(location: location)
@@ -55,9 +58,7 @@ class CameraAlertManager: NSObject {
     }()
     
 
-    init(items: [CameraListItem] = []) {
-        self.items = items
-        super.init()
+    override init() {
     }
     
     private func updateGeofences(location: CLLocation) {

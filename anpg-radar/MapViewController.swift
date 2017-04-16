@@ -21,9 +21,6 @@ import MapKit
 // kig her https://github.com/MartinBergerDX/LocalNotifications_iOS10/blob/master/LocalNotification_iOS10/ViewController.swift
 
 class MapViewController: UIViewController {
-
-    let notificationSettingIdentifier = "CameraNotificationsEnabled"
-    
     @IBAction func mapPinched(_ sender: Any) {
         handleUserMovedMap(sender)
     }
@@ -42,12 +39,12 @@ class MapViewController: UIViewController {
     @IBAction func notificationSwitchChanged(_ sender: Any) {
         guard let svitch = sender as? UISwitch else {return}
         if svitch.isOn {
-            alertManager.enable()
-            UserDefaults().set(true, forKey: notificationSettingIdentifier)
+            CameraAlertManager.shared.enable()
+            UserDefaults().set(true, forKey: Constants.notificationSettingIdentifier)
         }
         else {
-            alertManager.disable()
-            UserDefaults().set(false, forKey: notificationSettingIdentifier)
+            CameraAlertManager.shared.disable()
+            UserDefaults().set(false, forKey: Constants.notificationSettingIdentifier)
         }
     }
     @IBAction func followLocationButtonClicked(_ sender: Any) {
@@ -59,7 +56,7 @@ class MapViewController: UIViewController {
         didSet {
             mapView.removeAnnotations(mapView.annotations)
             mapView.addAnnotations(camList)
-            alertManager.items = camList
+            CameraAlertManager.shared.items = camList
         }
     }
     let bottomView = CameraBottomView.viewFromNib()
@@ -82,8 +79,6 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
-    let alertManager = CameraAlertManager()
     
     lazy var locationSubscriber: CommonLocationSubscriber = {
         let subscriber = CommonLocationSubscriber()
@@ -108,7 +103,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if UserDefaults().bool(forKey: notificationSettingIdentifier) {
+        if UserDefaults().bool(forKey: Constants.notificationSettingIdentifier) {
             notificationSwitch.isOn = true
         } else {
             notificationSwitch.isEnabled = false
@@ -170,8 +165,6 @@ class MapViewController: UIViewController {
                 let responseModel = CameraListResponseModel(json: parsedData)
                 let elements = responseModel?.elements ?? []
                 self?.camList = elements
-                let delegate = UIApplication.shared.delegate as? AppDelegate
-                delegate?.camList = elements
                 if elements.count > 0 {
                     self?.notificationSwitch.isEnabled = true
                 }

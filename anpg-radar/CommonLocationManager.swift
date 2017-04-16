@@ -15,6 +15,7 @@ class CommonLocationSubscriber: NSObject {
         super.init()
     }
     var updateLocation: ((_ location: CLLocation) -> ())?
+    var updateSignificantLocation: ((_ location: CLLocation) -> ())?
     var didEnterRegion: ((_ region: CLRegion) -> ())?
     var didExitRegion: ((_ region: CLRegion) -> ())?
     var accuracy: CLLocationAccuracy = 1000000
@@ -46,17 +47,25 @@ class CommonLocationManager: NSObject {
     var subscribers: [CommonLocationSubscriber] = [] {
         didSet {
             updateAccuracy()
+            print("stopping")
+            locationManager.stopUpdatingLocation()
+            locationManager.stopMonitoringSignificantLocationChanges()
             let locationSubscribersExist = subscribers.contains { (subscriber) -> Bool in
                 return subscriber.updateLocation != nil
             }
+            let significantLocationSubscribersExist = subscribers.contains { (subscriber) -> Bool in
+                return subscriber.updateSignificantLocation != nil
+            }
             if locationSubscribersExist {
                 locationManager.startUpdatingLocation()
-                print("more than 0, starting")
+                print("more than 0 location, starting")
+            } else if significantLocationSubscribersExist {
+                locationManager.startMonitoringSignificantLocationChanges()
+                print("more than 0 siginificant location, starting significant only")
+            } else {
+                print("0, not starting")
             }
-            else {
-                locationManager.stopUpdatingLocation()
-                print("0, stopping")
-            }
+
             print(locationManager.desiredAccuracy.description)
         }
     }
@@ -78,8 +87,6 @@ class CommonLocationManager: NSObject {
     
     func subscribe(_ subscriber: CommonLocationSubscriber) {
         print("subscribe: \(subscriber.self)")
-        locationManager.stopUpdatingLocation()
-        locationManager.startUpdatingLocation()
         if subscribers.contains(where: {$0 === subscriber}) {
             return
         }
@@ -118,12 +125,15 @@ extension CommonLocationManager: CLLocationManagerDelegate {
         // FIXME
         guard let location = manager.location else {return}
 
+        print(location)
+        
         let background = UIApplication.shared.applicationState == .background || UIApplication.shared.applicationState == .inactive
 
         subscribers.forEach { (subscriber) in
             // Skip non backgrounded items if running in background
             if !background || subscriber.isLocationActiveInBackground {
                 subscriber.updateLocation?(location)
+                subscriber.updateSignificantLocation?(location)
             }
         }
         

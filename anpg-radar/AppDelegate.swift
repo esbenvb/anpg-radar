@@ -24,14 +24,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var locationSubscriber: CommonLocationSubscriber = {
         let subscriber = CommonLocationSubscriber()
         subscriber.didEnterRegion = {(region) in
-            guard let item = CameraListItem.findById(id: region.identifier, list: self.camList) else {return}
+            guard let item = CameraListItem.findById(id: region.identifier, list: self.alertManager.items) else {return}
             self.showNotification(item: item)
         }
         return subscriber
     }()
     
-    
-    var camList = UserDefaults.standard.array(forKey: "camList") as? [CameraListItem] ?? []
+    lazy var alertManager: CameraAlertManager = {
+        let alertManager = CameraAlertManager.shared
+        alertManager.items = UserDefaults.standard.array(forKey: "camList") as? [CameraListItem] ?? []
+        return alertManager
+    }()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -49,6 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         unc.setNotificationCategories([category])
         unc.delegate = self
 
+        if UserDefaults().bool(forKey: Constants.notificationSettingIdentifier) {
+            alertManager.enable()
+        }
         
         return true
     }
@@ -140,7 +146,7 @@ extension AppDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        guard let item = CameraListItem.findById(id: response.notification.request.content.threadIdentifier, list: camList) else {return}
+        guard let item = CameraListItem.findById(id: response.notification.request.content.threadIdentifier, list: alertManager.items) else {return}
         let notification = Notification(name: Constants.cameraDetectedNotificationName, object: item, userInfo: nil)
         NotificationCenter.default.post(notification)
 
