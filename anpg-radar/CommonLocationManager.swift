@@ -39,10 +39,37 @@ enum CommonLocationError: Error {
     case locationUpdatesNotSupported
     case significantLocationUpdatesNotSupported
     case monitoringNotAvailable
+    
+    var alert: CommonLocationErrorAlert {
+        switch (self) {
+        case .locationNotGrantedWhenInuse:
+            return CommonLocationErrorAlert(title: "Needs access when in use", closeButtonLabel: "Close", message: "The feature requires location access when the app is in use. Activate it on the settings page.", secondButtonLabel: "Settings", secondButtonHandler: CommonLocationManager.openAppSettings)
+            
+        case .locationNotGrantedAlways:
+            return CommonLocationErrorAlert(title: "Needs access when in use", closeButtonLabel: "Close", message: "The feature requires location access, when the app is in the background. Activate it on the settings page.", secondButtonLabel: "Settings", secondButtonHandler: CommonLocationManager.openAppSettings)
+            
+        case .locationNotDetermined:
+            return CommonLocationErrorAlert(title: "Not available", closeButtonLabel: "Close", message: "You need to allow location access for this app FIXME.", secondButtonLabel: nil, secondButtonHandler: nil)
+            
+        case .locationUpdatesNotSupported:
+            return CommonLocationErrorAlert(title: "Not available", closeButtonLabel: "Close", message: "Location updates are not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
+            
+        case .significantLocationUpdatesNotSupported:
+            return CommonLocationErrorAlert(title: "Not available", closeButtonLabel: "Close", message: "Significant location changes are not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
+            
+        case .monitoringNotAvailable:
+            return CommonLocationErrorAlert(title: "Not available", closeButtonLabel: "Close", message: "Monitoring is not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
+        }
+    }
 }
 
 class CommonLocationManager: NSObject {
 
+    static func openAppSettings() {
+        guard let url = URL(string: UIApplicationOpenSettingsURLString) else {return}
+        UIApplication.shared.open(url)
+    }
+    
     override init() {
         super.init()
         locationManager.delegate = self
@@ -116,7 +143,6 @@ class CommonLocationManager: NSObject {
         
         if useLocation || useSignificantLocation {
             if CLLocationManager.authorizationStatus() == .notDetermined {
-                grantedAuthorizationCallback = subscriber.grantedAuthorization
                 // ask for permission
                 if isAppSupportingBackgroundLocation {
                     locationManager.requestAlwaysAuthorization()
@@ -124,12 +150,15 @@ class CommonLocationManager: NSObject {
                 else {
                     locationManager.requestWhenInUseAuthorization()
                 }
+                grantedAuthorizationCallback = subscriber.grantedAuthorization
                 throw CommonLocationError.locationNotDetermined
                 
             }
             if background {
+                grantedAuthorizationCallback = subscriber.grantedAuthorization
                 guard CLLocationManager.authorizationStatus() == .authorizedAlways else {
                     print ("NEEDS TO GRANT always ACCESS") // FIXME
+                    grantedAuthorizationCallback = subscriber.grantedAuthorization
                     throw CommonLocationError.locationNotGrantedAlways
                 }
             }
@@ -139,6 +168,7 @@ class CommonLocationManager: NSObject {
                     throw CommonLocationError.locationNotGrantedWhenInuse
                 }
             }
+            
         }
         
         if subscribers.contains(where: {$0 === subscriber}) {
@@ -225,6 +255,7 @@ extension CommonLocationManager: CLLocationManagerDelegate {
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:
             grantedAuthorizationCallback?()
+            grantedAuthorizationCallback = nil
         default:
             return
         }

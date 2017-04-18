@@ -42,18 +42,15 @@ class MapViewController: UIViewController {
             do {
                 try CameraAlertManager.shared.enable(grantedLocationCallback: {
                     svitch.isOn = true
-
                 })
             }
-            catch CommonLocationError.locationNotDetermined {
+            catch let error as CommonLocationError {
                 svitch.isOn = false
-                // FIXME ALERT
-                
+                showAlert(error: error)
             }
             catch {
                 svitch.isOn = false
-                // FIXME ALERT
-                
+                print("Other error")
             }
             
         }
@@ -75,7 +72,7 @@ class MapViewController: UIViewController {
     }
     let bottomView = CameraBottomView.viewFromNib()
     var originalFooterHeight: CGFloat = 0
-    var followLocation = true {
+    var followLocation = false {
         didSet {
             if followLocation {
                 // force update
@@ -85,12 +82,13 @@ class MapViewController: UIViewController {
                     followLocationButton.isSelected = true
                     followLocationButton.alpha = 0.6
                 }
-                catch CommonLocationError.locationNotDetermined {
+                catch let error as CommonLocationError {
                     followLocation = false
+                    showAlert(error: error)
                 }
                 catch {
-                    // FIXME SHOW ALERT ETC
                     followLocation = false
+                    print("Other error")
                 }
             } else  {
                 // update button focus
@@ -139,7 +137,7 @@ class MapViewController: UIViewController {
         followLocationButton.setTitle("Follow", for: .normal)
         followLocationButton.setTitle("✅ Follow", for: .selected)
         
-        followLocation = true
+        followLocation = false
 
         mapView.delegate = self
 
