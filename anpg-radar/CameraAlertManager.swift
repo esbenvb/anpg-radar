@@ -28,7 +28,7 @@ class CameraAlertManager: NSObject {
     private var alertItems: [CameraListItem] = [] {
         didSet {
             CommonLocationManager.shared.stopMonitoringAll()
-            alertItems.forEach { startMonitoring(camListItem: $0) }
+            alertItems.forEach { try? startMonitoring(camListItem: $0) }
         }
     }
     
@@ -43,7 +43,7 @@ class CameraAlertManager: NSObject {
                 return
             }
             
-            // Scenario 2: Number of geofences is below limit
+            // Scenario 2: Number of geofences is below limit, so a distance has not been set yet.
             guard let distance = self.previousDistanceToFirstSkippedItem else {
                 return
             }
@@ -80,7 +80,7 @@ class CameraAlertManager: NSObject {
         previousLocationOfUpdating = location
         if sortedItems.count > kGeofenceLimit, let distance = currentDistances[sortedItems[kGeofenceLimit].id] {
             previousDistanceToFirstSkippedItem = distance
-            locationSubscriber.enable()
+            try? locationSubscriber.enable()
         }
         else {
             previousDistanceToFirstSkippedItem = 0
@@ -88,16 +88,19 @@ class CameraAlertManager: NSObject {
         
     }
 
-    func enable() {
-        locationSubscriber.enable()
+    func enable(grantedLocationCallback: (()->())? = nil) throws {
+        locationSubscriber.grantedAuthorization = grantedLocationCallback
+        try locationSubscriber.enable()
+        UserDefaults().set(true, forKey: Constants.notificationSettingIdentifier)
     }
     
     func disable() {
         alertItems = []
         locationSubscriber.disable()
+        UserDefaults().set(false, forKey: Constants.notificationSettingIdentifier)
     }
     
-    private func startMonitoring(camListItem: CameraListItem) {
-        CommonLocationManager.shared.startMonitoring(for: camListItem.region)
+    private func startMonitoring(camListItem: CameraListItem) throws {
+        try CommonLocationManager.shared.startMonitoring(for: camListItem.region)
     }
 }

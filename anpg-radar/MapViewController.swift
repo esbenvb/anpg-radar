@@ -39,12 +39,26 @@ class MapViewController: UIViewController {
     @IBAction func notificationSwitchChanged(_ sender: Any) {
         guard let svitch = sender as? UISwitch else {return}
         if svitch.isOn {
-            CameraAlertManager.shared.enable()
-            UserDefaults().set(true, forKey: Constants.notificationSettingIdentifier)
+            do {
+                try CameraAlertManager.shared.enable(grantedLocationCallback: {
+                    svitch.isOn = true
+
+                })
+            }
+            catch CommonLocationError.locationNotDetermined {
+                svitch.isOn = false
+                // FIXME ALERT
+                
+            }
+            catch {
+                svitch.isOn = false
+                // FIXME ALERT
+                
+            }
+            
         }
         else {
             CameraAlertManager.shared.disable()
-            UserDefaults().set(false, forKey: Constants.notificationSettingIdentifier)
         }
     }
     @IBAction func followLocationButtonClicked(_ sender: Any) {
@@ -64,11 +78,20 @@ class MapViewController: UIViewController {
     var followLocation = true {
         didSet {
             if followLocation {
-                // update button focus
-                followLocationButton.isSelected = true
-                followLocationButton.alpha = 0.6
                 // force update
-                locationSubscriber.enable()
+                do {
+                    try locationSubscriber.enable()
+                    // update button focus
+                    followLocationButton.isSelected = true
+                    followLocationButton.alpha = 0.6
+                }
+                catch CommonLocationError.locationNotDetermined {
+                    followLocation = false
+                }
+                catch {
+                    // FIXME SHOW ALERT ETC
+                    followLocation = false
+                }
             } else  {
                 // update button focus
                 followLocationButton.isSelected = false
@@ -87,6 +110,9 @@ class MapViewController: UIViewController {
         subscriber.updateLocation = { (location) in
             self.centerMap(location: location, radius: 1000.0)
             self.bottomView.currentPosition = location
+        }
+        subscriber.grantedAuthorization = {
+            self.followLocation = true
         }
         return subscriber
     }()
@@ -130,7 +156,7 @@ class MapViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if followLocation {
-            locationSubscriber.enable()
+            try? locationSubscriber.enable()
         }
     }
     

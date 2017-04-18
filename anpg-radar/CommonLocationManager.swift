@@ -20,9 +20,11 @@ class CommonLocationSubscriber: NSObject {
     var didExitRegion: ((_ region: CLRegion) -> ())?
     var accuracy: CLLocationAccuracy = 1000000
     var isLocationActiveInBackground: Bool = false
+    var grantedAuthorization: (() -> ())?
+
     
-    func enable() {
-        CommonLocationManager.shared.subscribe(self)
+    func enable() throws {
+        try CommonLocationManager.shared.subscribe(self)
     }
     
     func disable() {
@@ -30,15 +32,23 @@ class CommonLocationSubscriber: NSObject {
     }
 }
 
+enum CommonLocationError: Error {
+    case locationNotGrantedWhenInuse
+    case locationNotGrantedAlways
+    case locationNotDetermined
+    case locationUpdatesNotSupported
+    case significantLocationUpdatesNotSupported
+    case monitoringNotAvailable
+}
+
 class CommonLocationManager: NSObject {
 
     override init() {
         super.init()
-        locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-        }
+        locationManager.delegate = self
     }
+    
+    var grantedAuthorizationCallback: (() -> ())?
     
     let locationManager = CLLocationManager()
 
@@ -69,7 +79,7 @@ class CommonLocationManager: NSObject {
             print(locationManager.desiredAccuracy.description)
         }
     }
-
+//http://stackoverflow.com/questions/25188965/ios8-location-how-should-one-request-always-authorization-after-user-has-grante
     func updateAccuracy() {
         var minAccuracy: CLLocationAccuracy = 10000000
         
@@ -85,13 +95,56 @@ class CommonLocationManager: NSObject {
         locationManager.desiredAccuracy = minAccuracy
     }
     
-    func subscribe(_ subscriber: CommonLocationSubscriber) {
+    func subscribe(_ subscriber: CommonLocationSubscriber) throws {
         print("subscribe: \(subscriber.self)")
+        
+        let useLocation = subscriber.updateLocation != nil
+        let useSignificantLocation = subscriber.updateSignificantLocation != nil
+        let background = subscriber.isLocationActiveInBackground
+
+        if useLocation {
+            guard CLLocationManager.locationServicesEnabled() else {
+                throw CommonLocationError.locationUpdatesNotSupported
+            }
+        }
+        
+        if useSignificantLocation {
+            guard CLLocationManager.significantLocationChangeMonitoringAvailable() else {
+                throw CommonLocationError.significantLocationUpdatesNotSupported
+            }
+        }
+        
+        if useLocation || useSignificantLocation {
+            if CLLocationManager.authorizationStatus() == .notDetermined {
+                grantedAuthorizationCallback = subscriber.grantedAuthorization
+                // ask for permission
+                if isAppSupportingBackgroundLocation {
+                    locationManager.requestAlwaysAuthorization()
+                }
+                else {
+                    locationManager.requestWhenInUseAuthorization()
+                }
+                throw CommonLocationError.locationNotDetermined
+                
+            }
+            if background {
+                guard CLLocationManager.authorizationStatus() == .authorizedAlways else {
+                    print ("NEEDS TO GRANT always ACCESS") // FIXME
+                    throw CommonLocationError.locationNotGrantedAlways
+                }
+            }
+            else {
+                guard CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() ==  .authorizedWhenInUse else {
+                    print ("NEEDS TO GRANT when in use ACCESS") // FIXME
+                    throw CommonLocationError.locationNotGrantedWhenInuse
+                }
+            }
+        }
+        
         if subscribers.contains(where: {$0 === subscriber}) {
             return
         }
         subscribers.append(subscriber)
-        
     }
     
     func unsubscribe(_ subscriber: CommonLocationSubscriber) {
@@ -100,13 +153,10 @@ class CommonLocationManager: NSObject {
         subscribers.remove(at: index)
     }
     
-    func startMonitoring(for region: CLRegion) {
+    func startMonitoring(for region: CLRegion) throws {
         if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
             print("NOT SUPPORTED ON DEVICE") // FIXME
-            return
-        }
-        if CLLocationManager.authorizationStatus() != .authorizedAlways {
-            print ("NEEDS TO GRANT ACCESS") // FIXME
+            throw CommonLocationError.monitoringNotAvailable
         }
         locationManager.startMonitoring(for: region)
     }
@@ -117,6 +167,17 @@ class CommonLocationManager: NSObject {
     
     func stopMonitoringAll() {
         locationManager.monitoredRegions.forEach { CLLocationManager().stopMonitoring(for: $0) }
+    }
+    
+    var isAppSupportingBackgroundLocation: Bool {
+        guard let backgroundModes = Bundle.main.object(forInfoDictionaryKey: "UIBackgroundModes") as? [String] else {
+            return false
+        }
+        return backgroundModes.contains("location")
+    }
+    
+    var isLocationAvailable: Bool {
+        return CLLocationManager.locationServicesEnabled() && (CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways)
     }
 }
 
@@ -157,6 +218,15 @@ extension CommonLocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         subscribers.forEach { (subscriber) in
             subscriber.didExitRegion?(region)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            grantedAuthorizationCallback?()
+        default:
+            return
         }
     }
     
