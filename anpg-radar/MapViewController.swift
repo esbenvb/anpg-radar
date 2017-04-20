@@ -39,7 +39,10 @@ class MapViewController: UIViewController {
     @IBAction func notificationSwitchChanged(_ sender: Any) {
         guard let svitch = sender as? UISwitch else {return}
         if svitch.isOn {
-            guard CameraAlertManager.shared.enable(messageDelegate: self, grantedLocationCallback: {svitch.isOn = true}) else {
+            guard CameraAlertManager.shared.enable(messageDelegate: self, grantedLocationCallback: {
+                svitch.isOn = true
+                self.notificationSwitchChanged(self.notificationSwitch)
+            }) else {
                 svitch.isOn = false
                 return
             }
