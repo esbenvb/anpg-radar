@@ -28,7 +28,15 @@ class CameraAlertManager: NSObject {
     private var alertItems: [CameraListItem] = [] {
         didSet {
             CommonLocationManager.shared.stopMonitoringAll()
-            alertItems.forEach { try? startMonitoring(camListItem: $0) }
+            alertItems.forEach {
+                do {
+                    try startMonitoring(camListItem: $0)
+                    print("installed \($0.description)")
+                }
+                catch {
+                    print("error alert item \($0.description)")
+                }
+            }
         }
     }
     
@@ -78,9 +86,8 @@ class CameraAlertManager: NSObject {
 
 
         previousLocationOfUpdating = location
-        if sortedItems.count > kGeofenceLimit, let distance = currentDistances[sortedItems[kGeofenceLimit].id] {
+        if sortedItems.count > kGeofenceLimit, let distance = currentDistances[sortedItems[kGeofenceLimit].id], locationSubscriber.enable() {
             previousDistanceToFirstSkippedItem = distance
-            try? locationSubscriber.enable()
         }
         else {
             previousDistanceToFirstSkippedItem = 0
@@ -88,10 +95,12 @@ class CameraAlertManager: NSObject {
         
     }
 
-    func enable(grantedLocationCallback: (()->())? = nil) throws {
+    func enable(messageDelegate: CommonLocationMessageDelegate, grantedLocationCallback: (()->())? = nil) -> Bool {
         locationSubscriber.grantedAuthorization = grantedLocationCallback
-        try locationSubscriber.enable()
+        locationSubscriber.messageDelegate = messageDelegate
+        guard locationSubscriber.enable() else {return false}
         UserDefaults().set(true, forKey: Constants.notificationSettingIdentifier)
+        return true
     }
     
     func disable() {

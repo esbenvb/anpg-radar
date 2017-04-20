@@ -11,8 +11,9 @@ import CoreLocation
 
 
 class CommonLocationSubscriber: NSObject {
-    override init() {
+    init(messageDelegate: CommonLocationMessageDelegate? = nil) {
         super.init()
+        self.messageDelegate = messageDelegate
     }
     var updateLocation: ((_ location: CLLocation) -> ())?
     var updateSignificantLocation: ((_ location: CLLocation) -> ())?
@@ -21,15 +22,39 @@ class CommonLocationSubscriber: NSObject {
     var accuracy: CLLocationAccuracy = 1000000
     var isLocationActiveInBackground: Bool = false
     var grantedAuthorization: (() -> ())?
-
+    var refusedAuthorization: (() -> ())?
+    weak var messageDelegate: CommonLocationMessageDelegate?
     
-    func enable() throws {
-        try CommonLocationManager.shared.subscribe(self)
+    func enable() -> Bool {
+        do {
+            try CommonLocationManager.shared.subscribe(self)
+            return true
+        }
+        catch (CommonLocationError.locationNotDetermined) {
+            messageDelegate?.handleError(.locationNotDetermined, closeAction: {
+                CommonLocationManager.shared.requestAuthorization(subscriber: self)
+            })
+            return false
+            
+        }
+        catch (let error as CommonLocationError) {
+            messageDelegate?.handleError(error, closeAction: nil)
+            return false
+        }
+        catch {
+            let error = CommonLocationError.unknown
+            messageDelegate?.handleError(error, closeAction: nil)
+            return false
+        }
     }
     
     func disable() {
         CommonLocationManager.shared.unsubscribe(self)
     }
+}
+
+protocol CommonLocationMessageDelegate: class {
+    func handleError(_ error: CommonLocationError, closeAction: (()->())?)
 }
 
 enum CommonLocationError: Error {
@@ -39,6 +64,7 @@ enum CommonLocationError: Error {
     case locationUpdatesNotSupported
     case significantLocationUpdatesNotSupported
     case monitoringNotAvailable
+    case unknown
     
     var alert: CommonLocationErrorAlert {
         switch (self) {
@@ -46,19 +72,22 @@ enum CommonLocationError: Error {
             return CommonLocationErrorAlert(title: "Needs access when in use", closeButtonLabel: "Close", message: "The feature requires location access when the app is in use. Activate it on the settings page.", secondButtonLabel: "Settings", secondButtonHandler: CommonLocationManager.openAppSettings)
             
         case .locationNotGrantedAlways:
-            return CommonLocationErrorAlert(title: "Needs access when in use", closeButtonLabel: "Close", message: "The feature requires location access, when the app is in the background. Activate it on the settings page.", secondButtonLabel: "Settings", secondButtonHandler: CommonLocationManager.openAppSettings)
+            return CommonLocationErrorAlert(title: "Needs access always", closeButtonLabel: "Close", message: "The feature requires location access, when the app is in the background. Activate it on the settings page.", secondButtonLabel: "Settings", secondButtonHandler: CommonLocationManager.openAppSettings)
             
         case .locationNotDetermined:
-            return CommonLocationErrorAlert(title: "Not available", closeButtonLabel: "Close", message: "You need to allow location access for this app FIXME.", secondButtonLabel: nil, secondButtonHandler: nil)
+            return CommonLocationErrorAlert(title: "Needs location access.", closeButtonLabel: "Close", message: "You need to allow location access for this app FIXME.", secondButtonLabel: nil, secondButtonHandler: nil)
             
         case .locationUpdatesNotSupported:
-            return CommonLocationErrorAlert(title: "Not available", closeButtonLabel: "Close", message: "Location updates are not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
+            return CommonLocationErrorAlert(title: "Device not supported", closeButtonLabel: "Close", message: "Location updates are not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
             
         case .significantLocationUpdatesNotSupported:
-            return CommonLocationErrorAlert(title: "Not available", closeButtonLabel: "Close", message: "Significant location changes are not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
+            return CommonLocationErrorAlert(title: "Device not supported", closeButtonLabel: "Close", message: "Significant location changes are not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
             
         case .monitoringNotAvailable:
-            return CommonLocationErrorAlert(title: "Not available", closeButtonLabel: "Close", message: "Monitoring is not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
+            return CommonLocationErrorAlert(title: "Device not supported", closeButtonLabel: "Close", message: "Monitoring is not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
+
+        case .unknown:
+            return CommonLocationErrorAlert(title: "Error", closeButtonLabel: "Close", message: "Unknown error", secondButtonLabel: nil, secondButtonHandler: nil)
         }
     }
 }
@@ -76,6 +105,7 @@ class CommonLocationManager: NSObject {
     }
     
     var grantedAuthorizationCallback: (() -> ())?
+    var refusedAuthorizationCallback: (() -> ())?
     
     let locationManager = CLLocationManager()
 
@@ -122,6 +152,18 @@ class CommonLocationManager: NSObject {
         locationManager.desiredAccuracy = minAccuracy
     }
     
+    func requestAuthorization(subscriber: CommonLocationSubscriber) {
+        // ask for permission
+        if isAppSupportingBackgroundLocation {
+            locationManager.requestAlwaysAuthorization()
+        }
+        else {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        grantedAuthorizationCallback = subscriber.grantedAuthorization
+        refusedAuthorizationCallback = subscriber.refusedAuthorization
+    }
+    
     func subscribe(_ subscriber: CommonLocationSubscriber) throws {
         print("subscribe: \(subscriber.self)")
         
@@ -143,22 +185,14 @@ class CommonLocationManager: NSObject {
         
         if useLocation || useSignificantLocation {
             if CLLocationManager.authorizationStatus() == .notDetermined {
-                // ask for permission
-                if isAppSupportingBackgroundLocation {
-                    locationManager.requestAlwaysAuthorization()
-                }
-                else {
-                    locationManager.requestWhenInUseAuthorization()
-                }
-                grantedAuthorizationCallback = subscriber.grantedAuthorization
                 throw CommonLocationError.locationNotDetermined
-                
             }
             if background {
+                // Setting these to make the desired stuff enabled when the user changes location settings
                 grantedAuthorizationCallback = subscriber.grantedAuthorization
+                refusedAuthorizationCallback = subscriber.refusedAuthorization
                 guard CLLocationManager.authorizationStatus() == .authorizedAlways else {
                     print ("NEEDS TO GRANT always ACCESS") // FIXME
-                    grantedAuthorizationCallback = subscriber.grantedAuthorization
                     throw CommonLocationError.locationNotGrantedAlways
                 }
             }
@@ -168,7 +202,6 @@ class CommonLocationManager: NSObject {
                     throw CommonLocationError.locationNotGrantedWhenInuse
                 }
             }
-            
         }
         
         if subscribers.contains(where: {$0 === subscriber}) {
@@ -184,7 +217,7 @@ class CommonLocationManager: NSObject {
     }
     
     func startMonitoring(for region: CLRegion) throws {
-        if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+        guard CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) else {
             print("NOT SUPPORTED ON DEVICE") // FIXME
             throw CommonLocationError.monitoringNotAvailable
         }
@@ -257,6 +290,8 @@ extension CommonLocationManager: CLLocationManagerDelegate {
             grantedAuthorizationCallback?()
             grantedAuthorizationCallback = nil
         default:
+            refusedAuthorizationCallback?()
+            refusedAuthorizationCallback = nil
             return
         }
     }

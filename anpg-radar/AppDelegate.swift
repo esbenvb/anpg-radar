@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     lazy var locationSubscriber: CommonLocationSubscriber = {
-        let subscriber = CommonLocationSubscriber()
+        let subscriber = CommonLocationSubscriber(messageDelegate: self)
         subscriber.didEnterRegion = {(region) in
             guard let item = CameraListItem.findById(id: region.identifier, list: self.alertManager.items) else {return}
             self.showNotification(item: item)
@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        try? locationSubscriber.enable()
+        let _ = locationSubscriber.enable() // FIXME HANDLE THIS
         
         let unc = UNUserNotificationCenter.current()
         
@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         unc.delegate = self
 
         if UserDefaults().bool(forKey: Constants.notificationSettingIdentifier) {
-            try? alertManager.enable()
+            let _ = alertManager.enable(messageDelegate: self) // FIXME HANDLE RESULT
         }
         
         return true
@@ -155,5 +155,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler(.alert)
+    }
+}
+
+extension AppDelegate: CommonLocationMessageDelegate {
+    func handleError(_ error: CommonLocationError, closeAction: (()->())?) {
+        print(error.localizedDescription)
+        closeAction?()
+        // FIXME
     }
 }

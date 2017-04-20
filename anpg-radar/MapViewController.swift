@@ -39,20 +39,10 @@ class MapViewController: UIViewController {
     @IBAction func notificationSwitchChanged(_ sender: Any) {
         guard let svitch = sender as? UISwitch else {return}
         if svitch.isOn {
-            do {
-                try CameraAlertManager.shared.enable(grantedLocationCallback: {
-                    svitch.isOn = true
-                })
-            }
-            catch let error as CommonLocationError {
+            guard CameraAlertManager.shared.enable(messageDelegate: self, grantedLocationCallback: {svitch.isOn = true}) else {
                 svitch.isOn = false
-                showAlert(error: error)
+                return
             }
-            catch {
-                svitch.isOn = false
-                print("Other error")
-            }
-            
         }
         else {
             CameraAlertManager.shared.disable()
@@ -76,20 +66,13 @@ class MapViewController: UIViewController {
         didSet {
             if followLocation {
                 // force update
-                do {
-                    try locationSubscriber.enable()
-                    // update button focus
-                    followLocationButton.isSelected = true
-                    followLocationButton.alpha = 0.6
+                guard locationSubscriber.enable() else {
+                    self.followLocation = false
+                    return
                 }
-                catch let error as CommonLocationError {
-                    followLocation = false
-                    showAlert(error: error)
-                }
-                catch {
-                    followLocation = false
-                    print("Other error")
-                }
+                // update button focus
+                followLocationButton.isSelected = true
+                followLocationButton.alpha = 0.6
             } else  {
                 // update button focus
                 followLocationButton.isSelected = false
@@ -102,7 +85,7 @@ class MapViewController: UIViewController {
     }
     
     lazy var locationSubscriber: CommonLocationSubscriber = {
-        let subscriber = CommonLocationSubscriber()
+        let subscriber = CommonLocationSubscriber(messageDelegate: self)
         subscriber.accuracy = kCLLocationAccuracyBestForNavigation
         subscriber.isLocationActiveInBackground = false
         subscriber.updateLocation = { (location) in
@@ -154,7 +137,10 @@ class MapViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if followLocation {
-            try? locationSubscriber.enable()
+            guard locationSubscriber.enable() else {
+                followLocation = false
+                return
+            }
         }
     }
     

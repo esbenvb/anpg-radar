@@ -10,15 +10,16 @@ import UIKit
 
 typealias CommonLocationErrorAlert = (title: String, closeButtonLabel: String, message: String?, secondButtonLabel: String?, secondButtonHandler: (()->())?)
 
-extension UIViewController {
-    func showLocationErrorAlert(_ alert: CommonLocationErrorAlert) {
+extension UIViewController: CommonLocationMessageDelegate {
+    func showLocationErrorAlert(_ alert: CommonLocationErrorAlert, closeAction: (()->())? = nil) {
         let ac = UIAlertController(title: alert.title, message: alert.message, preferredStyle: .alert)
         
-        let closeAction = UIAlertAction(title: alert.closeButtonLabel, style: .cancel) { (action) in
+        let closeButton = UIAlertAction(title: alert.closeButtonLabel, style: .cancel) { (action) in
+            closeAction?()
             ac.dismiss(animated: true, completion: nil)
         }
         
-        ac.addAction(closeAction)
+        ac.addAction(closeButton)
         
         if let label = alert.secondButtonLabel, let customHandler = alert.secondButtonHandler {
             let action = UIAlertAction(title: label, style: .default, handler:  { (action) in
@@ -31,7 +32,7 @@ extension UIViewController {
         present(ac, animated: true, completion: nil)
     }
     
-    func showAlert(error: CommonLocationError) {
-        showLocationErrorAlert(error.alert)
+    func handleError(_ error: CommonLocationError, closeAction: (()->())? = nil) {
+        showLocationErrorAlert(error.alert, closeAction: closeAction)
     }
 }
