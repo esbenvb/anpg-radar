@@ -21,15 +21,6 @@ import MapKit
 // kig her https://github.com/MartinBergerDX/LocalNotifications_iOS10/blob/master/LocalNotification_iOS10/ViewController.swift
 
 class MapViewController: UIViewController {
-    @IBAction func mapPinched(_ sender: Any) {
-        handleUserMovedMap(sender)
-    }
-    @IBAction func mapRotated(_ sender: Any) {
-        handleUserMovedMap(sender)
-    }
-    @IBAction func mapPanned(_ sender: Any) {
-        handleUserMovedMap(sender)
-    }
     @IBOutlet weak var followLocationButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var footerView: UIView!
@@ -92,8 +83,9 @@ class MapViewController: UIViewController {
         subscriber.accuracy = kCLLocationAccuracyBestForNavigation
         subscriber.isLocationActiveInBackground = false
         subscriber.updateLocation = { (location) in
-            self.centerMap(location: location, radius: 1000.0)
             self.bottomView.currentPosition = location
+            guard self.followLocation else {return}
+            self.centerMap(location: location, radius: 1000.0)
         }
         subscriber.grantedAuthorization = {
             self.followLocation = true
@@ -101,14 +93,7 @@ class MapViewController: UIViewController {
         return subscriber
     }()
     
-    func handleUserMovedMap(_ sender: Any) { // FIXME: does not work perfectly
-        guard let gr = sender as? UIGestureRecognizer else {return}
-        print (gr.state)
-        print(gr.numberOfTouches)
-//        if gr.state == .ended {
-            followLocation = false
-//        }
-    }
+    var regionChangedByUser = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,7 +101,7 @@ class MapViewController: UIViewController {
         if UserDefaults().bool(forKey: Constants.notificationSettingIdentifier) {
             notificationSwitch.isOn = true
         } else {
-            notificationSwitch.isEnabled = false
+//            notificationSwitch.isEnabled = false
             notificationSwitch.isOn = false
         }
         
@@ -269,4 +254,23 @@ extension MapViewController: MKMapViewDelegate {
 
     }
 
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if regionChangedByUser {
+            regionChangedByUser = false
+            followLocation = false
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+        mapView.subviews.first?.gestureRecognizers?.forEach({ (gestureRecognizer) in
+            switch gestureRecognizer.state {
+            case .began, .ended:
+                regionChangedByUser = true
+                return
+            default:
+                return
+            }
+        })
+        
+    }
 }

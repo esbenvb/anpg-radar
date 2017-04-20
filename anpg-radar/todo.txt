@@ -1,3 +1,6 @@
 colors/styling
 * center map on current position
-handle permissions for notfications and location
+* handle permissions for notfications and location
+style notifications
+* fix dragging map
+make 2nd page
