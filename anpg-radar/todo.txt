@@ -4,3 +4,6 @@ colors/styling
 style notifications
 * fix dragging map
 make 2nd page
+memory leak
+notifications not working on lock screen
+expiration timestamps of saved list 

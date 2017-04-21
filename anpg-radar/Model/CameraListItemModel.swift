@@ -24,7 +24,7 @@ class CameraListItem: NSObject, MKAnnotation, NSCoding {
         guard let imageData = try? Data(contentsOf: url) else {return nil}
         return UIImage(data: imageData)
     }()
-
+    
     init(id: String, lat: Double, lon: Double, operatur: String? = nil, imageUrl: String? = nil) {
 
         self.id = id
@@ -78,5 +78,24 @@ extension CameraListItem {
     static func findById(id: String, list: [CameraListItem]) -> CameraListItem? {
         let filteredList = list.filter{ $0.id == id}
         return filteredList.first
+    }
+    
+    static var localList: [CameraListItem]? {
+        get {
+            guard let listData = UserDefaults.standard.object(forKey: Constants.cameraLocalListKey) as? Data else {return nil}
+            let list = NSKeyedUnarchiver.unarchiveObject(with: listData) as? [CameraListItem] ?? nil
+            return list
+        }
+        
+        set {
+            guard let localList = localList else {
+                UserDefaults.standard.removeObject(forKey: Constants.cameraLocalListKey)
+                return
+            }
+            let elementsSerialized = NSKeyedArchiver.archivedData(withRootObject: localList)
+            UserDefaults.standard.set(elementsSerialized, forKey: Constants.cameraLocalListKey)
+            UserDefaults.standard.synchronize()
+            
+        }
     }
 }

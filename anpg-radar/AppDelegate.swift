@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     lazy var alertManager: CameraAlertManager = {
         let alertManager = CameraAlertManager.shared
-        alertManager.items = UserDefaults.standard.array(forKey: "camList") as? [CameraListItem] ?? []
+        alertManager.items = CameraListItem.localList ?? []
         return alertManager
     }()
     
@@ -146,6 +146,7 @@ extension AppDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("notification: \(response.description) id: \(response.notification.request.content.threadIdentifier)")
         guard let item = CameraListItem.findById(id: response.notification.request.content.threadIdentifier, list: alertManager.items) else {return}
         let notification = Notification(name: Constants.cameraDetectedNotificationName, object: item, userInfo: nil)
         NotificationCenter.default.post(notification)
@@ -154,7 +155,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler()
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler(.alert)
+        completionHandler([.alert, .sound])
     }
 }
 

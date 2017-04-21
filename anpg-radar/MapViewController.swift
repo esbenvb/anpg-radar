@@ -144,9 +144,8 @@ class MapViewController: UIViewController {
     }
 
     func loadData() {
-        let ud = UserDefaults.standard
-
-        if let elements = ud.array(forKey: "camList") as? [CameraListItem] {
+        // FIXME: expiration time on list... 
+        if let elements = CameraListItem.localList {
             camList = elements
             return
         }
@@ -166,7 +165,7 @@ class MapViewController: UIViewController {
                 if elements.count > 0 {
                     self?.notificationSwitch.isEnabled = true
                 }
-                self?.saveDataLocally(elements: elements)
+                CameraListItem.localList = elements
             } catch {
 
             }
@@ -174,14 +173,6 @@ class MapViewController: UIViewController {
 
     }
 
-    func saveDataLocally(elements: [CameraListItem]) {
-        let ud = UserDefaults.standard
-        let elementsSerialized: [Data] = elements.map { NSKeyedArchiver.archivedData(withRootObject: $0) }
-        ud.set(elementsSerialized, forKey: "camList")
-        ud.synchronize()
-
-    }
-    
     func centerMap(location: CLLocation, radius: CLLocationDistance) {
         let region = MKCoordinateRegionMakeWithDistance(location.coordinate, radius * 2, radius * 2)
         mapView.setRegion(region, animated: true)
@@ -257,7 +248,10 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         if regionChangedByUser {
             regionChangedByUser = false
-            followLocation = false
+            // Avoid calling didSet every time we pan the map.
+            if followLocation {
+                followLocation = false
+            }
         }
     }
     

@@ -22,6 +22,13 @@ class CameraAlertManager: NSObject {
             previousDistanceToFirstSkippedItem = 0
         }
     }
+    
+    var isEnabled = false {
+        didSet  {
+            UserDefaults().set(isEnabled, forKey: Constants.notificationSettingIdentifier)
+        }
+    }
+    
     private var currentDistances: [String : CLLocationDistance] = [:]
     private var previousLocationOfUpdating: CLLocation?
     private var previousDistanceToFirstSkippedItem: CLLocationDistance?
@@ -45,6 +52,15 @@ class CameraAlertManager: NSObject {
         subscriber.accuracy = kCLLocationAccuracyThreeKilometers
         subscriber.isLocationActiveInBackground = true
         subscriber.updateSignificantLocation = { (location) in
+            guard self.isEnabled else {
+                return
+            }
+            // Only update if list has content
+            guard self.items.count > 0 else {
+                self.alertItems = []
+                return
+            }
+            
             // Scenario 1: Nothing has been set yet. Initiate an update.
             guard let previousLocationOfUpdating = self.previousLocationOfUpdating else {
                 self.updateGeofences(location: location)
@@ -96,17 +112,19 @@ class CameraAlertManager: NSObject {
     }
 
     func enable(messageDelegate: CommonLocationMessageDelegate, grantedLocationCallback: (()->())? = nil) -> Bool {
+        previousLocationOfUpdating = nil
+        previousDistanceToFirstSkippedItem = 0
         locationSubscriber.grantedAuthorization = grantedLocationCallback
         locationSubscriber.messageDelegate = messageDelegate
         guard locationSubscriber.enable() else {return false}
-        UserDefaults().set(true, forKey: Constants.notificationSettingIdentifier)
+        isEnabled = true
         return true
     }
     
     func disable() {
         alertItems = []
         locationSubscriber.disable()
-        UserDefaults().set(false, forKey: Constants.notificationSettingIdentifier)
+        isEnabled = false
     }
     
     private func startMonitoring(camListItem: CameraListItem) throws {

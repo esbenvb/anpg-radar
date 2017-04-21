@@ -19,5 +19,6 @@ struct Constants {
 
     static let notificationCategoryId = "camDetected"
     static let notificationSettingIdentifier = "CameraNotificationsEnabled"
+    static let cameraLocalListKey = "CameraList"
 }
 
