@@ -80,7 +80,7 @@ class MapViewController: UIViewController {
     
     lazy var locationSubscriber: CommonLocationSubscriber = {
         let subscriber = CommonLocationSubscriber(messageDelegate: self)
-        subscriber.accuracy = kCLLocationAccuracyBestForNavigation
+        subscriber.accuracy = kCLLocationAccuracyHundredMeters
         subscriber.isLocationActiveInBackground = false
         subscriber.updateLocation = { (location) in
             self.bottomView.currentPosition = location
@@ -97,7 +97,6 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if UserDefaults().bool(forKey: Constants.notificationSettingIdentifier) {
             notificationSwitch.isOn = true
         } else {
