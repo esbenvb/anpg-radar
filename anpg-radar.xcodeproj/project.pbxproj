@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9014AFA41EA6B480007E6141 /* Alert_UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9014AFA31EA6B480007E6141 /* Alert_UIViewController_Extension.swift */; };
+		901C882F1EAA90E100ABCAF6 /* coordinates.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 901C882E1EAA90E100ABCAF6 /* coordinates.gpx */; };
 		904A28451E5E66E8009EF2B7 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 904A28441E5E66E8009EF2B7 /* UserNotifications.framework */; };
 		904A28471E5E66E8009EF2B7 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 904A28461E5E66E8009EF2B7 /* UserNotificationsUI.framework */; };
 		904A284A1E5E66E8009EF2B7 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904A28491E5E66E8009EF2B7 /* NotificationViewController.swift */; };
@@ -60,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		9014AFA31EA6B480007E6141 /* Alert_UIViewController_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert_UIViewController_Extension.swift; sourceTree = "<group>"; };
+		901C882E1EAA90E100ABCAF6 /* coordinates.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = coordinates.gpx; sourceTree = "<group>"; };
 		904A28421E5E66E8009EF2B7 /* notification.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = notification.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		904A28441E5E66E8009EF2B7 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		904A28461E5E66E8009EF2B7 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
@@ -131,6 +133,7 @@
 		90CCE9721DF214B3000FD386 = {
 			isa = PBXGroup;
 			children = (
+				901C882E1EAA90E100ABCAF6 /* coordinates.gpx */,
 				90CCE97D1DF214B3000FD386 /* anpg-radar */,
 				904A28481E5E66E8009EF2B7 /* notification */,
 				904A28431E5E66E8009EF2B7 /* Frameworks */,
@@ -296,6 +299,7 @@
 				90B8B2011E678F3F00A1AEF1 /* todo.txt in Resources */,
 				90CCE9881DF214B3000FD386 /* Assets.xcassets in Resources */,
 				90CCE9861DF214B3000FD386 /* Main.storyboard in Resources */,
+				901C882F1EAA90E100ABCAF6 /* coordinates.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
