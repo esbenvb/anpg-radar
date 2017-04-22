@@ -15,18 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    let category: UNNotificationCategory = {
-        let action = UNNotificationAction(identifier: "action ID", title: "action title", options: [.foreground])
-        let category = UNNotificationCategory(identifier: Constants.notificationCategoryId, actions: [action], intentIdentifiers: [], options: [])
-        return category
-    }()
-    
     lazy var locationSubscriber: CommonLocationSubscriber = {
         let subscriber = CommonLocationSubscriber(messageDelegate: self)
         subscriber.didEnterRegion = { [weak self] (region) in
             guard let sself = self else {return}
             guard let item = CameraListItem.findById(id: region.identifier, list: sself.alertManager.items) else {return}
-            sself.showNotification(item: item)
+            item.showNotification()
         }
         return subscriber
     }()
@@ -42,16 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let _ = locationSubscriber.enable() // FIXME HANDLE THIS
         
-        let unc = UNUserNotificationCenter.current()
-        
-        unc.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
-            print(granted ? "granted" : "not granted")
-            print(error?.localizedDescription ?? "NA")
-        }
-        unc.removeAllPendingNotificationRequests()
-        
-        unc.setNotificationCategories([category])
-        unc.delegate = self
+        alertManager.setupNotifications(delegate: self)
 
         if UserDefaults().bool(forKey: Constants.notificationSettingIdentifier) {
             let _ = alertManager.enable(messageDelegate: self) // FIXME HANDLE RESULT
@@ -87,62 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
 
-}
-
-extension AppDelegate {
-
-    func showNotification(item: CameraListItem) {
-
-        if UIApplication.shared.applicationState == .active {
-            let ac = UIAlertController(title: "WARNING", message: item.id, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .cancel) { (action) in
-                ac.dismiss(animated: true, completion: nil)
-            }
-            ac.addAction(okAction)
-            window?.rootViewController?.present(ac, animated: true, completion: nil)
-            let notification = Notification(name: Constants.cameraDetectedNotificationName, object: item, userInfo: nil)
-            NotificationCenter.default.post(notification)
-
-        }
-        else {
-            // https://blog.codecentric.de/en/2016/11/setup-ios-10-local-notification/
-            
-            
-            let location = CLLocation(latitude: item.coordinate.latitude, longitude: item.coordinate.longitude)
-            GeoTools.decodePosition(location: location) {
-                (address, city) in
-                let content = UNMutableNotificationContent()
-                content.title = "Camera nearby!"
-                content.subtitle = item.id
-                content.body = "\(address), \(city)"
-                content.categoryIdentifier = Constants.notificationCategoryId
-                content.sound = UNNotificationSound.default()
-                content.threadIdentifier = item.id
-                
-                // FIXME make action for clicking notification
-                
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.001, repeats: false) // FIXME HACK
-                
-                let request = UNNotificationRequest(identifier: "camNotification", content: content, trigger: trigger)
-                
-                let unc = UNUserNotificationCenter.current()
-                unc.removeAllPendingNotificationRequests()
-                unc.add(request, withCompletionHandler: { (error) in
-                    if let error = error {
-                        print(error)
-                    }
-                    else {
-                        print("completed")
-                    }
-                    
-                })
-                
-            }
-            
-            
-        }
-        print("you enteded region \(item.id)")
-    }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {

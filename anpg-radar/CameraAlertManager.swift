@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import UserNotifications
 
 let kGeofenceLimit = 20 // FIXME
 
@@ -131,5 +132,24 @@ class CameraAlertManager: NSObject {
     
     private func startMonitoring(camListItem: CameraListItem) throws {
         try CommonLocationManager.shared.startMonitoring(for: camListItem.region)
+    }
+    
+    func setupNotifications(delegate: UNUserNotificationCenterDelegate) {
+        let category: UNNotificationCategory = {
+            let action = UNNotificationAction(identifier: "action ID", title: "action title", options: [.foreground])
+            let category = UNNotificationCategory(identifier: Constants.notificationCategoryId, actions: [action], intentIdentifiers: [], options: [])
+            return category
+        }()
+        
+        let unc = UNUserNotificationCenter.current()
+        
+        unc.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+            print(granted ? "granted" : "not granted")
+            print(error?.localizedDescription ?? "NA")
+        }
+        unc.removeAllPendingNotificationRequests()
+        
+        unc.setNotificationCategories([category])
+        unc.delegate = delegate
     }
 }
