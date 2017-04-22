@@ -23,9 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     lazy var locationSubscriber: CommonLocationSubscriber = {
         let subscriber = CommonLocationSubscriber(messageDelegate: self)
-        subscriber.didEnterRegion = {(region) in
-            guard let item = CameraListItem.findById(id: region.identifier, list: self.alertManager.items) else {return}
-            self.showNotification(item: item)
+        subscriber.didEnterRegion = { [weak self] (region) in
+            guard let sself = self else {return}
+            guard let item = CameraListItem.findById(id: region.identifier, list: sself.alertManager.items) else {return}
+            sself.showNotification(item: item)
         }
         return subscriber
     }()
@@ -108,7 +109,7 @@ extension AppDelegate {
             
             
             let location = CLLocation(latitude: item.coordinate.latitude, longitude: item.coordinate.longitude)
-            GeoTools.decodePosition(location: location) { [weak self]
+            GeoTools.decodePosition(location: location) {
                 (address, city) in
                 let content = UNMutableNotificationContent()
                 content.title = "Camera nearby!"

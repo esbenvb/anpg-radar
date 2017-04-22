@@ -51,31 +51,33 @@ class CameraAlertManager: NSObject {
         let subscriber = CommonLocationSubscriber()
         subscriber.accuracy = kCLLocationAccuracyThreeKilometers
         subscriber.isLocationActiveInBackground = true
-        subscriber.updateSignificantLocation = { (location) in
-            guard self.isEnabled else {
+        subscriber.updateSignificantLocation = {[weak self] (location) in
+            guard let sself = self else {return}
+            
+            guard sself.isEnabled else {
                 return
             }
             // Only update if list has content
-            guard self.items.count > 0 else {
-                self.alertItems = []
+            guard sself.items.count > 0 else {
+                sself.alertItems = []
                 return
             }
             
             // Scenario 1: Nothing has been set yet. Initiate an update.
-            guard let previousLocationOfUpdating = self.previousLocationOfUpdating else {
-                self.updateGeofences(location: location)
+            guard let previousLocationOfUpdating = sself.previousLocationOfUpdating else {
+                sself.updateGeofences(location: location)
                 return
             }
             
             // Scenario 2: Number of geofences is below limit, so a distance has not been set yet.
-            guard let distance = self.previousDistanceToFirstSkippedItem else {
+            guard let distance = sself.previousDistanceToFirstSkippedItem else {
                 return
             }
             
             // Scenario 3: Number of geofences is above limit
             // Update if items were skipped and the distance to the last location of update is within 90% of the original distance to the first skipped item.
             if location.distance(from: previousLocationOfUpdating) > distance * 0.9 {
-                self.updateGeofences(location: location)
+                sself.updateGeofences(location: location)
             }
         }
         return subscriber

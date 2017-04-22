@@ -30,9 +30,10 @@ class MapViewController: UIViewController {
     @IBAction func notificationSwitchChanged(_ sender: Any) {
         guard let svitch = sender as? UISwitch else {return}
         if svitch.isOn {
-            guard CameraAlertManager.shared.enable(messageDelegate: self, grantedLocationCallback: {
+            guard CameraAlertManager.shared.enable(messageDelegate: self, grantedLocationCallback: {[weak self] in
+                guard let sself = self else {return}
                 svitch.isOn = true
-                self.notificationSwitchChanged(self.notificationSwitch)
+                sself.notificationSwitchChanged(sself.notificationSwitch)
             }) else {
                 svitch.isOn = false
                 return
@@ -82,13 +83,14 @@ class MapViewController: UIViewController {
         let subscriber = CommonLocationSubscriber(messageDelegate: self)
         subscriber.accuracy = kCLLocationAccuracyHundredMeters
         subscriber.isLocationActiveInBackground = false
-        subscriber.updateLocation = { (location) in
-            self.bottomView.currentPosition = location
-            guard self.followLocation else {return}
-            self.centerMap(location: location, radius: 1000.0)
+        subscriber.updateLocation = { [weak self] (location) in
+            guard let sself = self else {return}
+            sself.bottomView.currentPosition = location
+            guard sself.followLocation else {return}
+            sself.centerMap(location: location, radius: 1000.0)
         }
-        subscriber.grantedAuthorization = {
-            self.followLocation = true
+        subscriber.grantedAuthorization = { [weak self] in
+            self?.followLocation = true
         }
         return subscriber
     }()
