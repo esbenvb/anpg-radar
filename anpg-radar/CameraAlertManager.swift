@@ -35,9 +35,7 @@ class CameraAlertManager: NSObject {
     private var previousDistanceToFirstSkippedItem: CLLocationDistance?
     private var alertItems: [CameraListItem] = [] {
         didSet {
-            CommonLocationManager.shared.stopMonitoringAll()
             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-
             alertItems.forEach { (item) in
                 item.enableWarning()
             }
@@ -47,7 +45,7 @@ class CameraAlertManager: NSObject {
     private lazy var locationSubscriber: CommonLocationSubscriber = {
         let subscriber = CommonLocationSubscriber()
         subscriber.accuracy = kCLLocationAccuracyThreeKilometers
-        subscriber.isLocationActiveInBackground = true
+//        subscriber.isLocationActiveInBackground = true
         subscriber.updateSignificantLocation = {[weak self] (location) in
             guard let sself = self else {return}
             
