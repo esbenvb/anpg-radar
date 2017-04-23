@@ -10,11 +10,15 @@ import Foundation
 import CoreLocation
 
 struct GeoTools {
-    static func decodePosition(location: CLLocation, completion: @escaping (_ address: String, _ city: String) -> ()) {
+    static func decodePosition(location: CLLocation, completion: @escaping (_ address: String?, _ city: String?) -> ()) {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) {
             (placemarks, error)  in
-            guard let placemarks = placemarks else {return}
+            guard let placemarks = placemarks, error == nil else {
+                completion(nil, nil)
+                print(error?.localizedDescription ?? "")
+                return
+            }
 
             guard
                 let placemark = placemarks.first,

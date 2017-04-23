@@ -24,16 +24,9 @@ class CameraBottomView: UIStackView {
             guard let cameraListItem = cameraListItem else {return}
             idLabel.text = String(cameraListItem.id)
             ownerLabel.text = cameraListItem.operatur
-            cityLabel.text = ""
-            addressLabel.text = ""
+            cityLabel.text = cameraListItem.address2
+            addressLabel.text = cameraListItem.address1
             imageView.image = Constants.noImageImage
-
-            let location = CLLocation(latitude: cameraListItem.coordinate.latitude, longitude: cameraListItem.coordinate.longitude)
-            GeoTools.decodePosition(location: location) { [weak self]
-                (address, city) in
-                self?.addressLabel.text = address
-                self?.cityLabel.text = city
-            }
 
             DispatchQueue.global(qos: .userInitiated).async {
                 if let image = cameraListItem.image {

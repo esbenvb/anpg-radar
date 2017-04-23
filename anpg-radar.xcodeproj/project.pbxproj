@@ -27,10 +27,6 @@
 		90CCE98B1DF214B3000FD386 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE9891DF214B3000FD386 /* LaunchScreen.storyboard */; };
 		90CCE99C1DF21625000FD386 /* CameraListItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9931DF21625000FD386 /* CameraListItemModel.swift */; };
 		90CCE99D1DF21625000FD386 /* CameraListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9941DF21625000FD386 /* CameraListResponseModel.swift */; };
-		90CCE99E1DF21625000FD386 /* CamAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9961DF21625000FD386 /* CamAnnotationView.swift */; };
-		90CCE99F1DF21625000FD386 /* CamAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE9971DF21625000FD386 /* CamAnnotationView.xib */; };
-		90CCE9A01DF21625000FD386 /* CamCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9981DF21625000FD386 /* CamCustomView.swift */; };
-		90CCE9A11DF21625000FD386 /* CamCustomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE9991DF21625000FD386 /* CamCustomView.xib */; };
 		90CCE9A21DF21625000FD386 /* CameraBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE99A1DF21625000FD386 /* CameraBottomView.swift */; };
 		90CCE9A31DF21625000FD386 /* CameraBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE99B1DF21625000FD386 /* CameraBottomView.xib */; };
 		90CCE9A61DF2169E000FD386 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9A41DF2169E000FD386 /* Constants.swift */; };
@@ -85,10 +81,6 @@
 		90CCE98C1DF214B3000FD386 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		90CCE9931DF21625000FD386 /* CameraListItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraListItemModel.swift; sourceTree = "<group>"; };
 		90CCE9941DF21625000FD386 /* CameraListResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraListResponseModel.swift; sourceTree = "<group>"; };
-		90CCE9961DF21625000FD386 /* CamAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CamAnnotationView.swift; sourceTree = "<group>"; };
-		90CCE9971DF21625000FD386 /* CamAnnotationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CamAnnotationView.xib; sourceTree = "<group>"; };
-		90CCE9981DF21625000FD386 /* CamCustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CamCustomView.swift; sourceTree = "<group>"; };
-		90CCE9991DF21625000FD386 /* CamCustomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CamCustomView.xib; sourceTree = "<group>"; };
 		90CCE99A1DF21625000FD386 /* CameraBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraBottomView.swift; sourceTree = "<group>"; };
 		90CCE99B1DF21625000FD386 /* CameraBottomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraBottomView.xib; sourceTree = "<group>"; };
 		90CCE9A41DF2169E000FD386 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -190,10 +182,6 @@
 		90CCE9951DF21625000FD386 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				90CCE9961DF21625000FD386 /* CamAnnotationView.swift */,
-				90CCE9971DF21625000FD386 /* CamAnnotationView.xib */,
-				90CCE9981DF21625000FD386 /* CamCustomView.swift */,
-				90CCE9991DF21625000FD386 /* CamCustomView.xib */,
 				90CCE99A1DF21625000FD386 /* CameraBottomView.swift */,
 				90CCE99B1DF21625000FD386 /* CameraBottomView.xib */,
 			);
@@ -299,9 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				90CCE98B1DF214B3000FD386 /* LaunchScreen.storyboard in Resources */,
-				90CCE99F1DF21625000FD386 /* CamAnnotationView.xib in Resources */,
 				90CCE9A31DF21625000FD386 /* CameraBottomView.xib in Resources */,
-				90CCE9A11DF21625000FD386 /* CamCustomView.xib in Resources */,
 				90B8B2011E678F3F00A1AEF1 /* todo.txt in Resources */,
 				90CCE9881DF214B3000FD386 /* Assets.xcassets in Resources */,
 				900BB3C21EAD30100091C5FB /* waypoints.gpx in Resources */,
@@ -327,10 +313,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				90CCE9831DF214B3000FD386 /* OtherViewController.swift in Sources */,
-				90CCE99E1DF21625000FD386 /* CamAnnotationView.swift in Sources */,
 				90CCE9A21DF21625000FD386 /* CameraBottomView.swift in Sources */,
 				90A9EB211E6E049100C76B2C /* CameraAlertManager.swift in Sources */,
-				90CCE9A01DF21625000FD386 /* CamCustomView.swift in Sources */,
 				90CCE99D1DF21625000FD386 /* CameraListResponseModel.swift in Sources */,
 				90CCE99C1DF21625000FD386 /* CameraListItemModel.swift in Sources */,
 				90CCE97F1DF214B3000FD386 /* AppDelegate.swift in Sources */,

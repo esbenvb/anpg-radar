@@ -148,11 +148,13 @@ class MapViewController: UIViewController {
         
         CameraListResponseModel.load(completion: { [weak self] (elements) in
             guard let sself = self else {return}
-            sself.camList = elements
-            if elements.count > 0 {
-                sself.notificationSwitch.isEnabled = true
-            }
-            CameraListItem.localList = elements
+            CameraListItem.updateAddresses(elements: elements, completion: { (updatedElements) in
+                sself.camList = elements
+                if elements.count > 0 {
+                    sself.notificationSwitch.isEnabled = true
+                }
+                CameraListItem.localList = elements
+            })
             }, failure: { (error) in
                 print(error?.localizedDescription ?? "Generic error")
         })

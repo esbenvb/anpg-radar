@@ -18,6 +18,8 @@ class CameraListItem: NSObject, MKAnnotation, NSCoding {
     var title: String?
     var subtitle: String?
     var coordinate: CLLocationCoordinate2D
+    var address1: String?
+    var address2: String?
 
     lazy var image: UIImage? = { [weak self] in
         print("loading  image \(self?.imageUrl ?? "")")
@@ -26,7 +28,7 @@ class CameraListItem: NSObject, MKAnnotation, NSCoding {
         return UIImage(data: imageData)
     }()
     
-    init(id: String, lat: Double, lon: Double, operatur: String? = nil, imageUrl: String? = nil) {
+    init(id: String, lat: Double, lon: Double, operatur: String? = nil, imageUrl: String? = nil, address1: String? = nil, address2: String? = nil) {
 
         self.id = id
         self.lat = lat
@@ -44,15 +46,19 @@ class CameraListItem: NSObject, MKAnnotation, NSCoding {
         let lon = aDecoder.decodeDouble(forKey: "lon")
         let operatur = aDecoder.decodeObject(forKey: "operatur") as? String
         let imageUrl = aDecoder.decodeObject(forKey: "imageUrl") as? String
-        self.init(id: id, lat: lat, lon: lon, operatur: operatur, imageUrl: imageUrl)
+        let address1 = aDecoder.decodeObject(forKey: "address1") as? String
+        let address2 = aDecoder.decodeObject(forKey: "address2") as? String
+        self.init(id: id, lat: lat, lon: lon, operatur: operatur, imageUrl: imageUrl, address1: address1, address2: address2)
     }
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(id, forKey: "id")
         aCoder.encode(lat, forKey: "lat")
         aCoder.encode(lon, forKey: "lon")
-        aCoder.encode(imageUrl, forKey: "iamgeUrl")
         aCoder.encode(operatur, forKey: "operatur")
+        aCoder.encode(imageUrl, forKey: "iamgeUrl")
+        aCoder.encode(address1, forKey: "address1")
+        aCoder.encode(address2, forKey: "address2")
     }
 }
 
@@ -75,6 +81,51 @@ extension CameraListItem {
         region.notifyOnEntry = true
         region.notifyOnExit = false
         return region
+    }
+    
+    var notificationContent: UNNotificationContent {
+        let content = UNMutableNotificationContent()
+        content.title = "Camera nearby!"
+        content.subtitle = self.id
+        if let address1 = self.address1, let address2 = self.address2 {
+            content.body = "\(address1), \(address2)"
+        }
+        else {
+            content.body = "Unknown address"
+        }
+        content.categoryIdentifier = Constants.notificationCategoryId
+        content.sound = UNNotificationSound.default()
+        content.threadIdentifier = self.id
+        
+        // FIXME: does not work with external URLs...
+        //            if let url = URL(string: self.imageUrl ?? ""), url.startAccessingSecurityScopedResource() {
+        //                do {
+        //                    let image = try UNNotificationAttachment(identifier: self.id, url: url, options: [:])
+        //                    content.attachments = [image]
+        //                    url.stopAccessingSecurityScopedResource()
+        //                }
+        //                catch {
+        //                    print(error.localizedDescription)
+        //                }
+        //                url.stopAccessingSecurityScopedResource()
+        //            }
+        // FIXME make action for clicking notification
+        return content
+    }
+    
+    func enableWarning() {
+        let trigger = UNLocationNotificationTrigger(region: self.region, repeats: true)
+        let request = UNNotificationRequest(identifier: "camNotification.\(self.id)", content: self.notificationContent, trigger: trigger)
+
+        CLLocationManager().requestWhenInUseAuthorization()
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
+            if let error = error {
+                print(error)
+            }
+            else {
+                print("completed \(self.address1 ?? "NA") \(self.address2 ?? "NA")")
+            }
+        })
     }
     
     static func findById(id: String, list: [CameraListItem]) -> CameraListItem? {
@@ -101,49 +152,20 @@ extension CameraListItem {
         }
     }
 
-    func enableWarning() {
-        let location = CLLocation(latitude: self.coordinate.latitude, longitude: self.coordinate.longitude)
-        GeoTools.decodePosition(location: location) {
-            (address, city) in
-            let content = UNMutableNotificationContent()
-            content.title = "Camera nearby!"
-            content.subtitle = self.id
-            content.body = "\(address), \(city)"
-            content.categoryIdentifier = Constants.notificationCategoryId
-            content.sound = UNNotificationSound.default()
-            content.threadIdentifier = self.id
-            
-            // FIXME: does not work with external URLs...
-//            if let url = URL(string: self.imageUrl ?? ""), url.startAccessingSecurityScopedResource() {
-//                do {
-//                    let image = try UNNotificationAttachment(identifier: self.id, url: url, options: [:])
-//                    content.attachments = [image]
-//                    url.stopAccessingSecurityScopedResource()
-//                }
-//                catch {
-//                    print(error.localizedDescription)
-//                }
-//                url.stopAccessingSecurityScopedResource()
-//            }
-            // FIXME make action for clicking notification
-            
-            let trigger = UNLocationNotificationTrigger(region: self.region, repeats: true)
-            let request = UNNotificationRequest(identifier: "camNotification.\(self.id)", content: content, trigger: trigger)
-            
-            let unc = UNUserNotificationCenter.current()
-           // unc.removeAllPendingNotificationRequests()
-            
-            CLLocationManager().requestWhenInUseAuthorization()
-            unc.add(request, withCompletionHandler: { (error) in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    print("completed \(address) \(city)")
-                }
+    
+    static func updateAddresses(elements: [CameraListItem], completion: @escaping ([CameraListItem]) -> ()) {
+        var updatedElements: [CameraListItem] = []
+        elements.forEach { (element) in
+            let location = CLLocation(latitude: element.coordinate.latitude, longitude: element.coordinate.longitude)
+            GeoTools.decodePosition(location: location, completion: { (address1, address2) in
+                element.address1 = address1
+                element.address2 = address2
+                updatedElements.append(element)
                 
+                if updatedElements.count == elements.count {
+                    completion(updatedElements)
+                }
             })
-            
         }
     }
 }
