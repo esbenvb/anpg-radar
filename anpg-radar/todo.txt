@@ -5,9 +5,11 @@ style notifications
 * fix dragging map
 make 2nd page
 * memory leak 
+
 notifications not working on lock screen
 expiration timestamps of saved list 
 improve handling geofences… (make region for the current list, trigger when leaving region…
 
 
-use UNLocationNotificationTrigger instead?
+* use UNLocationNotificationTrigger instead?
+make “ignore” button on certain cameras…

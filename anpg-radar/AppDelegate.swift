@@ -15,16 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    lazy var locationSubscriber: CommonLocationSubscriber = {
-        let subscriber = CommonLocationSubscriber(messageDelegate: self)
-        subscriber.didEnterRegion = { [weak self] (region) in
-            guard let sself = self else {return}
-            guard let item = CameraListItem.findById(id: region.identifier, list: sself.alertManager.items) else {return}
-            item.showNotification()
-        }
-        return subscriber
-    }()
-    
     lazy var alertManager: CameraAlertManager = {
         let alertManager = CameraAlertManager.shared
         alertManager.items = CameraListItem.localList ?? []
@@ -33,8 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        let _ = locationSubscriber.enable() // FIXME HANDLE THIS
         
         alertManager.setupNotifications(delegate: self)
 

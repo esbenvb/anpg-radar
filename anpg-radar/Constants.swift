@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 struct Constants {
     static var noImageImage: UIImage? {
@@ -20,5 +21,6 @@ struct Constants {
     static let notificationCategoryId = "camDetected"
     static let notificationSettingIdentifier = "CameraNotificationsEnabled"
     static let cameraLocalListKey = "CameraList"
+    static let cameraRegionRadius: CLLocationDistance = 1000.0
 }
 

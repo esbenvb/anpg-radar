@@ -36,14 +36,10 @@ class CameraAlertManager: NSObject {
     private var alertItems: [CameraListItem] = [] {
         didSet {
             CommonLocationManager.shared.stopMonitoringAll()
-            alertItems.forEach {
-                do {
-                    try startMonitoring(camListItem: $0)
-                    print("installed \($0.description)")
-                }
-                catch {
-                    print("error alert item \($0.description)")
-                }
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+
+            alertItems.forEach { (item) in
+                item.enableWarning()
             }
         }
     }

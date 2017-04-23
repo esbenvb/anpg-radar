@@ -71,8 +71,9 @@ extension CameraListItem {
     }
 
     var region: CLCircularRegion {
-        let region = CLCircularRegion(center: coordinate, radius: CLLocationDistance(1000), identifier: String(id))
+        let region = CLCircularRegion(center: coordinate, radius: Constants.cameraRegionRadius, identifier: id)
         region.notifyOnEntry = true
+        region.notifyOnExit = false
         return region
     }
     
@@ -100,56 +101,43 @@ extension CameraListItem {
         }
     }
 
-    func showNotification() {
-        
-        if UIApplication.shared.applicationState == .active {
-            let ac = UIAlertController(title: "WARNING", message: self.id, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .cancel) { (action) in
-                ac.dismiss(animated: true, completion: nil)
+    func enableWarning() {
+        let location = CLLocation(latitude: self.coordinate.latitude, longitude: self.coordinate.longitude)
+        GeoTools.decodePosition(location: location) {
+            (address, city) in
+            let content = UNMutableNotificationContent()
+            content.title = "Camera nearby!"
+            content.subtitle = self.id
+            content.body = "\(address), \(city)"
+            content.categoryIdentifier = Constants.notificationCategoryId
+            content.sound = UNNotificationSound.default()
+            content.threadIdentifier = self.id
+            
+            // FIXME: untested
+            if let url = URL(string: self.imageUrl ?? "") {
+                if let image = try? UNNotificationAttachment(identifier: self.id, url: url, options: [:]) {
+                    content.attachments = [image]
+                }
             }
-            ac.addAction(okAction)
-            UIApplication.shared.keyWindow?.rootViewController?.present(ac, animated: true, completion: nil)
-            let notification = Notification(name: Constants.cameraDetectedNotificationName, object: self, userInfo: nil)
-            NotificationCenter.default.post(notification)
+            // FIXME make action for clicking notification
+            
+            let trigger = UNLocationNotificationTrigger(region: self.region, repeats: true)
+            let request = UNNotificationRequest(identifier: "camNotification.\(self.id)", content: content, trigger: trigger)
+            
+            let unc = UNUserNotificationCenter.current()
+           // unc.removeAllPendingNotificationRequests()
+            
+            CLLocationManager().requestWhenInUseAuthorization()
+            unc.add(request, withCompletionHandler: { (error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("completed \(address) \(city)")
+                }
+                
+            })
             
         }
-        else {
-            // https://blog.codecentric.de/en/2016/11/setup-ios-10-local-notification/
-            
-            
-            let location = CLLocation(latitude: self.coordinate.latitude, longitude: self.coordinate.longitude)
-            GeoTools.decodePosition(location: location) {
-                (address, city) in
-                let content = UNMutableNotificationContent()
-                content.title = "Camera nearby!"
-                content.subtitle = self.id
-                content.body = "\(address), \(city)"
-                content.categoryIdentifier = Constants.notificationCategoryId
-                content.sound = UNNotificationSound.default()
-                content.threadIdentifier = self.id
-                
-                // FIXME make action for clicking notification
-                
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.001, repeats: false) // FIXME HACK
-                
-                let request = UNNotificationRequest(identifier: "camNotification", content: content, trigger: trigger)
-                
-                let unc = UNUserNotificationCenter.current()
-                unc.removeAllPendingNotificationRequests()
-                unc.add(request, withCompletionHandler: { (error) in
-                    if let error = error {
-                        print(error)
-                    }
-                    else {
-                        print("completed")
-                    }
-                    
-                })
-                
-            }
-            
-            
-        }
-        print("you enteded region \(self.id)")
     }
 }
