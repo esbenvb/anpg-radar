@@ -45,7 +45,6 @@ class CameraAlertManager: NSObject {
     private lazy var locationSubscriber: CommonLocationSubscriber = {
         let subscriber = CommonLocationSubscriber()
         subscriber.accuracy = kCLLocationAccuracyThreeKilometers
-//        subscriber.isLocationActiveInBackground = true
         subscriber.updateSignificantLocation = {[weak self] (location) in
             guard let sself = self else {return}
             
@@ -115,6 +114,7 @@ class CameraAlertManager: NSObject {
         locationSubscriber.messageDelegate = messageDelegate
         guard locationSubscriber.enable() else {return false}
         isEnabled = true
+        CommonLocationManager.shared.requestLocation()
         return true
     }
     
@@ -122,10 +122,6 @@ class CameraAlertManager: NSObject {
         alertItems = []
         locationSubscriber.disable()
         isEnabled = false
-    }
-    
-    private func startMonitoring(camListItem: CameraListItem) throws {
-        try CommonLocationManager.shared.startMonitoring(for: camListItem.region)
     }
     
     func setupNotifications(delegate: UNUserNotificationCenterDelegate) {

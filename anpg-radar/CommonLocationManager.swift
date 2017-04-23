@@ -242,6 +242,10 @@ class CommonLocationManager: NSObject {
     var isLocationAvailable: Bool {
         return CLLocationManager.locationServicesEnabled() && (CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways)
     }
+    
+    func requestLocation() {
+        locationManager.requestLocation()
+    }
 }
 
 extension CommonLocationManager: CLLocationManagerDelegate {
