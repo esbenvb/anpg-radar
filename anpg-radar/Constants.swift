@@ -19,8 +19,10 @@ struct Constants {
     static let cameraDetectedNotificationName = Notification.Name("CameraDetected")
 
     static let notificationCategoryId = "camDetected"
+    static let outOfRangeCategoryId = "outOfRange"
     static let notificationSettingIdentifier = "CameraNotificationsEnabled"
     static let cameraLocalListKey = "CameraList"
     static let cameraRegionRadius: CLLocationDistance = 1000.0
+    
 }
 

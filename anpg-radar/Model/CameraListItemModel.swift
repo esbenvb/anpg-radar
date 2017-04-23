@@ -37,6 +37,8 @@ class CameraListItem: NSObject, MKAnnotation, NSCoding {
         self.operatur = operatur
         self.imageUrl = imageUrl
         self.title = operatur ?? "N/A"
+        self.address1 = address1
+        self.address2 = address2
     }
     
 
@@ -141,11 +143,11 @@ extension CameraListItem {
         }
         
         set {
-            guard let localList = localList else {
+            guard let newValue = newValue else {
                 UserDefaults.standard.removeObject(forKey: Constants.cameraLocalListKey)
                 return
             }
-            let elementsSerialized = NSKeyedArchiver.archivedData(withRootObject: localList)
+            let elementsSerialized = NSKeyedArchiver.archivedData(withRootObject: newValue)
             UserDefaults.standard.set(elementsSerialized, forKey: Constants.cameraLocalListKey)
             UserDefaults.standard.synchronize()
             

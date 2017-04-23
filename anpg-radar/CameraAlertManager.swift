@@ -94,12 +94,15 @@ class CameraAlertManager: NSObject {
             return a < b
         }
         
-        alertItems = Array(sortedItems.prefix(kGeofenceLimit))
+        let maxItems = items.count > kGeofenceLimit ? kGeofenceLimit - 1 : kGeofenceLimit
+        
+        alertItems = Array(sortedItems.prefix(maxItems))
 
 
         previousLocationOfUpdating = location
         if sortedItems.count > kGeofenceLimit, let distance = currentDistances[sortedItems[kGeofenceLimit].id], locationSubscriber.enable() {
             previousDistanceToFirstSkippedItem = distance
+            setupOutOfRangeWarning(location: location, distance: distance)
         }
         else {
             previousDistanceToFirstSkippedItem = 0
@@ -107,6 +110,24 @@ class CameraAlertManager: NSObject {
         
     }
 
+    private func setupOutOfRangeWarning(location: CLLocation, distance: CLLocationDistance) {
+        let region = CLCircularRegion(center: location.coordinate, radius: distance, identifier: "outOfRangeWarning")
+        region.notifyOnExit = true
+        region.notifyOnEntry = false
+        
+        let content: UNNotificationContent = {
+            let content = UNMutableNotificationContent()
+            content.title = "Camera warnings out of range"
+            content.body = "Click to open the app, this will update the warnings to your current area"
+            return content
+        }()
+        
+        let trigger = UNLocationNotificationTrigger(region: region, repeats: true)
+        
+        let request = UNNotificationRequest(identifier: "outOfRangeRequest", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+    }
+    
     func enable(messageDelegate: CommonLocationMessageDelegate, grantedLocationCallback: (()->())? = nil) -> Bool {
         previousLocationOfUpdating = nil
         previousDistanceToFirstSkippedItem = 0
@@ -125,9 +146,14 @@ class CameraAlertManager: NSObject {
     }
     
     func setupNotifications(delegate: UNUserNotificationCenterDelegate) {
-        let category: UNNotificationCategory = {
+        let cameraWarning: UNNotificationCategory = {
             let action = UNNotificationAction(identifier: "action ID", title: "action title", options: [.foreground])
-            let category = UNNotificationCategory(identifier: Constants.notificationCategoryId, actions: [action], intentIdentifiers: [], options: [])
+            let category = UNNotificationCategory(identifier: Constants.notificationCategoryId, actions: [], intentIdentifiers: [], options: [])
+            return category
+        }()
+        
+        let outOfRangeWarning: UNNotificationCategory = {
+            let category = UNNotificationCategory(identifier: Constants.outOfRangeCategoryId, actions: [], intentIdentifiers: [], options: [])
             return category
         }()
         
@@ -139,7 +165,7 @@ class CameraAlertManager: NSObject {
         }
         unc.removeAllPendingNotificationRequests()
         
-        unc.setNotificationCategories([category])
+        unc.setNotificationCategories([cameraWarning, outOfRangeWarning])
         unc.delegate = delegate
     }
 }
