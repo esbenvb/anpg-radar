@@ -1,15 +1,20 @@
+version 1:
+improve handling geofences… (make region for the current list, trigger when leaving region…
+expiration timestamps of saved list 
+make 2nd page
 colors/styling
+
+version 2:
+style notifications
+make “ignore” button on certain cameras… / make custom action for that + mute button
+download images locally, use in notifications
+
 * center map on current position
 * handle permissions for notfications and location
-style notifications
 * fix dragging map
-make 2nd page
 * memory leak 
 
-notifications not working on lock screen
-expiration timestamps of saved list 
-improve handling geofences… (make region for the current list, trigger when leaving region…
+// notifications not working on lock screen
 
 
 * use UNLocationNotificationTrigger instead?
-make “ignore” button on certain cameras…

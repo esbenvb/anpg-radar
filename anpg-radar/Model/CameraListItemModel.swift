@@ -113,12 +113,18 @@ extension CameraListItem {
             content.sound = UNNotificationSound.default()
             content.threadIdentifier = self.id
             
-            // FIXME: untested
-            if let url = URL(string: self.imageUrl ?? "") {
-                if let image = try? UNNotificationAttachment(identifier: self.id, url: url, options: [:]) {
-                    content.attachments = [image]
-                }
-            }
+            // FIXME: does not work with external URLs...
+//            if let url = URL(string: self.imageUrl ?? ""), url.startAccessingSecurityScopedResource() {
+//                do {
+//                    let image = try UNNotificationAttachment(identifier: self.id, url: url, options: [:])
+//                    content.attachments = [image]
+//                    url.stopAccessingSecurityScopedResource()
+//                }
+//                catch {
+//                    print(error.localizedDescription)
+//                }
+//                url.stopAccessingSecurityScopedResource()
+//            }
             // FIXME make action for clicking notification
             
             let trigger = UNLocationNotificationTrigger(region: self.region, repeats: true)

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		900BB3C11EAD30100091C5FB /* route (1).gpx in Resources */ = {isa = PBXBuildFile; fileRef = 900BB3BF1EAD30100091C5FB /* route (1).gpx */; };
+		900BB3C21EAD30100091C5FB /* waypoints.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 900BB3C01EAD30100091C5FB /* waypoints.gpx */; };
 		9014AFA41EA6B480007E6141 /* Alert_UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9014AFA31EA6B480007E6141 /* Alert_UIViewController_Extension.swift */; };
 		901C882F1EAA90E100ABCAF6 /* coordinates.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 901C882E1EAA90E100ABCAF6 /* coordinates.gpx */; };
 		904A28451E5E66E8009EF2B7 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 904A28441E5E66E8009EF2B7 /* UserNotifications.framework */; };
@@ -60,6 +62,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		900BB3BF1EAD30100091C5FB /* route (1).gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "route (1).gpx"; sourceTree = "<group>"; };
+		900BB3C01EAD30100091C5FB /* waypoints.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = waypoints.gpx; sourceTree = "<group>"; };
 		9014AFA31EA6B480007E6141 /* Alert_UIViewController_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert_UIViewController_Extension.swift; sourceTree = "<group>"; };
 		901C882E1EAA90E100ABCAF6 /* coordinates.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = coordinates.gpx; sourceTree = "<group>"; };
 		904A28421E5E66E8009EF2B7 /* notification.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = notification.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +137,8 @@
 		90CCE9721DF214B3000FD386 = {
 			isa = PBXGroup;
 			children = (
+				900BB3BF1EAD30100091C5FB /* route (1).gpx */,
+				900BB3C01EAD30100091C5FB /* waypoints.gpx */,
 				901C882E1EAA90E100ABCAF6 /* coordinates.gpx */,
 				90CCE97D1DF214B3000FD386 /* anpg-radar */,
 				904A28481E5E66E8009EF2B7 /* notification */,
@@ -298,8 +304,10 @@
 				90CCE9A11DF21625000FD386 /* CamCustomView.xib in Resources */,
 				90B8B2011E678F3F00A1AEF1 /* todo.txt in Resources */,
 				90CCE9881DF214B3000FD386 /* Assets.xcassets in Resources */,
+				900BB3C21EAD30100091C5FB /* waypoints.gpx in Resources */,
 				90CCE9861DF214B3000FD386 /* Main.storyboard in Resources */,
 				901C882F1EAA90E100ABCAF6 /* coordinates.gpx in Resources */,
+				900BB3C11EAD30100091C5FB /* route (1).gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

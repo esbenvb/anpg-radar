@@ -28,4 +28,32 @@ extension CameraListResponseModel {
             return nil
         }
     }
+    
+    static func load(completion: @escaping (_ elements: [CameraListItem])->(), failure: ((Error?)->())? = nil) {
+        #if (arch(i386) || arch(x86_64))
+            let feedUrlString = "http://localhost:8000/data.json"
+        #else
+            let feedUrlString = "https://anpg.dk/data.json"
+        #endif
+        
+        guard let url = URL(string: feedUrlString) else {return}
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data, error == nil else {
+                failure?(error)
+                return
+            }
+            do {
+                guard let parsedData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {return}
+                let responseModel = CameraListResponseModel(json: parsedData)
+                let elements = responseModel?.elements ?? []
+                completion(elements)
+
+            } catch {
+                failure?(error)
+            }
+            }.resume()
+        
+        
+    }
 }

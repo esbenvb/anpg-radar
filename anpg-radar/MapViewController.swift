@@ -9,12 +9,6 @@
 import UIKit
 import MapKit
 
-#if (arch(i386) || arch(x86_64))
-    let feedUrlString = "http://localhost:8000/data.json?aa"
-#else
-    let feedUrlString = "https://anpg.dk/data.json"
-#endif
-
 
 // FIXME handle unload of view
 
@@ -151,27 +145,17 @@ class MapViewController: UIViewController {
             return
         }
         
-        guard let url = URL(string: feedUrlString) else {return}
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
-        URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
-            guard let data = data, error == nil else {
-                print(error ?? "error")
-                return
+        
+        CameraListResponseModel.load(completion: { [weak self] (elements) in
+            guard let sself = self else {return}
+            sself.camList = elements
+            if elements.count > 0 {
+                sself.notificationSwitch.isEnabled = true
             }
-            do {
-                guard let parsedData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {return}
-                let responseModel = CameraListResponseModel(json: parsedData)
-                let elements = responseModel?.elements ?? []
-                self?.camList = elements
-                if elements.count > 0 {
-                    self?.notificationSwitch.isEnabled = true
-                }
-                CameraListItem.localList = elements
-            } catch {
-
-            }
-        }.resume()
-
+            CameraListItem.localList = elements
+            }, failure: { (error) in
+                print(error?.localizedDescription ?? "Generic error")
+        })
     }
 
     func centerMap(location: CLLocation, radius: CLLocationDistance) {
