@@ -42,22 +42,38 @@ class CameraAlertManager: NSObject {
         }
     }
     
-    private var busy = false
-    
-    private lazy var significantLocationSubscriber: CommonLocationSubscriber = {
+    private lazy var locationSubscriber: CommonLocationSubscriber = {
         let subscriber = CommonLocationSubscriber()
         subscriber.accuracy = kCLLocationAccuracyThreeKilometers
+//        subscriber.isLocationActiveInBackground = true
         subscriber.updateSignificantLocation = {[weak self] (location) in
-            self?.locationUpdated(location)
-        }
-        return subscriber
-    }()
-    
-    private lazy var forceLocationSubscriber: CommonLocationSubscriber = {
-        let subscriber = CommonLocationSubscriber()
-        subscriber.accuracy = kCLLocationAccuracyThreeKilometers
-        subscriber.updateLocation = {[weak self] (location) in
-            self?.updateGeofences(location: location)
+            guard let sself = self else {return}
+            
+            guard sself.isEnabled else {
+                return
+            }
+            // Only update if list has content
+            guard sself.items.count > 0 else {
+                sself.alertItems = []
+                return
+            }
+            
+            // Scenario 1: Nothing has been set yet. Initiate an update.
+            guard let previousLocationOfUpdating = sself.previousLocationOfUpdating else {
+                sself.updateGeofences(location: location)
+                return
+            }
+            
+            // Scenario 2: Number of geofences is below limit, so a distance has not been set yet.
+            guard let distance = sself.previousDistanceToFirstSkippedItem else {
+                return
+            }
+            
+            // Scenario 3: Number of geofences is above limit
+            // Update if items were skipped and the distance to the last location of update is within 90% of the original distance to the first skipped item.
+            if location.distance(from: previousLocationOfUpdating) > distance * 0.9 {
+                sself.updateGeofences(location: location)
+            }
         }
         return subscriber
     }()
@@ -66,45 +82,9 @@ class CameraAlertManager: NSObject {
     override init() {
     }
     
-    private func locationUpdated(_ location: CLLocation) {
-        guard isEnabled && !busy else {
-            return
-        }
-
-        busy = true
-        // Only update if list has content
-        guard items.count > 0 else {
-            alertItems = []
-            busy = false
-            return
-        }
-        
-        // Scenario 1: Nothing has been set yet. Initiate an update.
-        guard let previousLocationOfUpdating = previousLocationOfUpdating else {
-            updateGeofences(location: location)
-            busy = false
-            return
-        }
-        
-        // Scenario 2: Number of geofences is below limit, so a distance has not been set yet.
-        guard let distance = previousDistanceToFirstSkippedItem else {
-            busy = false
-            return
-        }
-        
-        // Scenario 3: Number of geofences is above limit
-        // Update if items were skipped and the distance to the last location of update is within 90% of the original distance to the first skipped item.
-        if location.distance(from: previousLocationOfUpdating) > distance * 0.9 {
-            updateGeofences(location: location)
-            busy = false
-        }
-        busy = false
-    }
-    
     private func updateGeofences(location: CLLocation) {
-        significantLocationSubscriber.disable()
-        forceLocationSubscriber.disable()
-
+        locationSubscriber.disable()
+        
         currentDistances = [:]
         items.forEach { (item) in
             currentDistances[item.id] = CLLocation(latitude: item.coordinate.latitude, longitude: item.coordinate.longitude).distance(from: location)
@@ -119,7 +99,7 @@ class CameraAlertManager: NSObject {
 
 
         previousLocationOfUpdating = location
-        if sortedItems.count > kGeofenceLimit, let distance = currentDistances[sortedItems[kGeofenceLimit].id], significantLocationSubscriber.enable() {
+        if sortedItems.count > kGeofenceLimit, let distance = currentDistances[sortedItems[kGeofenceLimit].id], locationSubscriber.enable() {
             previousDistanceToFirstSkippedItem = distance
         }
         else {
@@ -131,24 +111,17 @@ class CameraAlertManager: NSObject {
     func enable(messageDelegate: CommonLocationMessageDelegate, grantedLocationCallback: (()->())? = nil) -> Bool {
         previousLocationOfUpdating = nil
         previousDistanceToFirstSkippedItem = 0
-        significantLocationSubscriber.grantedAuthorization = grantedLocationCallback
-        significantLocationSubscriber.messageDelegate = messageDelegate
-        guard significantLocationSubscriber.enable() else {return false}
-        // Force update when enabling.
-        guard forceLocationSubscriber.enable() else {return false}
+        locationSubscriber.grantedAuthorization = grantedLocationCallback
+        locationSubscriber.messageDelegate = messageDelegate
+        guard locationSubscriber.enable() else {return false}
         isEnabled = true
         return true
     }
     
     func disable() {
         alertItems = []
-        significantLocationSubscriber.disable()
-        forceLocationSubscriber.disable()
+        locationSubscriber.disable()
         isEnabled = false
-    }
-    
-    func forceUpdate() -> Bool {
-        return forceLocationSubscriber.enable()
     }
     
     private func startMonitoring(camListItem: CameraListItem) throws {
@@ -173,6 +146,4 @@ class CameraAlertManager: NSObject {
         unc.setNotificationCategories([category])
         unc.delegate = delegate
     }
-    
-    
 }
