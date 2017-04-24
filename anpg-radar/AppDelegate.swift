@@ -26,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         alertManager.setupNotifications(delegate: self)
 
+        if let window = window {
+            Appearance.applyTheme(window: window)
+        }
         return true
     }
 

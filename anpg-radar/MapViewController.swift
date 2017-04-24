@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var footerStackView: UIStackView!
     @IBOutlet weak var footerViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var footerViewBottom: NSLayoutConstraint!
     @IBOutlet weak var notificationSwitch: UISwitch!
     @IBAction func notificationSwitchChanged(_ sender: Any) {
         guard let svitch = sender as? UISwitch else {return}
@@ -47,10 +48,13 @@ class MapViewController: UIViewController {
             mapView.removeAnnotations(mapView.annotations)
             mapView.addAnnotations(camList)
             CameraAlertManager.shared.items = camList
+            if camList.count > 0 {
+                notificationSwitch.isEnabled = true
+            }
         }
     }
     let bottomView = CameraBottomView.viewFromNib()
-    var originalFooterHeight: CGFloat = 0
+    var originalFooterBottomMargin: CGFloat = 0
     var followLocation = false {
         didSet {
             if followLocation {
@@ -96,7 +100,7 @@ class MapViewController: UIViewController {
         if UserDefaults().bool(forKey: Constants.notificationSettingIdentifier) {
             notificationSwitch.isOn = true
         } else {
-//            notificationSwitch.isEnabled = false
+            notificationSwitch.isEnabled = false
             notificationSwitch.isOn = false
         }
         
@@ -108,13 +112,17 @@ class MapViewController: UIViewController {
         mapView.delegate = self
 
         footerStackView.addArrangedSubview(bottomView)
-        originalFooterHeight = footerViewHeight.constant
+        originalFooterBottomMargin = footerViewBottom.constant
         hideFooter()
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(notify), name: Constants.cameraDetectedNotificationName, object: nil)
 
         loadData()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -150,9 +158,6 @@ class MapViewController: UIViewController {
             guard let sself = self else {return}
             CameraListItem.updateAddresses(elements: elements, completion: { (updatedElements) in
                 sself.camList = elements
-                if elements.count > 0 {
-                    sself.notificationSwitch.isEnabled = true
-                }
                 CameraListItem.localList = elements
             })
             }, failure: { (error) in
@@ -168,7 +173,8 @@ class MapViewController: UIViewController {
     func showFooter() {
         UIView.setAnimationsEnabled(true)
         UIView.animate(withDuration: 0.2) {
-            self.footerViewHeight.constant = self.originalFooterHeight
+            self.footerViewBottom.constant = self.originalFooterBottomMargin
+            self.footerView.alpha = 1
             self.view.layoutIfNeeded()
         }
     }
@@ -176,7 +182,8 @@ class MapViewController: UIViewController {
     func hideFooter() {
         UIView.setAnimationsEnabled(true)
         UIView.animate(withDuration: 0.2, animations: {
-            self.footerViewHeight.constant = 0
+            self.footerViewBottom.constant = -(self.footerViewHeight.constant)
+            self.footerView.alpha = 0
             self.view.layoutIfNeeded()
         })
 

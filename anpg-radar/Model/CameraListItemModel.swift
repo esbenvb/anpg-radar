@@ -58,7 +58,7 @@ class CameraListItem: NSObject, MKAnnotation, NSCoding {
         aCoder.encode(lat, forKey: "lat")
         aCoder.encode(lon, forKey: "lon")
         aCoder.encode(operatur, forKey: "operatur")
-        aCoder.encode(imageUrl, forKey: "iamgeUrl")
+        aCoder.encode(imageUrl, forKey: "imageUrl")
         aCoder.encode(address1, forKey: "address1")
         aCoder.encode(address2, forKey: "address2")
     }
