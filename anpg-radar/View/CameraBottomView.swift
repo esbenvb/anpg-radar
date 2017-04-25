@@ -28,6 +28,8 @@ class CameraBottomView: UIStackView {
             cityLabel.text = cameraListItem.address2
             addressLabel.text = cameraListItem.address1
             imageView.image = Constants.noImageImage
+            headingImageView.isHidden = true
+            distanceLabel.text = ""
 
             DispatchQueue.global(qos: .userInitiated).async {
                 if let image = cameraListItem.image {
@@ -62,6 +64,7 @@ class CameraBottomView: UIStackView {
         let bearing = Int(camLocation.bearing(to: location))
         let shownHeading = (360 + 180 + (bearing - Int(heading))) % 360
         print(shownHeading)
+        headingImageView.isHidden = false
         headingImageView.transform = CGAffineTransform(rotationAngle: CGFloat(shownHeading).toRadians)
 
     }

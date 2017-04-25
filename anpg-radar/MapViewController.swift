@@ -42,6 +42,11 @@ class MapViewController: UIViewController {
         // enable following location
         followLocation = true
     }
+    @IBAction func infoButtonClicked(_ sender: Any) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        guard let vc = sb.instantiateViewController(withIdentifier: "Other") as? OtherViewController else {return}
+        present(vc, animated: true, completion: nil)
+    }
 
     var camList: [CameraListItem] = [] {
         didSet {
