@@ -93,6 +93,16 @@ class MapViewController: UIViewController {
         return subscriber
     }()
     
+    lazy var headingSubscriber: CommonLocationSubscriber = {
+        let subscriber = CommonLocationSubscriber(messageDelegate: self)
+        subscriber.updateHeading = { [weak self] (heading) in
+            guard let sself = self else {return}
+            sself.bottomView.currentHeading = heading
+            print(heading.description)
+        }
+        return subscriber
+    }()
+    
     var regionChangedByUser = false
     
     override func viewDidLoad() {
@@ -177,6 +187,8 @@ class MapViewController: UIViewController {
             self.footerView.alpha = 1
             self.view.layoutIfNeeded()
         }
+        let _ = headingSubscriber.enable()
+        let _ = locationSubscriber.enable()
     }
 
     func hideFooter() {
@@ -186,7 +198,10 @@ class MapViewController: UIViewController {
             self.footerView.alpha = 0
             self.view.layoutIfNeeded()
         })
-
+        headingSubscriber.disable()
+        if !followLocation {
+            locationSubscriber.disable()
+        }
     }
 
     func notify(notification: NSNotification) {

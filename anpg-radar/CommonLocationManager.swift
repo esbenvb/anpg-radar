@@ -16,6 +16,7 @@ class CommonLocationSubscriber: NSObject {
         self.messageDelegate = messageDelegate
     }
     var updateLocation: ((_ location: CLLocation) -> ())?
+    var updateHeading: ((_ heading: CLHeading) -> ())?
     var updateSignificantLocation: ((_ location: CLLocation) -> ())?
     var didEnterRegion: ((_ region: CLRegion) -> ())?
     var didExitRegion: ((_ region: CLRegion) -> ())?
@@ -117,11 +118,15 @@ class CommonLocationManager: NSObject {
             print("stopping")
             locationManager.stopUpdatingLocation()
             locationManager.stopMonitoringSignificantLocationChanges()
+            locationManager.stopUpdatingHeading()
             let locationSubscribersExist = subscribers.contains { (subscriber) -> Bool in
                 return subscriber.updateLocation != nil
             }
             let significantLocationSubscribersExist = subscribers.contains { (subscriber) -> Bool in
                 return subscriber.updateSignificantLocation != nil
+            }
+            let headingSubscribersExist = subscribers.contains { (subscriber) -> Bool in
+                return subscriber.updateHeading != nil
             }
             if locationSubscribersExist {
                 locationManager.startUpdatingLocation()
@@ -133,6 +138,11 @@ class CommonLocationManager: NSObject {
                 print("0, not starting")
             }
 
+            if headingSubscribersExist {
+                locationManager.startUpdatingHeading()
+                print("updating heading")
+            }
+            
             print(locationManager.desiredAccuracy.description)
         }
     }
@@ -297,6 +307,12 @@ extension CommonLocationManager: CLLocationManagerDelegate {
             refusedAuthorizationCallback?()
             refusedAuthorizationCallback = nil
             return
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        subscribers.forEach { (subscriber) in
+            subscriber.updateHeading?(newHeading)
         }
     }
     
