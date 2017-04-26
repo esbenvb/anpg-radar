@@ -102,7 +102,7 @@ class CameraAlertManager: NSObject {
         previousLocationOfUpdating = location
         if sortedItems.count > kGeofenceLimit, let distance = currentDistances[sortedItems[kGeofenceLimit].id], locationSubscriber.enable() {
             previousDistanceToFirstSkippedItem = distance
-            setupOutOfRangeWarning(location: location, distance: distance)
+            setupOutOfRangeWarning(location: location, distance: distance * 0.9)
         }
         else {
             previousDistanceToFirstSkippedItem = 0
