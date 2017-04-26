@@ -1,9 +1,13 @@
 version 1:
 * improve handling geofences… (make region for the current list, trigger when leaving region…
-expiration timestamps of saved list 
+* expiration timestamps of saved list 
 make 2nd page
-colors/styling
+
+* color s/styling
 i18n
+* “backend”
+google analytics
+handle notification subscription (state of switch, disable witch untill success block called)
 
 version 2:
 style notifications

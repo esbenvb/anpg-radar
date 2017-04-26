@@ -33,7 +33,7 @@ extension CameraListResponseModel {
         #if (arch(i386) || arch(x86_64))
             let feedUrlString = "http://localhost:8000/data.json"
         #else
-            let feedUrlString = "https://anpg.dk/data.json"
+            let feedUrlString = "http://anpg.amokk.dk/files/data.json"
         #endif
         
         guard let url = URL(string: feedUrlString) else {return}
@@ -44,6 +44,11 @@ extension CameraListResponseModel {
                 return
             }
             do {
+                if let httpResponse = response as? HTTPURLResponse,  let expires = httpResponse.allHeaderFields["Expires"] as? String {
+                    let expiresDate = DateFormatter.dateFromIso2616(from: expires)
+                    UserDefaults.standard.set(expiresDate, forKey: Constants.cameraListExpiresKey)
+                }
+                
                 guard let parsedData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {return}
                 let responseModel = CameraListResponseModel(json: parsedData)
                 let elements = responseModel?.elements ?? []
@@ -55,5 +60,13 @@ extension CameraListResponseModel {
             }.resume()
         
         
+    }
+}
+
+extension DateFormatter {
+    static func dateFromIso2616(from string: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+        return dateFormatter.date(from: string)
     }
 }

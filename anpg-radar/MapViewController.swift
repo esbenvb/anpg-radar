@@ -163,9 +163,16 @@ class MapViewController: UIViewController {
 
     func loadData() {
         // FIXME: expiration time on list... 
-        if let elements = CameraListItem.localList {
-            camList = elements
-            return
+        let now = Date()
+
+        if let expiresDate = UserDefaults.standard.object(forKey: Constants.cameraListExpiresKey) as? Date {
+            if now.timeIntervalSince(expiresDate) < 0 {
+                if let elements = CameraListItem.localList {
+                    camList = elements
+                    return
+                }
+            }
+            
         }
         
         

@@ -23,6 +23,6 @@ struct Constants {
     static let notificationSettingIdentifier = "CameraNotificationsEnabled"
     static let cameraLocalListKey = "CameraList"
     static let cameraRegionRadius: CLLocationDistance = 1000.0
-    
+    static let cameraListExpiresKey = "cameraListExpiresKey"
 }
 
