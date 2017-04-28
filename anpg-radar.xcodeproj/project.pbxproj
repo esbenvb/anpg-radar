@@ -33,6 +33,9 @@
 		90CCE9A31DF21625000FD386 /* CameraBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE99B1DF21625000FD386 /* CameraBottomView.xib */; };
 		90CCE9A61DF2169E000FD386 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9A41DF2169E000FD386 /* Constants.swift */; };
 		90CCE9A71DF2169E000FD386 /* GeoTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9A51DF2169E000FD386 /* GeoTools.swift */; };
+		90F39B8C1EB3A21200792215 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90F39B8B1EB3A21200792215 /* GoogleService-Info.plist */; };
+		BCE8C2F0710D1F459E4BC4FC /* Pods_anpg_radar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD3A664A72F97E6B8ECBAEE /* Pods_anpg_radar.framework */; };
+		EDF05B6AC6B61F0090CA3486 /* Pods_notification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923490AB7B027193AF4AFDA0 /* Pods_notification.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,10 +63,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		07CE9A458218269E83A3A293 /* Pods-notification.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notification.release.xcconfig"; path = "Pods/Target Support Files/Pods-notification/Pods-notification.release.xcconfig"; sourceTree = "<group>"; };
+		4063D32B1CFBA29917717614 /* Pods-anpg-radar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-anpg-radar.release.xcconfig"; path = "Pods/Target Support Files/Pods-anpg-radar/Pods-anpg-radar.release.xcconfig"; sourceTree = "<group>"; };
 		900BB3BF1EAD30100091C5FB /* route (1).gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "route (1).gpx"; sourceTree = "<group>"; };
 		900BB3C01EAD30100091C5FB /* waypoints.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = waypoints.gpx; sourceTree = "<group>"; };
 		9014AFA31EA6B480007E6141 /* Alert_UIViewController_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert_UIViewController_Extension.swift; sourceTree = "<group>"; };
 		901C882E1EAA90E100ABCAF6 /* coordinates.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = coordinates.gpx; sourceTree = "<group>"; };
+		90393D681EB3CEA100ACE48B /* anpg-radar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "anpg-radar-Bridging-Header.h"; sourceTree = "<group>"; };
 		904A28421E5E66E8009EF2B7 /* notification.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = notification.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		904A28441E5E66E8009EF2B7 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		904A28461E5E66E8009EF2B7 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
@@ -89,6 +95,11 @@
 		90CCE99B1DF21625000FD386 /* CameraBottomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraBottomView.xib; sourceTree = "<group>"; };
 		90CCE9A41DF2169E000FD386 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		90CCE9A51DF2169E000FD386 /* GeoTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoTools.swift; sourceTree = "<group>"; };
+		90F39B8B1EB3A21200792215 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		923490AB7B027193AF4AFDA0 /* Pods_notification.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_notification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D35A70B279FBFA8E22A92F59 /* Pods-notification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notification.debug.xcconfig"; path = "Pods/Target Support Files/Pods-notification/Pods-notification.debug.xcconfig"; sourceTree = "<group>"; };
+		D63962C726F138126ADC7031 /* Pods-anpg-radar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-anpg-radar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-anpg-radar/Pods-anpg-radar.debug.xcconfig"; sourceTree = "<group>"; };
+		DAD3A664A72F97E6B8ECBAEE /* Pods_anpg_radar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_anpg_radar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +109,7 @@
 			files = (
 				904A28471E5E66E8009EF2B7 /* UserNotificationsUI.framework in Frameworks */,
 				904A28451E5E66E8009EF2B7 /* UserNotifications.framework in Frameworks */,
+				EDF05B6AC6B61F0090CA3486 /* Pods_notification.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCE8C2F0710D1F459E4BC4FC /* Pods_anpg_radar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +129,8 @@
 			children = (
 				904A28441E5E66E8009EF2B7 /* UserNotifications.framework */,
 				904A28461E5E66E8009EF2B7 /* UserNotificationsUI.framework */,
+				DAD3A664A72F97E6B8ECBAEE /* Pods_anpg_radar.framework */,
+				923490AB7B027193AF4AFDA0 /* Pods_notification.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -133,6 +148,7 @@
 		90CCE9721DF214B3000FD386 = {
 			isa = PBXGroup;
 			children = (
+				90F39B8B1EB3A21200792215 /* GoogleService-Info.plist */,
 				900BB3BF1EAD30100091C5FB /* route (1).gpx */,
 				900BB3C01EAD30100091C5FB /* waypoints.gpx */,
 				901C882E1EAA90E100ABCAF6 /* coordinates.gpx */,
@@ -140,6 +156,7 @@
 				904A28481E5E66E8009EF2B7 /* notification */,
 				904A28431E5E66E8009EF2B7 /* Frameworks */,
 				90CCE97C1DF214B3000FD386 /* Products */,
+				B5915210BCD38B14A190F76B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,6 +188,7 @@
 				90CCE9821DF214B3000FD386 /* OtherViewController.swift */,
 				90B8B2001E678F3F00A1AEF1 /* todo.txt */,
 				90CCE9951DF21625000FD386 /* View */,
+				90393D681EB3CEA100ACE48B /* anpg-radar-Bridging-Header.h */,
 			);
 			path = "anpg-radar";
 			sourceTree = "<group>";
@@ -194,6 +212,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		B5915210BCD38B14A190F76B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D63962C726F138126ADC7031 /* Pods-anpg-radar.debug.xcconfig */,
+				4063D32B1CFBA29917717614 /* Pods-anpg-radar.release.xcconfig */,
+				D35A70B279FBFA8E22A92F59 /* Pods-notification.debug.xcconfig */,
+				07CE9A458218269E83A3A293 /* Pods-notification.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -201,9 +230,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 904A28521E5E66E8009EF2B7 /* Build configuration list for PBXNativeTarget "notification" */;
 			buildPhases = (
+				2067C48DA1C2BCB98FACDD7F /* [CP] Check Pods Manifest.lock */,
 				904A283E1E5E66E8009EF2B7 /* Sources */,
 				904A283F1E5E66E8009EF2B7 /* Frameworks */,
 				904A28401E5E66E8009EF2B7 /* Resources */,
+				273A346C06EBC5E9899971F3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -218,10 +249,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 90CCE98F1DF214B3000FD386 /* Build configuration list for PBXNativeTarget "anpg-radar" */;
 			buildPhases = (
+				54EF34BE0C487EBF245B6F94 /* [CP] Check Pods Manifest.lock */,
 				90CCE9771DF214B3000FD386 /* Sources */,
 				90CCE9781DF214B3000FD386 /* Frameworks */,
 				90CCE9791DF214B3000FD386 /* Resources */,
 				904A28551E5E66E8009EF2B7 /* Embed App Extensions */,
+				85DA3FFFCD47CC01EB4FB170 /* [CP] Embed Pods Frameworks */,
+				D0D0716583E21BD3C5C94FF4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -294,6 +328,7 @@
 			files = (
 				90CCE98B1DF214B3000FD386 /* LaunchScreen.storyboard in Resources */,
 				90CCE9A31DF21625000FD386 /* CameraBottomView.xib in Resources */,
+				90F39B8C1EB3A21200792215 /* GoogleService-Info.plist in Resources */,
 				90B8B2011E678F3F00A1AEF1 /* todo.txt in Resources */,
 				90CCE9881DF214B3000FD386 /* Assets.xcassets in Resources */,
 				900BB3C21EAD30100091C5FB /* waypoints.gpx in Resources */,
@@ -304,6 +339,84 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2067C48DA1C2BCB98FACDD7F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		273A346C06EBC5E9899971F3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-notification/Pods-notification-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		54EF34BE0C487EBF245B6F94 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		85DA3FFFCD47CC01EB4FB170 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-anpg-radar/Pods-anpg-radar-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D0D0716583E21BD3C5C94FF4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-anpg-radar/Pods-anpg-radar-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		904A283E1E5E66E8009EF2B7 /* Sources */ = {
@@ -374,6 +487,7 @@
 /* Begin XCBuildConfiguration section */
 		904A28531E5E66E8009EF2B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35A70B279FBFA8E22A92F59 /* Pods-notification.debug.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEVELOPMENT_TEAM = WHQ3KJUC5S;
@@ -389,6 +503,7 @@
 		};
 		904A28541E5E66E8009EF2B7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07CE9A458218269E83A3A293 /* Pods-notification.release.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEVELOPMENT_TEAM = WHQ3KJUC5S;
@@ -497,6 +612,7 @@
 		};
 		90CCE9901DF214B3000FD386 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D63962C726F138126ADC7031 /* Pods-anpg-radar.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -504,14 +620,17 @@
 				DEVELOPMENT_TEAM = WHQ3KJUC5S;
 				INFOPLIST_FILE = "anpg-radar/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "dk.vonbuchwald.esben.anpg-radar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/$(PROJECT_NAME)/$(PROJECT_NAME)-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		90CCE9911DF214B3000FD386 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4063D32B1CFBA29917717614 /* Pods-anpg-radar.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -521,6 +640,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "dk.vonbuchwald.esben.anpg-radar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/$(PROJECT_NAME)/$(PROJECT_NAME)-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

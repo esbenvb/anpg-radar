@@ -9,7 +9,6 @@
 import UIKit
 import MapKit
 
-
 // FIXME handle unload of view
 
 // kig her https://github.com/MartinBergerDX/LocalNotifications_iOS10/blob/master/LocalNotification_iOS10/ViewController.swift
@@ -132,8 +131,6 @@ class MapViewController: UIViewController {
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(notify), name: Constants.cameraDetectedNotificationName, object: nil)
-
-        loadData()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -148,6 +145,18 @@ class MapViewController: UIViewController {
                 return
             }
         }
+        loadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let tracker = GAI.sharedInstance().defaultTracker else { return }
+        tracker.set(kGAIScreenName, value: type(of: self).description())
+        
+        guard let builder = GAIDictionaryBuilder.createScreenView() else { return }
+        tracker.send(builder.build() as [NSObject : AnyObject])
+
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -162,19 +171,15 @@ class MapViewController: UIViewController {
     }
 
     func loadData() {
-        // FIXME: expiration time on list... 
-        let now = Date()
-
         if let expiresDate = UserDefaults.standard.object(forKey: Constants.cameraListExpiresKey) as? Date {
+            let now = Date()
             if now.timeIntervalSince(expiresDate) < 0 {
                 if let elements = CameraListItem.localList {
                     camList = elements
                     return
                 }
             }
-            
         }
-        
         
         CameraListResponseModel.load(completion: { [weak self] (elements) in
             guard let sself = self else {return}
@@ -183,6 +188,17 @@ class MapViewController: UIViewController {
                 CameraListItem.localList = elements
             })
             }, failure: { (error) in
+                let ac = UIAlertController(title: "Error", message: "Could not load data. Retry?", preferredStyle: .alert)
+                let closeAction = UIAlertAction(title: "Close", style: .cancel, handler: { _ in
+                    ac.dismiss(animated: true, completion: nil)
+                })
+                ac.addAction(closeAction)
+                let retryAction = UIAlertAction(title: "Retry", style: .default, handler: { _ in
+                    self.loadData()
+                })
+                ac.addAction(retryAction)
+                self.present(ac, animated: true, completion: nil)
+                
                 print(error?.localizedDescription ?? "Generic error")
         })
     }
