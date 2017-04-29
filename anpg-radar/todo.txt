@@ -6,7 +6,7 @@ make 2nd page
 * color s/styling
 i18n
 * “backend”
-google analytics
+* google analytics
 handle notification subscription (state of switch, disable witch untill success block called)
 
 version 2:

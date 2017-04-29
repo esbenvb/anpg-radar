@@ -20,7 +20,7 @@ struct Appearance {
         OverlayView.appearance().cornerRadius = 8
         UILabel.appearance(whenContainedInInstancesOf: [OverlayView.self]).textColor = .white
         FolloLocationButton.appearance().setTitleColor(tintColor, for: .normal)
-        UITabBar.appearance().barTintColor = blackTransparent
-
+        UINavigationBar.appearance().backgroundColor = .black
+        
     }
 }

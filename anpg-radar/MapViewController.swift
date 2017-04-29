@@ -42,9 +42,9 @@ class MapViewController: UIViewController {
         followLocation = true
     }
     @IBAction func infoButtonClicked(_ sender: Any) {
-        let sb = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = sb.instantiateViewController(withIdentifier: "Other") as? OtherViewController else {return}
-        present(vc, animated: true, completion: nil)
+        let vc = InfoPageViewController()
+        let nc = UINavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
     }
 
     var camList: [CameraListItem] = [] {
@@ -118,8 +118,8 @@ class MapViewController: UIViewController {
             notificationSwitch.isOn = false
         }
         
-        followLocationButton.setTitle("Follow", for: .normal)
-        followLocationButton.setTitle("✅ Follow", for: .selected)
+        followLocationButton.setTitle("My location", for: .normal)
+        followLocationButton.setTitle("✅ My location", for: .selected)
         
         followLocation = false
 
@@ -262,7 +262,7 @@ extension MapViewController: MKMapViewDelegate {
         if pinView == nil {
             pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
         }
-        let mapPinImage = UIImage(named: "mapPin")
+        let mapPinImage = #imageLiteral(resourceName: "mapPin")
         pinView?.image = mapPinImage
         return pinView
     }
@@ -272,13 +272,13 @@ extension MapViewController: MKMapViewDelegate {
         guard let cameraListItem = view.annotation as? CameraListItem else {return}
         bottomView.cameraListItem = cameraListItem
         showFooter()
-        view.image = UIImage(named: "first")
+        view.image = #imageLiteral(resourceName: "mapArrow")
     }
 
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         print("DID DESELECT")
         hideFooter()
-        view.image = UIImage(named: "mapPin")
+        view.image = #imageLiteral(resourceName: "mapPin")
 
     }
 
