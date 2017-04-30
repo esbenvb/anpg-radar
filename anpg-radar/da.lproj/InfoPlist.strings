@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  anpg-radar
+
+  Created by Esben von Buchwald on 30/04/2017.
+  Copyright © 2017 Esben von Buchwald. All rights reserved.
+*/
+"NSLocationWhenInUseUsageDescription" = "Du skal tillade lokations-adgang for denne app, for at benytte kortet og advarslerne.";

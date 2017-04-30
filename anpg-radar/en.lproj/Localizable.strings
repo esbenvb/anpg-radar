@@ -1,0 +1,45 @@
+/*
+ Localizable.strings
+ anpg-radar
+ 
+ Created by Esben von Buchwald on 30/04/2017.
+ Copyright © 2017 Esben von Buchwald. All rights reserved.
+ */
+
+"switch.warnings" = "Warnings";
+"button.followlocation.inactive" = "My location";
+"button.followlocation.active" = "✅ My location";
+"notification.title.warning" = "Camera nearby!";
+"label.address.unknown" = "Unknown address";
+"notification.title.outofrange" = "Camera warnings out of range";
+"notification.body.outofrange" = "Click to open the app, this will update the warnings to your current area";
+"app.title" = "ANPG Radar";
+"app.version" = "Version %@ build %@";
+"alert.title.needslocationwheninuse" = "Needs access when in use";
+"alert.message.needslocationwheninuse" = "The feature requires location access when the app is in use. Activate it on the settings page.";
+"alert.button.close" = "Close";
+"alert.button.settings" = "Settings";
+"alert.button.retry" = "Retry";
+"alert.message.loadingerror" = "Could not load data. Retry?";
+"label.info.privacy" = "This app does not collect any sensitive information or hand it over to 3rd parties. Location is only used for showing your position on the map, distances to cameras and for enabling warnings. The application is not running/tracking location in the background, even when the warnings are enabled. Furthermore, enabling warnings should have no impact on power consumption.\n\nGoogle Analytics is used to collect anonymous usage statistics.";
+"title.info.privacy" = "Privacy";
+"label.info.datasource" = "Data is provided by the anpg.dk website and is collected by users.";
+"title.info.datasource" = "Data Source";
+"label.info.about" = "This app is made by Esben von Buchwald and its main purpose is to make clear to the citizens, how often they are registered, in an attempt to bring increased attention to the problems with mass surveillance.\n\nNobody currently profits from this app.";
+"title.info.about" = "About";
+"label.info.whatisanpg" = "ANPG (short for Automatisk NummerPlade Genkendelse) is a system that registers cars and their license plates, and stores the data for a certain period. Most people are not aware of this, neither do they know where and when their car is being registered.\n\nThis app can show you where the cameras have been discovered, and warn you when getting near.\n\nBe aware that police cars may also register your license plate,. This app only warns about the cameras at fixed positions. They might look like the following.";
+"title.info.whatisanpg" = "What is APNG?";
+"label.info.reportcamera" = "The camera list is maintained by Christian Panton from anpg.dk. Click to contact him.";
+"title.info.reportcamera" = "Report new camera";
+"alert.message.unknownerror" = "Unknown error";
+"alert.title.error" = "Error";
+"alert.title.devicenotsupported" = "Device not supported";
+"alert.message.monitoringnotavailable" = "Monitoring is not supported by your device";
+"alert.message.significantlocationnotavailable" = "Significant location changes are not supported by your device";
+"alert.message.locationnotavailable" = "Location updates are not supported by your device";
+"alert.title.needslocationaccess" = "Needs location access";
+"alert.message.needslocationaccess" = "You need to allow location access for this app to use the map overview and warnings.";
+"alert.title.needswheninuselocationaccess" = "Needs access when in use";
+"alert.message.needswheninuselocationaccess" = "The feature requires location access when the app is in use. Activate it on the settings page.";
+"alert.title.needsalwayslocationaccess" = "Needs access always";
+"alert.message.needsalwayslocationaccess" = "The feature requires location access, when the app is in the background. Activate it on the settings page.";

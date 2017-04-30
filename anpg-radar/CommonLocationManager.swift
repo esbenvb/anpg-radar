@@ -70,25 +70,25 @@ enum CommonLocationError: Error {
     var alert: CommonLocationErrorAlert {
         switch (self) {
         case .locationNotGrantedWhenInuse:
-            return CommonLocationErrorAlert(title: "Needs access when in use", closeButtonLabel: "Close", message: "The feature requires location access when the app is in use. Activate it on the settings page.", secondButtonLabel: "Settings", secondButtonHandler: CommonLocationManager.openAppSettings)
+            return CommonLocationErrorAlert(title: "alert.title.needswheninuselocationaccess".localized, closeButtonLabel: "alert.button.close".localized, message: "alert.message.needswheninuselocationaccess.".localized, secondButtonLabel: "alert.button.settings".localized, secondButtonHandler: CommonLocationManager.openAppSettings)
             
         case .locationNotGrantedAlways:
-            return CommonLocationErrorAlert(title: "Needs access always", closeButtonLabel: "Close", message: "The feature requires location access, when the app is in the background. Activate it on the settings page.", secondButtonLabel: "Settings", secondButtonHandler: CommonLocationManager.openAppSettings)
+            return CommonLocationErrorAlert(title: "alert.title.needsalwayslocationaccess".localized , closeButtonLabel: "alert.button.close".localized, message: "alert.message.needsalwayslocationaccess".localized, secondButtonLabel: "alert.button.settings".localized, secondButtonHandler: CommonLocationManager.openAppSettings)
             
         case .locationNotDetermined:
-            return CommonLocationErrorAlert(title: "Needs location access.", closeButtonLabel: "Close", message: "You need to allow location access for this app FIXME.", secondButtonLabel: nil, secondButtonHandler: nil)
+            return CommonLocationErrorAlert(title: "alert.title.needslocationaccess".localized, closeButtonLabel: "alert.button.close".localized, message: "alert.message.needslocationaccess".localized, secondButtonLabel: nil, secondButtonHandler: nil)
             
         case .locationUpdatesNotSupported:
-            return CommonLocationErrorAlert(title: "Device not supported", closeButtonLabel: "Close", message: "Location updates are not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
+            return CommonLocationErrorAlert(title: "alert.title.devicenotsupported".localized, closeButtonLabel: "alert.button.close".localized, message: "alert.message.locationnotavailable".localized, secondButtonLabel: nil, secondButtonHandler: nil)
             
         case .significantLocationUpdatesNotSupported:
-            return CommonLocationErrorAlert(title: "Device not supported", closeButtonLabel: "Close", message: "Significant location changes are not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
+            return CommonLocationErrorAlert(title: "alert.title.devicenotsupported".localized, closeButtonLabel: "alert.button.close".localized, message: "alert.message.significantlocationnotavailable".localized, secondButtonLabel: nil, secondButtonHandler: nil)
             
         case .monitoringNotAvailable:
-            return CommonLocationErrorAlert(title: "Device not supported", closeButtonLabel: "Close", message: "Monitoring is not supported by your device", secondButtonLabel: nil, secondButtonHandler: nil)
+            return CommonLocationErrorAlert(title: "alert.title.devicenotsupported".localized, closeButtonLabel: "alert.button.close".localized, message: "alert.message.monitoringnotavailable".localized, secondButtonLabel: nil, secondButtonHandler: nil)
 
         case .unknown:
-            return CommonLocationErrorAlert(title: "Error", closeButtonLabel: "Close", message: "Unknown error", secondButtonLabel: nil, secondButtonHandler: nil)
+            return CommonLocationErrorAlert(title: "alert.title.error".localized, closeButtonLabel: "alert.button.close".localized, message: "alert.message.unknownerror".localized, secondButtonLabel: nil, secondButtonHandler: nil)
         }
     }
 }

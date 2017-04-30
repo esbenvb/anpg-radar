@@ -87,13 +87,13 @@ extension CameraListItem {
     
     var notificationContent: UNNotificationContent {
         let content = UNMutableNotificationContent()
-        content.title = "Camera nearby!"
+        content.title = "notification.title.warning".localized
         content.subtitle = self.id
         if let address1 = self.address1, let address2 = self.address2 {
             content.body = "\(address1), \(address2)"
         }
         else {
-            content.body = "Unknown address"
+            content.body = "label.address.unknown".localized
         }
         content.categoryIdentifier = Constants.notificationCategoryId
         content.sound = UNNotificationSound.default()

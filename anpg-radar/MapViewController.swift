@@ -118,8 +118,8 @@ class MapViewController: UIViewController {
             notificationSwitch.isOn = false
         }
         
-        followLocationButton.setTitle("My location", for: .normal)
-        followLocationButton.setTitle("✅ My location", for: .selected)
+        followLocationButton.setTitle("button.followlocation.inactive".localized, for: .normal)
+        followLocationButton.setTitle("button.followlocation.active".localized, for: .selected)
         
         followLocation = false
 

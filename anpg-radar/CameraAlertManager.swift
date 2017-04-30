@@ -117,8 +117,8 @@ class CameraAlertManager: NSObject {
         
         let content: UNNotificationContent = {
             let content = UNMutableNotificationContent()
-            content.title = "Camera warnings out of range"
-            content.body = "Click to open the app, this will update the warnings to your current area"
+            content.title = "notification.title.outofrange".localized
+            content.body = "notification.body.outofrange".localized
             return content
         }()
         

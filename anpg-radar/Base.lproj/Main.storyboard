@@ -27,16 +27,16 @@
                                 <gestureRecognizers/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2jb-OK-ocS" customClass="OverlayView" customModule="anpg_radar" customModuleProvider="target">
-                                <rect key="frame" x="201.5" y="28" width="165.5" height="81"/>
+                                <rect key="frame" x="202" y="28" width="165" height="81"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="A7w-6P-lLI">
-                                        <rect key="frame" x="8" y="8" width="149.5" height="65"/>
+                                        <rect key="frame" x="8" y="8" width="149" height="65"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="CXk-aT-ecp">
-                                                <rect key="frame" x="0.0" y="0.0" width="149.5" height="31"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="149" height="31"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1f-zg-UgX">
-                                                        <rect key="frame" x="0.0" y="0.0" width="96.5" height="31"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warnings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1f-zg-UgX">
+                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="31"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -47,7 +47,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6kU-4q-Tp4">
-                                                        <rect key="frame" x="100.5" y="0.0" width="51" height="31"/>
+                                                        <rect key="frame" x="100" y="0.0" width="51" height="31"/>
                                                         <connections>
                                                             <action selector="notificationSwitchChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="atg-O1-jFg"/>
                                                         </connections>
@@ -55,7 +55,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="fO1-XX-Z3X">
-                                                <rect key="frame" x="0.0" y="31" width="149.5" height="34"/>
+                                                <rect key="frame" x="0.0" y="31" width="149" height="34"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bwA-mI-OiA" customClass="FolloLocationButton" customModule="anpg_radar" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="22" height="34"/>
@@ -64,7 +64,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X4A-Q3-jyB" customClass="FolloLocationButton" customModule="anpg_radar" customModuleProvider="target">
-                                                        <rect key="frame" x="119.5" y="0.0" width="30" height="34"/>
+                                                        <rect key="frame" x="119" y="0.0" width="30" height="34"/>
                                                         <connections>
                                                             <action selector="followLocationButtonClicked:" destination="9pv-A4-QxB" eventType="touchUpInside" id="aAf-s8-Qoq"/>
                                                         </connections>
@@ -79,6 +79,7 @@
                                     <constraint firstItem="A7w-6P-lLI" firstAttribute="top" secondItem="2jb-OK-ocS" secondAttribute="topMargin" id="SMW-9N-WGy"/>
                                     <constraint firstItem="A7w-6P-lLI" firstAttribute="leading" secondItem="2jb-OK-ocS" secondAttribute="leadingMargin" id="Tn6-sy-7q6"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="A7w-6P-lLI" secondAttribute="bottom" id="cJl-hr-SBz"/>
+                                    <constraint firstAttribute="width" constant="165" id="v5a-Ar-Vlf"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ifr-L3-mQJ" customClass="OverlayView" customModule="anpg_radar" customModuleProvider="target">

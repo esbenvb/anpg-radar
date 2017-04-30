@@ -10,6 +10,8 @@
 		900BB3C11EAD30100091C5FB /* route (1).gpx in Resources */ = {isa = PBXBuildFile; fileRef = 900BB3BF1EAD30100091C5FB /* route (1).gpx */; };
 		900BB3C21EAD30100091C5FB /* waypoints.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 900BB3C01EAD30100091C5FB /* waypoints.gpx */; };
 		9014AFA41EA6B480007E6141 /* Alert_UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9014AFA31EA6B480007E6141 /* Alert_UIViewController_Extension.swift */; };
+		9019E7A31EB67FB100377959 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9019E7A51EB67FB100377959 /* Localizable.strings */; };
+		9019E7A81EB68F0600377959 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9019E7AA1EB68F0600377959 /* InfoPlist.strings */; };
 		901C882F1EAA90E100ABCAF6 /* coordinates.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 901C882E1EAA90E100ABCAF6 /* coordinates.gpx */; };
 		904A28451E5E66E8009EF2B7 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 904A28441E5E66E8009EF2B7 /* UserNotifications.framework */; };
 		904A28471E5E66E8009EF2B7 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 904A28461E5E66E8009EF2B7 /* UserNotificationsUI.framework */; };
@@ -21,6 +23,7 @@
 		90868EF31E9FFABD001E1798 /* CommonLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90868EF21E9FFABD001E1798 /* CommonLocationManager.swift */; };
 		909F7CC81EB400100037C3DF /* InfoPageHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 909F7CC71EB400100037C3DF /* InfoPageHeaderTableViewCell.xib */; };
 		909F7CCA1EB400220037C3DF /* InfoPageHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909F7CC91EB400220037C3DF /* InfoPageHeaderTableViewCell.swift */; };
+		909F7CCE1EB668C20037C3DF /* String_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909F7CCD1EB668C20037C3DF /* String_Extensions.swift */; };
 		90A9EB211E6E049100C76B2C /* CameraAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9EB201E6E049100C76B2C /* CameraAlertManager.swift */; };
 		90B8B2011E678F3F00A1AEF1 /* todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90B8B2001E678F3F00A1AEF1 /* todo.txt */; };
 		90CCE97F1DF214B3000FD386 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE97E1DF214B3000FD386 /* AppDelegate.swift */; };
@@ -70,6 +73,13 @@
 		900BB3BF1EAD30100091C5FB /* route (1).gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "route (1).gpx"; sourceTree = "<group>"; };
 		900BB3C01EAD30100091C5FB /* waypoints.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = waypoints.gpx; sourceTree = "<group>"; };
 		9014AFA31EA6B480007E6141 /* Alert_UIViewController_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert_UIViewController_Extension.swift; sourceTree = "<group>"; };
+		9019E79E1EB67EAC00377959 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		9019E79F1EB67EAC00377959 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Main.strings; sourceTree = "<group>"; };
+		9019E7A01EB67EAC00377959 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		9019E7A61EB67FB400377959 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9019E7A71EB67FB600377959 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9019E7A91EB68F0600377959 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9019E7AB1EB68F0800377959 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		901C882E1EAA90E100ABCAF6 /* coordinates.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = coordinates.gpx; sourceTree = "<group>"; };
 		90393D681EB3CEA100ACE48B /* anpg-radar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "anpg-radar-Bridging-Header.h"; sourceTree = "<group>"; };
 		904A28421E5E66E8009EF2B7 /* notification.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = notification.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +93,7 @@
 		90868EF21E9FFABD001E1798 /* CommonLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonLocationManager.swift; sourceTree = "<group>"; };
 		909F7CC71EB400100037C3DF /* InfoPageHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoPageHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		909F7CC91EB400220037C3DF /* InfoPageHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoPageHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		909F7CCD1EB668C20037C3DF /* String_Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String_Extensions.swift; sourceTree = "<group>"; };
 		90A9EB201E6E049100C76B2C /* CameraAlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraAlertManager.swift; sourceTree = "<group>"; };
 		90B8B2001E678F3F00A1AEF1 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
 		90CCE97B1DF214B3000FD386 /* anpg-radar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "anpg-radar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,6 +193,7 @@
 				90726B6C1EAE8B8F00E81F20 /* Appearance.swift */,
 				90CCE9871DF214B3000FD386 /* Assets.xcassets */,
 				90A9EB201E6E049100C76B2C /* CameraAlertManager.swift */,
+				9019E7A51EB67FB100377959 /* Localizable.strings */,
 				90868EF21E9FFABD001E1798 /* CommonLocationManager.swift */,
 				90CCE9A41DF2169E000FD386 /* Constants.swift */,
 				90CCE9A51DF2169E000FD386 /* GeoTools.swift */,
@@ -193,6 +205,8 @@
 				90CCE9921DF21625000FD386 /* Model */,
 				90B8B2001E678F3F00A1AEF1 /* todo.txt */,
 				90CCE9951DF21625000FD386 /* View */,
+				909F7CCD1EB668C20037C3DF /* String_Extensions.swift */,
+				9019E7AA1EB68F0600377959 /* InfoPlist.strings */,
 			);
 			path = "anpg-radar";
 			sourceTree = "<group>";
@@ -307,6 +321,7 @@
 			knownRegions = (
 				en,
 				Base,
+				da,
 			);
 			mainGroup = 90CCE9721DF214B3000FD386;
 			productRefGroup = 90CCE97C1DF214B3000FD386 /* Products */;
@@ -333,7 +348,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				90CCE98B1DF214B3000FD386 /* LaunchScreen.storyboard in Resources */,
+				9019E7A81EB68F0600377959 /* InfoPlist.strings in Resources */,
 				90CCE9A31DF21625000FD386 /* CameraBottomView.xib in Resources */,
+				9019E7A31EB67FB100377959 /* Localizable.strings in Resources */,
 				90F39B8C1EB3A21200792215 /* GoogleService-Info.plist in Resources */,
 				90B8B2011E678F3F00A1AEF1 /* todo.txt in Resources */,
 				90CCE9881DF214B3000FD386 /* Assets.xcassets in Resources */,
@@ -448,6 +465,7 @@
 				90CCE99C1DF21625000FD386 /* CameraListItemModel.swift in Sources */,
 				90CCE97F1DF214B3000FD386 /* AppDelegate.swift in Sources */,
 				90CCE9811DF214B3000FD386 /* MapViewController.swift in Sources */,
+				909F7CCE1EB668C20037C3DF /* String_Extensions.swift in Sources */,
 				90CCE9A61DF2169E000FD386 /* Constants.swift in Sources */,
 				90CCE9A71DF2169E000FD386 /* GeoTools.swift in Sources */,
 				9014AFA41EA6B480007E6141 /* Alert_UIViewController_Extension.swift in Sources */,
@@ -466,10 +484,29 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		9019E7A51EB67FB100377959 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9019E7A61EB67FB400377959 /* en */,
+				9019E7A71EB67FB600377959 /* da */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		9019E7AA1EB68F0600377959 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9019E7A91EB68F0600377959 /* en */,
+				9019E7AB1EB68F0800377959 /* da */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		904A284B1E5E66E8009EF2B7 /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				904A284C1E5E66E8009EF2B7 /* Base */,
+				9019E7A01EB67EAC00377959 /* da */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -478,6 +515,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				90CCE9851DF214B3000FD386 /* Base */,
+				9019E79F1EB67EAC00377959 /* da */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -486,6 +524,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				90CCE98A1DF214B3000FD386 /* Base */,
+				9019E79E1EB67EAC00377959 /* da */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -529,6 +568,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -579,6 +619,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

@@ -1,9 +1,9 @@
 version 1:
 * improve handling geofences… (make region for the current list, trigger when leaving region…
 * expiration timestamps of saved list 
-make 2nd page
+* make 2nd page
 
-* color s/styling
+* colors/styling
 i18n
 * “backend”
 * google analytics
