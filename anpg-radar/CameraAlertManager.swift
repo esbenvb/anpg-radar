@@ -1,4 +1,4 @@
-//
+    //
 //  CameraAlertManager.swift
 //  anpg-radar
 //
@@ -12,6 +12,15 @@ import UserNotifications
 
 let kGeofenceLimit = 20 // FIXME
 
+enum CameraNotificationError: Error {
+    case handlerNotReady
+    case handlerNotInitialized
+}
+
+protocol CameraAlertManagerNotificationHandler: class  {
+    func handleNotification(item: CameraListItem) throws
+}
+    
 class CameraAlertManager: NSObject {
     
     static let shared: CameraAlertManager = CameraAlertManager()
@@ -29,6 +38,9 @@ class CameraAlertManager: NSObject {
             UserDefaults().set(isEnabled, forKey: Constants.notificationSettingIdentifier)
         }
     }
+    
+    private var itemFromNotification: CameraListItem?
+    weak var notificationHandler: CameraAlertManagerNotificationHandler?
     
     private var currentDistances: [String : CLLocationDistance] = [:]
     private var previousLocationOfUpdating: CLLocation?
@@ -144,6 +156,35 @@ class CameraAlertManager: NSObject {
         locationSubscriber.disable()
         isEnabled = false
     }
+
+    func pushNotification(item: CameraListItem) {
+        do {
+            if let handler = notificationHandler {
+                try handler.handleNotification(item: item)
+            }
+            else {
+                itemFromNotification = item
+            }
+        }
+        catch CameraNotificationError.handlerNotReady {
+            itemFromNotification = item
+        }
+        catch {
+            print("UNKNOWN ERROR     func handleNotification(item: CameraListItem)")
+        }
+    }
+    
+    func popSelectedNotification() -> CameraListItem? {
+        guard let item = itemFromNotification else {return nil}
+        itemFromNotification = nil
+        return item
+    }
+
+    // Make one function to call here when app is launched with notification as option or notification has been received
+    //    try calling the warningdelegate (or similar) and if returned true, the delegate (map VC) has shown the notification. Otherwise, set the variable for showing then VC is ready
+//    VC should have a flag set in viewDidAppear, indicating that it's ready.  and check that flag and that there's data. If no data or not appeard, return false.
+//    When appearing, check if there's data and get eventually set notifications
+    // When data is set, check if view has apppeared, and get eventurally set notificaitons
     
     func setupNotifications(delegate: UNUserNotificationCenterDelegate) {
         let cameraWarning: UNNotificationCategory = {
