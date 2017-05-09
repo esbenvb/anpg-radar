@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>TRACKING_ID</key>
-	<string>UA-37513559-3</string>
+	<string>UA-37513559-4</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>dk.vonbuchwald.esben.anpg-radar</string>
+	<string>dk.vonbuchwald.esben.anpgradar</string>
 	<key>PROJECT_ID</key>
 	<string>anpg-radar</string>
 	<key>IS_ADS_ENABLED</key>
@@ -21,6 +21,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<false/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:875235230802:ios:22af0f42c483e10a</string>
+	<string>1:875235230802:ios:946ed606b98cf3f9</string>
 </dict>
 </plist>

@@ -1,4 +1,4 @@
-//
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        //
 //  MapViewController.swift
 //  ANPG Radar
 //
@@ -53,7 +53,11 @@ class MapViewController: UIViewController {
             mapView.addAnnotations(camList)
             CameraAlertManager.shared.items = camList
             if camList.count > 0 {
+                isDataReady = true
                 notificationSwitch.isEnabled = true
+            }
+            else {
+                isDataReady = false
             }
         }
     }
@@ -79,6 +83,24 @@ class MapViewController: UIViewController {
 
             }
         }
+    }
+    
+    var isDataReady: Bool = false {
+        didSet {
+            showNotificationIfPossible()
+        }
+    }
+    var isVCShown: Bool = false {
+        didSet {
+            showNotificationIfPossible()
+        }
+    }
+    
+    func showNotificationIfPossible() {
+        if isDataReady && isVCShown, let item = CameraAlertManager.shared.popSelectedNotification() {
+            selectAnnotation(byId: item.id)
+        }
+
     }
     
     lazy var locationSubscriber: CommonLocationSubscriber = {
@@ -127,10 +149,8 @@ class MapViewController: UIViewController {
 
         footerStackView.addArrangedSubview(bottomView)
         originalFooterBottomMargin = footerViewBottom.constant
+        CameraAlertManager.shared.notificationHandler = self
         hideFooter()
-        
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(notify), name: Constants.cameraDetectedNotificationName, object: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -139,6 +159,7 @@ class MapViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        isVCShown = true
         if followLocation {
             guard locationSubscriber.enable() else {
                 followLocation = false
@@ -160,6 +181,7 @@ class MapViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        isVCShown = false
         super.viewDidDisappear(animated)
         locationSubscriber.disable()
     }
@@ -170,6 +192,13 @@ class MapViewController: UIViewController {
         nc.removeObserver(self, name: Constants.cameraDetectedNotificationName, object: nil)
     }
 
+//    func selectStoredNotification() {
+//        // Do not load (and pop) the item until we have the necessary data ready.
+//        guard camList.count > 0 else {return}
+//        guard let item = CameraAlertManager.shared.showSelectedNotification() else {return}
+//        selectAnnotation(byId: item.id)
+//    }
+    
     func loadData() {
         if let expiresDate = UserDefaults.standard.object(forKey: Constants.cameraListExpiresKey) as? Date {
             let now = Date()
@@ -232,13 +261,6 @@ class MapViewController: UIViewController {
         }
     }
 
-    func notify(notification: NSNotification) {
-        guard let item = notification.object as? CameraListItem else {return}
-        
-
-        selectAnnotation(byId: item.id)
-        // play alert sound
-    }
 
     func selectAnnotation(byId id: String) {
         let filteredList = mapView.annotations.filter{ (annotation) -> Bool in
@@ -302,6 +324,14 @@ extension MapViewController: MKMapViewDelegate {
                 return
             }
         })
-        
     }
 }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        extension MapViewController: CameraAlertManagerNotificationHandler {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            func handleNotification(item: CameraListItem) throws {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                if isVCShown && isDataReady {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    selectAnnotation(byId: item.id)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                else { throw CameraNotificationError.handlerNotReady
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }}

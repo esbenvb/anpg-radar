@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Optional: configure GAI options.
         guard let gai = GAI.sharedInstance() else {
             assert(false, "Google Analytics not configured correctly")
+            return false
         }
         gai.trackUncaughtExceptions = true  // report uncaught exceptions
         #if DEBUG
@@ -82,15 +83,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print("notification: \(response.description) id: \(response.notification.request.content.threadIdentifier)")
-        guard let item = CameraListItem.findById(id: response.notification.request.content.threadIdentifier, list: alertManager.items) else {return}
-        let notification = Notification(name: Constants.cameraDetectedNotificationName, object: item, userInfo: nil)
-        NotificationCenter.default.post(notification)
-
-        
-        completionHandler()
+        if response.notification.request.content.categoryIdentifier == Constants.notificationCategoryId {
+            guard let item = CameraListItem.findById(id: response.notification.request.content.threadIdentifier, list: alertManager.items) else {return}
+            alertManager.pushNotification(item: item)
+            completionHandler()
+        }
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.alert, .sound])
+        if notification.request.content.categoryIdentifier == Constants.notificationCategoryId {
+            completionHandler([.alert, .sound])
+        }
     }
 }
 
