@@ -1,0 +1,586 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		900BB3C11EAD30100091C5FB /* route (1).gpx in Resources */ = {isa = PBXBuildFile; fileRef = 900BB3BF1EAD30100091C5FB /* route (1).gpx */; };
+		900BB3C21EAD30100091C5FB /* waypoints.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 900BB3C01EAD30100091C5FB /* waypoints.gpx */; };
+		9014AFA41EA6B480007E6141 /* Alert_UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9014AFA31EA6B480007E6141 /* Alert_UIViewController_Extension.swift */; };
+		9019E7A31EB67FB100377959 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9019E7A51EB67FB100377959 /* Localizable.strings */; };
+		9019E7A81EB68F0600377959 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9019E7AA1EB68F0600377959 /* InfoPlist.strings */; };
+		901C882F1EAA90E100ABCAF6 /* coordinates.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 901C882E1EAA90E100ABCAF6 /* coordinates.gpx */; };
+		90726B6B1EAE739A00E81F20 /* UIView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90726B6A1EAE739A00E81F20 /* UIView_Extension.swift */; };
+		90726B6D1EAE8B8F00E81F20 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90726B6C1EAE8B8F00E81F20 /* Appearance.swift */; };
+		90868EF31E9FFABD001E1798 /* CommonLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90868EF21E9FFABD001E1798 /* CommonLocationManager.swift */; };
+		909F7CC81EB400100037C3DF /* InfoPageHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 909F7CC71EB400100037C3DF /* InfoPageHeaderTableViewCell.xib */; };
+		909F7CCA1EB400220037C3DF /* InfoPageHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909F7CC91EB400220037C3DF /* InfoPageHeaderTableViewCell.swift */; };
+		909F7CCE1EB668C20037C3DF /* String_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909F7CCD1EB668C20037C3DF /* String_Extensions.swift */; };
+		90A9EB211E6E049100C76B2C /* CameraAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9EB201E6E049100C76B2C /* CameraAlertManager.swift */; };
+		90B8B2011E678F3F00A1AEF1 /* todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90B8B2001E678F3F00A1AEF1 /* todo.txt */; };
+		90CCE97F1DF214B3000FD386 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE97E1DF214B3000FD386 /* AppDelegate.swift */; };
+		90CCE9811DF214B3000FD386 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9801DF214B3000FD386 /* MapViewController.swift */; };
+		90CCE9831DF214B3000FD386 /* InfoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9821DF214B3000FD386 /* InfoPageViewController.swift */; };
+		90CCE9861DF214B3000FD386 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE9841DF214B3000FD386 /* Main.storyboard */; };
+		90CCE9881DF214B3000FD386 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE9871DF214B3000FD386 /* Assets.xcassets */; };
+		90CCE98B1DF214B3000FD386 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE9891DF214B3000FD386 /* LaunchScreen.storyboard */; };
+		90CCE99C1DF21625000FD386 /* CameraListItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9931DF21625000FD386 /* CameraListItemModel.swift */; };
+		90CCE99D1DF21625000FD386 /* CameraListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9941DF21625000FD386 /* CameraListResponseModel.swift */; };
+		90CCE9A21DF21625000FD386 /* CameraBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE99A1DF21625000FD386 /* CameraBottomView.swift */; };
+		90CCE9A31DF21625000FD386 /* CameraBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CCE99B1DF21625000FD386 /* CameraBottomView.xib */; };
+		90CCE9A61DF2169E000FD386 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9A41DF2169E000FD386 /* Constants.swift */; };
+		90CCE9A71DF2169E000FD386 /* GeoTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CCE9A51DF2169E000FD386 /* GeoTools.swift */; };
+		90F3E74A1EC2746000995B29 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90F3E7491EC2746000995B29 /* GoogleService-Info.plist */; };
+		BCE8C2F0710D1F459E4BC4FC /* Pods_anpg_radar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD3A664A72F97E6B8ECBAEE /* Pods_anpg_radar.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		904A28551E5E66E8009EF2B7 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		07CE9A458218269E83A3A293 /* Pods-notification.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notification.release.xcconfig"; path = "Pods/Target Support Files/Pods-notification/Pods-notification.release.xcconfig"; sourceTree = "<group>"; };
+		4063D32B1CFBA29917717614 /* Pods-anpg-radar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-anpg-radar.release.xcconfig"; path = "Pods/Target Support Files/Pods-anpg-radar/Pods-anpg-radar.release.xcconfig"; sourceTree = "<group>"; };
+		900BB3BF1EAD30100091C5FB /* route (1).gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "route (1).gpx"; sourceTree = "<group>"; };
+		900BB3C01EAD30100091C5FB /* waypoints.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = waypoints.gpx; sourceTree = "<group>"; };
+		9014AFA31EA6B480007E6141 /* Alert_UIViewController_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert_UIViewController_Extension.swift; sourceTree = "<group>"; };
+		9019E79E1EB67EAC00377959 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		9019E79F1EB67EAC00377959 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Main.strings; sourceTree = "<group>"; };
+		9019E7A01EB67EAC00377959 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		9019E7A61EB67FB400377959 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9019E7A71EB67FB600377959 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9019E7A91EB68F0600377959 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9019E7AB1EB68F0800377959 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		901C882E1EAA90E100ABCAF6 /* coordinates.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = coordinates.gpx; sourceTree = "<group>"; };
+		90393D681EB3CEA100ACE48B /* anpg-radar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "anpg-radar-Bridging-Header.h"; sourceTree = "<group>"; };
+		904A28441E5E66E8009EF2B7 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		904A28461E5E66E8009EF2B7 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		904A28491E5E66E8009EF2B7 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		904A284C1E5E66E8009EF2B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		904A284E1E5E66E8009EF2B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90726B6A1EAE739A00E81F20 /* UIView_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView_Extension.swift; sourceTree = "<group>"; };
+		90726B6C1EAE8B8F00E81F20 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		90868EF21E9FFABD001E1798 /* CommonLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonLocationManager.swift; sourceTree = "<group>"; };
+		909F7CC71EB400100037C3DF /* InfoPageHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoPageHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		909F7CC91EB400220037C3DF /* InfoPageHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoPageHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		909F7CCD1EB668C20037C3DF /* String_Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String_Extensions.swift; sourceTree = "<group>"; };
+		90A9EB201E6E049100C76B2C /* CameraAlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraAlertManager.swift; sourceTree = "<group>"; };
+		90B8B2001E678F3F00A1AEF1 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
+		90CCE97B1DF214B3000FD386 /* anpg-radar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "anpg-radar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		90CCE97E1DF214B3000FD386 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		90CCE9801DF214B3000FD386 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		90CCE9821DF214B3000FD386 /* InfoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPageViewController.swift; sourceTree = "<group>"; };
+		90CCE9851DF214B3000FD386 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		90CCE9871DF214B3000FD386 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		90CCE98A1DF214B3000FD386 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		90CCE98C1DF214B3000FD386 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90CCE9931DF21625000FD386 /* CameraListItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraListItemModel.swift; sourceTree = "<group>"; };
+		90CCE9941DF21625000FD386 /* CameraListResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraListResponseModel.swift; sourceTree = "<group>"; };
+		90CCE99A1DF21625000FD386 /* CameraBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraBottomView.swift; sourceTree = "<group>"; };
+		90CCE99B1DF21625000FD386 /* CameraBottomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraBottomView.xib; sourceTree = "<group>"; };
+		90CCE9A41DF2169E000FD386 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		90CCE9A51DF2169E000FD386 /* GeoTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoTools.swift; sourceTree = "<group>"; };
+		90F3E7491EC2746000995B29 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		923490AB7B027193AF4AFDA0 /* Pods_notification.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_notification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D35A70B279FBFA8E22A92F59 /* Pods-notification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notification.debug.xcconfig"; path = "Pods/Target Support Files/Pods-notification/Pods-notification.debug.xcconfig"; sourceTree = "<group>"; };
+		D63962C726F138126ADC7031 /* Pods-anpg-radar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-anpg-radar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-anpg-radar/Pods-anpg-radar.debug.xcconfig"; sourceTree = "<group>"; };
+		DAD3A664A72F97E6B8ECBAEE /* Pods_anpg_radar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_anpg_radar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		90CCE9781DF214B3000FD386 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCE8C2F0710D1F459E4BC4FC /* Pods_anpg_radar.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		904A28431E5E66E8009EF2B7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				904A28441E5E66E8009EF2B7 /* UserNotifications.framework */,
+				904A28461E5E66E8009EF2B7 /* UserNotificationsUI.framework */,
+				DAD3A664A72F97E6B8ECBAEE /* Pods_anpg_radar.framework */,
+				923490AB7B027193AF4AFDA0 /* Pods_notification.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		904A28481E5E66E8009EF2B7 /* notification */ = {
+			isa = PBXGroup;
+			children = (
+				904A28491E5E66E8009EF2B7 /* NotificationViewController.swift */,
+				904A284B1E5E66E8009EF2B7 /* MainInterface.storyboard */,
+				904A284E1E5E66E8009EF2B7 /* Info.plist */,
+			);
+			path = notification;
+			sourceTree = "<group>";
+		};
+		90CCE9721DF214B3000FD386 = {
+			isa = PBXGroup;
+			children = (
+				90F3E7491EC2746000995B29 /* GoogleService-Info.plist */,
+				900BB3BF1EAD30100091C5FB /* route (1).gpx */,
+				900BB3C01EAD30100091C5FB /* waypoints.gpx */,
+				901C882E1EAA90E100ABCAF6 /* coordinates.gpx */,
+				90CCE97D1DF214B3000FD386 /* anpg-radar */,
+				904A28481E5E66E8009EF2B7 /* notification */,
+				904A28431E5E66E8009EF2B7 /* Frameworks */,
+				90CCE97C1DF214B3000FD386 /* Products */,
+				B5915210BCD38B14A190F76B /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		90CCE97C1DF214B3000FD386 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				90CCE97B1DF214B3000FD386 /* anpg-radar.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		90CCE97D1DF214B3000FD386 /* anpg-radar */ = {
+			isa = PBXGroup;
+			children = (
+				9014AFA31EA6B480007E6141 /* Alert_UIViewController_Extension.swift */,
+				90393D681EB3CEA100ACE48B /* anpg-radar-Bridging-Header.h */,
+				90CCE97E1DF214B3000FD386 /* AppDelegate.swift */,
+				90726B6C1EAE8B8F00E81F20 /* Appearance.swift */,
+				90CCE9871DF214B3000FD386 /* Assets.xcassets */,
+				90A9EB201E6E049100C76B2C /* CameraAlertManager.swift */,
+				9019E7A51EB67FB100377959 /* Localizable.strings */,
+				90868EF21E9FFABD001E1798 /* CommonLocationManager.swift */,
+				90CCE9A41DF2169E000FD386 /* Constants.swift */,
+				90CCE9A51DF2169E000FD386 /* GeoTools.swift */,
+				90CCE98C1DF214B3000FD386 /* Info.plist */,
+				90CCE9821DF214B3000FD386 /* InfoPageViewController.swift */,
+				90CCE9891DF214B3000FD386 /* LaunchScreen.storyboard */,
+				90CCE9841DF214B3000FD386 /* Main.storyboard */,
+				90CCE9801DF214B3000FD386 /* MapViewController.swift */,
+				90CCE9921DF21625000FD386 /* Model */,
+				90B8B2001E678F3F00A1AEF1 /* todo.txt */,
+				90CCE9951DF21625000FD386 /* View */,
+				909F7CCD1EB668C20037C3DF /* String_Extensions.swift */,
+				9019E7AA1EB68F0600377959 /* InfoPlist.strings */,
+			);
+			path = "anpg-radar";
+			sourceTree = "<group>";
+		};
+		90CCE9921DF21625000FD386 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				90CCE9931DF21625000FD386 /* CameraListItemModel.swift */,
+				90CCE9941DF21625000FD386 /* CameraListResponseModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		90CCE9951DF21625000FD386 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90CCE99A1DF21625000FD386 /* CameraBottomView.swift */,
+				90CCE99B1DF21625000FD386 /* CameraBottomView.xib */,
+				90726B6A1EAE739A00E81F20 /* UIView_Extension.swift */,
+				909F7CC71EB400100037C3DF /* InfoPageHeaderTableViewCell.xib */,
+				909F7CC91EB400220037C3DF /* InfoPageHeaderTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B5915210BCD38B14A190F76B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D63962C726F138126ADC7031 /* Pods-anpg-radar.debug.xcconfig */,
+				4063D32B1CFBA29917717614 /* Pods-anpg-radar.release.xcconfig */,
+				D35A70B279FBFA8E22A92F59 /* Pods-notification.debug.xcconfig */,
+				07CE9A458218269E83A3A293 /* Pods-notification.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		90CCE97A1DF214B3000FD386 /* anpg-radar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 90CCE98F1DF214B3000FD386 /* Build configuration list for PBXNativeTarget "anpg-radar" */;
+			buildPhases = (
+				54EF34BE0C487EBF245B6F94 /* [CP] Check Pods Manifest.lock */,
+				90CCE9771DF214B3000FD386 /* Sources */,
+				90CCE9781DF214B3000FD386 /* Frameworks */,
+				90CCE9791DF214B3000FD386 /* Resources */,
+				904A28551E5E66E8009EF2B7 /* Embed App Extensions */,
+				85DA3FFFCD47CC01EB4FB170 /* [CP] Embed Pods Frameworks */,
+				D0D0716583E21BD3C5C94FF4 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "anpg-radar";
+			productName = "anpg-radar";
+			productReference = 90CCE97B1DF214B3000FD386 /* anpg-radar.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		90CCE9731DF214B3000FD386 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = "Esben von Buchwald";
+				TargetAttributes = {
+					90CCE97A1DF214B3000FD386 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 74Q63VCJTF;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 90CCE9761DF214B3000FD386 /* Build configuration list for PBXProject "anpg-radar" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				da,
+			);
+			mainGroup = 90CCE9721DF214B3000FD386;
+			productRefGroup = 90CCE97C1DF214B3000FD386 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				90CCE97A1DF214B3000FD386 /* anpg-radar */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		90CCE9791DF214B3000FD386 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				90CCE98B1DF214B3000FD386 /* LaunchScreen.storyboard in Resources */,
+				9019E7A81EB68F0600377959 /* InfoPlist.strings in Resources */,
+				90CCE9A31DF21625000FD386 /* CameraBottomView.xib in Resources */,
+				9019E7A31EB67FB100377959 /* Localizable.strings in Resources */,
+				90B8B2011E678F3F00A1AEF1 /* todo.txt in Resources */,
+				90F3E74A1EC2746000995B29 /* GoogleService-Info.plist in Resources */,
+				90CCE9881DF214B3000FD386 /* Assets.xcassets in Resources */,
+				900BB3C21EAD30100091C5FB /* waypoints.gpx in Resources */,
+				90CCE9861DF214B3000FD386 /* Main.storyboard in Resources */,
+				909F7CC81EB400100037C3DF /* InfoPageHeaderTableViewCell.xib in Resources */,
+				901C882F1EAA90E100ABCAF6 /* coordinates.gpx in Resources */,
+				900BB3C11EAD30100091C5FB /* route (1).gpx in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		54EF34BE0C487EBF245B6F94 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		85DA3FFFCD47CC01EB4FB170 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-anpg-radar/Pods-anpg-radar-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D0D0716583E21BD3C5C94FF4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-anpg-radar/Pods-anpg-radar-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		90CCE9771DF214B3000FD386 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				909F7CCA1EB400220037C3DF /* InfoPageHeaderTableViewCell.swift in Sources */,
+				90CCE9831DF214B3000FD386 /* InfoPageViewController.swift in Sources */,
+				90CCE9A21DF21625000FD386 /* CameraBottomView.swift in Sources */,
+				90726B6B1EAE739A00E81F20 /* UIView_Extension.swift in Sources */,
+				90A9EB211E6E049100C76B2C /* CameraAlertManager.swift in Sources */,
+				90726B6D1EAE8B8F00E81F20 /* Appearance.swift in Sources */,
+				90CCE99D1DF21625000FD386 /* CameraListResponseModel.swift in Sources */,
+				90CCE99C1DF21625000FD386 /* CameraListItemModel.swift in Sources */,
+				90CCE97F1DF214B3000FD386 /* AppDelegate.swift in Sources */,
+				90CCE9811DF214B3000FD386 /* MapViewController.swift in Sources */,
+				909F7CCE1EB668C20037C3DF /* String_Extensions.swift in Sources */,
+				90CCE9A61DF2169E000FD386 /* Constants.swift in Sources */,
+				90CCE9A71DF2169E000FD386 /* GeoTools.swift in Sources */,
+				9014AFA41EA6B480007E6141 /* Alert_UIViewController_Extension.swift in Sources */,
+				90868EF31E9FFABD001E1798 /* CommonLocationManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		9019E7A51EB67FB100377959 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9019E7A61EB67FB400377959 /* en */,
+				9019E7A71EB67FB600377959 /* da */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		9019E7AA1EB68F0600377959 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9019E7A91EB68F0600377959 /* en */,
+				9019E7AB1EB68F0800377959 /* da */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		904A284B1E5E66E8009EF2B7 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				904A284C1E5E66E8009EF2B7 /* Base */,
+				9019E7A01EB67EAC00377959 /* da */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		90CCE9841DF214B3000FD386 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				90CCE9851DF214B3000FD386 /* Base */,
+				9019E79F1EB67EAC00377959 /* da */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		90CCE9891DF214B3000FD386 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				90CCE98A1DF214B3000FD386 /* Base */,
+				9019E79E1EB67EAC00377959 /* da */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		90CCE98D1DF214B3000FD386 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		90CCE98E1DF214B3000FD386 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		90CCE9901DF214B3000FD386 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D63962C726F138126ADC7031 /* Pods-anpg-radar.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Esben von Buchwald (NFF5VRXQ8H)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Esben von Buchwald (NFF5VRXQ8H)";
+				DEVELOPMENT_TEAM = 74Q63VCJTF;
+				INFOPLIST_FILE = "anpg-radar/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = dk.vonbuchwald.esben.anpgradar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1b5fef51-f4b1-42a4-8ebb-7482fb364d00";
+				PROVISIONING_PROFILE_SPECIFIER = "ANPG Radar Development";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/$(PROJECT_NAME)/$(PROJECT_NAME)-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		90CCE9911DF214B3000FD386 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4063D32B1CFBA29917717614 /* Pods-anpg-radar.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Esben von Buchwald (74Q63VCJTF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Esben von Buchwald (74Q63VCJTF)";
+				DEVELOPMENT_TEAM = 74Q63VCJTF;
+				INFOPLIST_FILE = "anpg-radar/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = dk.vonbuchwald.esben.anpgradar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4835cd32-d5e8-4759-aa1f-1e3c57ba3310";
+				PROVISIONING_PROFILE_SPECIFIER = "ANPG Radar App Store";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/$(PROJECT_NAME)/$(PROJECT_NAME)-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		90CCE9761DF214B3000FD386 /* Build configuration list for PBXProject "anpg-radar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90CCE98D1DF214B3000FD386 /* Debug */,
+				90CCE98E1DF214B3000FD386 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		90CCE98F1DF214B3000FD386 /* Build configuration list for PBXNativeTarget "anpg-radar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90CCE9901DF214B3000FD386 /* Debug */,
+				90CCE9911DF214B3000FD386 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 90CCE9731DF214B3000FD386 /* Project object */;
+}

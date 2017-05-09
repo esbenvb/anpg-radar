@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  anpg-radar
+
+  Created by Esben von Buchwald on 30/04/2017.
+  Copyright © 2017 Esben von Buchwald. All rights reserved.
+*/
+"NSLocationWhenInUseUsageDescription" = "You need to allow location access for this app to use the map overview and warnings.";

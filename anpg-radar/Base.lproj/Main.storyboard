@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9pv-A4-QxB">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Map-->
+        <scene sceneID="hNz-n2-bh7">
+            <objects>
+                <viewController id="9pv-A4-QxB" userLabel="Map" customClass="MapViewController" customModule="anpg_radar" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
+                        <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" mapType="hybrid" showsUserLocation="YES" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y2R-7a-yDE">
+                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
+                                <gestureRecognizers/>
+                            </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2jb-OK-ocS" customClass="OverlayView" customModule="anpg_radar" customModuleProvider="target">
+                                <rect key="frame" x="202" y="28" width="165" height="81"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="A7w-6P-lLI">
+                                        <rect key="frame" x="8" y="8" width="149" height="65"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="CXk-aT-ecp">
+                                                <rect key="frame" x="0.0" y="0.0" width="149" height="31"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warnings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1f-zg-UgX">
+                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="31"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6kU-4q-Tp4">
+                                                        <rect key="frame" x="100" y="0.0" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="notificationSwitchChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="atg-O1-jFg"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="fO1-XX-Z3X">
+                                                <rect key="frame" x="0.0" y="31" width="149" height="34"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bwA-mI-OiA" customClass="FolloLocationButton" customModule="anpg_radar" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="22" height="34"/>
+                                                        <connections>
+                                                            <action selector="infoButtonClicked:" destination="9pv-A4-QxB" eventType="touchUpInside" id="kgM-bg-XAg"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X4A-Q3-jyB" customClass="FolloLocationButton" customModule="anpg_radar" customModuleProvider="target">
+                                                        <rect key="frame" x="119" y="0.0" width="30" height="34"/>
+                                                        <connections>
+                                                            <action selector="followLocationButtonClicked:" destination="9pv-A4-QxB" eventType="touchUpInside" id="aAf-s8-Qoq"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailingMargin" secondItem="A7w-6P-lLI" secondAttribute="trailing" id="PKe-7S-VgP"/>
+                                    <constraint firstItem="A7w-6P-lLI" firstAttribute="top" secondItem="2jb-OK-ocS" secondAttribute="topMargin" id="SMW-9N-WGy"/>
+                                    <constraint firstItem="A7w-6P-lLI" firstAttribute="leading" secondItem="2jb-OK-ocS" secondAttribute="leadingMargin" id="Tn6-sy-7q6"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="A7w-6P-lLI" secondAttribute="bottom" id="cJl-hr-SBz"/>
+                                    <constraint firstAttribute="width" constant="165" id="v5a-Ar-Vlf"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ifr-L3-mQJ" customClass="OverlayView" customModule="anpg_radar" customModuleProvider="target">
+                                <rect key="frame" x="8" y="531" width="359" height="128"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Y67-ME-6MQ">
+                                        <rect key="frame" x="8" y="8" width="343" height="112"/>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Y67-ME-6MQ" firstAttribute="top" secondItem="Ifr-L3-mQJ" secondAttribute="topMargin" id="5lc-Ht-cFn"/>
+                                    <constraint firstItem="Y67-ME-6MQ" firstAttribute="leading" secondItem="Ifr-L3-mQJ" secondAttribute="leadingMargin" id="JPh-ai-7cU"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="Y67-ME-6MQ" secondAttribute="bottom" id="TiW-eV-wWy"/>
+                                    <constraint firstAttribute="height" constant="128" id="hgA-tJ-J7u"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="Y67-ME-6MQ" secondAttribute="trailing" id="iwT-II-QGd"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Ifr-L3-mQJ" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" constant="8" id="9Fo-ma-EC8"/>
+                            <constraint firstAttribute="trailing" secondItem="Y2R-7a-yDE" secondAttribute="trailing" id="I1T-6K-gGr"/>
+                            <constraint firstAttribute="trailing" secondItem="Ifr-L3-mQJ" secondAttribute="trailing" constant="8" id="RKV-Fb-bhp"/>
+                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="Ifr-L3-mQJ" secondAttribute="bottom" constant="8" id="auR-6I-fRt"/>
+                            <constraint firstItem="Y2R-7a-yDE" firstAttribute="bottom" secondItem="4ug-Mw-9AY" secondAttribute="top" id="g7w-w1-zuY"/>
+                            <constraint firstItem="Y2R-7a-yDE" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" id="jc4-yv-quF"/>
+                            <constraint firstAttribute="trailing" secondItem="2jb-OK-ocS" secondAttribute="trailing" constant="8" id="nbA-1r-G2g"/>
+                            <constraint firstItem="Y2R-7a-yDE" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="y30-8F-81h"/>
+                            <constraint firstItem="2jb-OK-ocS" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="8" id="zbF-5Z-hbB"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" image="mapPin" id="acW-dT-cKf"/>
+                    <connections>
+                        <outlet property="followLocationButton" destination="X4A-Q3-jyB" id="yti-2T-Yjr"/>
+                        <outlet property="footerStackView" destination="Y67-ME-6MQ" id="o3c-g6-zqp"/>
+                        <outlet property="footerView" destination="Ifr-L3-mQJ" id="t7J-FW-SFs"/>
+                        <outlet property="footerViewBottom" destination="auR-6I-fRt" id="bXh-J3-GPn"/>
+                        <outlet property="footerViewHeight" destination="hgA-tJ-J7u" id="9Gt-du-ZmN"/>
+                        <outlet property="mapView" destination="Y2R-7a-yDE" id="Z1c-Or-vMx"/>
+                        <outlet property="notificationSwitch" destination="6kU-4q-Tp4" id="oUf-WC-bRT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="749.60000000000002" y="-320.68965517241384"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="mapPin" width="45" height="45"/>
+    </resources>
+</document>

@@ -1,0 +1,45 @@
+/*
+ Localizable.strings
+ anpg-radar
+ 
+ Created by Esben von Buchwald on 30/04/2017.
+ Copyright © 2017 Esben von Buchwald. All rights reserved.
+ */
+
+"switch.warnings" = "Advarsler";
+"button.followlocation.inactive" = "Min lokation";
+"button.followlocation.active" = "✅ Min lokation";
+"notification.title.warning" = "Kamera i nærheden!";
+"notification.title.outofrange" = "Uden for området af kamera-advarsler";
+"notification.body.outofrange" = "Klik for at åbne appen, dette opdaterer advarslerne i dit nuværende område.";
+"label.address.unknown" = "Ukendt adresse";
+"app.title" = "ANPG Radar";
+"app.version" = "Version %@ byg %@";
+"alert.title.needslocationwheninuse" = "Kræver adgang når appen bruges.";
+"alert.message.needslocationwheninuse" = "Denne funktion kræver adgang til din lokation når appen bruges. Aktivér det under indstillinger.";
+"alert.button.close" = "Luk";
+"alert.button.settings" = "Indstillinger";
+"alert.button.retry" = "Forsøg igen";
+"alert.message.loadingerror" = "Kunne ikke hente data. Forsøg igen?";
+"label.info.privacy" = "Denne app indsamler ingen følsom information eller videregiver det til tredjepart. Din lokation benyttes kun til at vise kortet, afstand til kameraer samt advarsler. Appen hverken kører eller tracker din lokation i baggrunden, heller ikke når advarsler er aktiveret. Desuden vil aktivering af advarsler ikke påvirke strømforbruget .\n\nGoogle Analytics benyttes til at indsamle anonym bruger-statistik.";
+"title.info.privacy" = "Privatliv";
+"label.info.datasource" = "Data er leveret af anpg.dk-websitet, og er indsamlet af brugere.";
+"title.info.datasource" = "Datakilde";
+"label.info.about" = "Denne app er lavet af Esben von Buchwald og dens primære formål er at tydeliggøre for borgere, hvor ofte de bliver registreret, i et forsøg på at øge fokus på problemerne ved masseovervågning.\n\nIngen tjener penge på denne app pt.";
+"title.info.about" = "Om";
+"label.info.whatisanpg" = "ANPG (forkortelse for Automatisk NummerPlade Genkendelse) er et system som registrerer biler og deres nummerplader, og gemmer data i en vis periode. De fleste borgere er ikke opmærksomme på dette, og ved heller ikke hvor og hvornår deres bil bliver registreret.\n\Denne app kan vise dig hvor kameraerne er blevet set, og advare dig når du kommer i nærheden.\n\nBemærk at politibiler også kan scanne og registrere din nummerplade. Denne app advarer kun om de fastmonterede kameraer. De kan se således ud.";
+"title.info.whatisanpg" = "Hvad er APNG?";
+"label.info.reportcamera" = "Listen af kameraer er vedligeholdt af Christian Panton fra anpg.dk. Klik for at kontakte ham.";
+"title.info.reportcamera" = "Rapportér nyt kamera";
+"alert.message.unknownerror" = "Ukendt fejl";
+"alert.title.error" = "Fejl";
+"alert.title.devicenotsupported" = "Enhed ikke understøttet";
+"alert.message.monitoringnotavailable" = "Monitoring er ikke understøttet af din enhed.";
+"alert.message.significantlocationnotavailable" = "Betydelige lokationsopdateringer er ikke understøttet af din enhed.";
+"alert.message.locationnotavailable" = "Lokationsopdateringer er ikke understøttet af din enhed.";
+"alert.title.needslocationaccess" = "Kræver adgang til lokation.";
+"alert.message.needslocationaccess" = "Du skal tillade lokations-adgang for denne app, for at benytte kortet og advarslerne.";
+"alert.title.needswheninuselocationaccess" = "Kræver adgang når appen bruges.";
+"alert.message.needswheninuselocationaccess" = "Denne funktion kræver adgang til din lokation mens appen bruges. Aktiver dette under indstillinger.";
+"alert.title.needsalwayslocationaccess" = "Kræver adgang altid.";
+"alert.message.needsalwayslocationaccess" = "Denne funktion kræver adgang til din lokation, også når appen kører i baggrunden. Aktiver dette under indstillinger.";
